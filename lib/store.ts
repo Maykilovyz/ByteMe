@@ -35,15 +35,20 @@ async function sb(caminho: string, init: RequestInit = {}): Promise<Response> {
   if (chave.startsWith("eyJ")) headers.Authorization = `Bearer ${chave}`; // chaves antigas (JWT); as novas (sb_secret_) só usam apikey
   const r = await fetch(url, { ...init, headers, cache: "no-store", signal: AbortSignal.timeout(10_000) });
   if (!r.ok) throw new Error(`Supabase ${r.status} em ${caminho.split("?")[0]}: ${(await r.text()).slice(0, 200)}`);
-  if (r.status !== 201 && r.status !== 204 && !(r.headers.get("content-type") ?? "").includes("json")) {
+  return r;
+}
+
+/** Lê o JSON da resposta; se vier uma página da web, a URL do projeto está errada. */
+async function lerJson<T>(r: Response): Promise<T> {
+  if (!(r.headers.get("content-type") ?? "").includes("json")) {
     throw new Error("Supabase: a SUPABASE_URL parece errada (devolveu uma página, não dados). Use a Project URL, tipo https://xxxx.supabase.co, sem /dashboard e sem /rest/v1.");
   }
-  return r;
+  return (await r.json()) as T;
 }
 
 async function proximoContador(nome: string): Promise<number> {
   const r = await sb("rpc/proximo_contador", { method: "POST", body: JSON.stringify({ p_nome: nome }) });
-  return Number(await r.json());
+  return Number(await lerJson<number>(r));
 }
 
 const agora = () => new Date().toISOString();
@@ -66,7 +71,7 @@ export async function criarAtendimento(perfil: Atendimento["perfil"], canal: str
 export async function obter(protocolo: string): Promise<Atendimento | undefined> {
   if (!usaSupabase()) return banco().atendimentos[protocolo];
   const r = await sb(`atendimentos?protocolo=eq.${encodeURIComponent(protocolo)}&select=dados`);
-  const linhas = (await r.json()) as { dados: Atendimento }[];
+  const linhas = await lerJson<{ dados: Atendimento }[]>(r);
   return linhas[0]?.dados;
 }
 
@@ -104,7 +109,7 @@ export async function previsaoEsperaMin(unidadeId: string | null): Promise<numbe
   if (usaSupabase()) {
     const filtroUnidade = unidadeId == null ? "" : `&unidade_id=eq.${encodeURIComponent(unidadeId)}`;
     const r = await sb(`atendimentos?status=eq.aguardando_atendimento${filtroUnidade}&select=protocolo`);
-    naFrente = ((await r.json()) as unknown[]).length;
+    naFrente = (await lerJson<unknown[]>(r)).length;
   } else {
     naFrente = Object.values(banco().atendimentos).filter(
       (a) => a.status === "aguardando_atendimento" && (unidadeId == null || a.unidadeId === unidadeId)
@@ -116,5 +121,5 @@ export async function previsaoEsperaMin(unidadeId: string | null): Promise<numbe
 export async function listar(): Promise<Atendimento[]> {
   if (!usaSupabase()) return Object.values(banco().atendimentos).sort((a, b) => a.criadoEm.localeCompare(b.criadoEm));
   const r = await sb("atendimentos?select=dados&order=criado_em.asc&limit=1000");
-  return ((await r.json()) as { dados: Atendimento }[]).map((l) => l.dados);
+  return (await lerJson<{ dados: Atendimento }[]>(r)).map((l) => l.dados);
 }
