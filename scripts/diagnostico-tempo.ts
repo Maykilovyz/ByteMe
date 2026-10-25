@@ -34,7 +34,11 @@ async function main() {
   if (!chave) return console.log("\n== Gemini: sem GEMINI_API_KEY (pulado)");
   console.log("\n== Google");
   await tempoDe("DNS", async () => JSON.stringify(await dns("generativelanguage.googleapis.com")));
-  const modelo = (process.env.GEMINI_MODELS ?? "gemini-3.5-flash").split(",")[0].trim();
+  const modelos = (process.env.GEMINI_MODELS ?? "gemini-3.5-flash,gemini-3.5-flash-lite,gemini-3.8-flash").split(",").map((m) => m.trim());
+  for (const modelo of modelos) await testarModelo(modelo, chave);
+}
+
+async function testarModelo(modelo: string, chave: string) {
   console.log(`\n== Gemini ${modelo}: pergunta curta, 2 vezes por variante`);
   const variantes: [string, object][] = [
     ["padrão", {}],
@@ -54,7 +58,10 @@ async function main() {
         });
         const c = await r.json();
         const u = c?.usageMetadata ?? {};
-        const motivo = r.ok ? "" : `  motivo: ${String(c?.error?.message ?? "").replace(/\s+/g, " ").slice(0, 220)}`;
+        const det: { violations?: { quotaId?: string; quotaMetric?: string }[]; retryDelay?: string }[] = c?.error?.details ?? [];
+        const cota = det.flatMap((d) => d.violations ?? []).map((v) => v.quotaId ?? v.quotaMetric).filter(Boolean).join(", ");
+        const espera = det.map((d) => d.retryDelay).find(Boolean);
+        const motivo = r.ok ? "" : `  limite: ${cota || "?"}  esperar: ${espera ?? "?"}`;
         return `HTTP ${r.status}  tokens de raciocínio: ${u.thoughtsTokenCount ?? 0}${motivo}`;
       });
     }
