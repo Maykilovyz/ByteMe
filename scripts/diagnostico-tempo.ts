@@ -7,8 +7,9 @@ const ms = (t0: number) => `${Math.round(performance.now() - t0)} ms`;
 
 async function tempoDe(rotulo: string, fn: () => Promise<string>) {
   const t0 = performance.now();
-  try { console.log(`${rotulo}: ${ms(t0)}  ${await fn()}`); }
-  catch (e) { console.log(`${rotulo}: ${ms(t0)}  ERRO ${String(e).slice(0, 100)}`); }
+  let texto: string;
+  try { texto = await fn(); } catch (e) { texto = `ERRO ${String(e).slice(0, 100)}`; }
+  console.log(`${rotulo}: ${ms(t0)}  ${texto}`);
 }
 
 async function main() {
@@ -53,7 +54,8 @@ async function main() {
         });
         const c = await r.json();
         const u = c?.usageMetadata ?? {};
-        return `HTTP ${r.status}  tokens de raciocínio: ${u.thoughtsTokenCount ?? 0}`;
+        const motivo = r.ok ? "" : `  motivo: ${String(c?.error?.message ?? "").replace(/\s+/g, " ").slice(0, 220)}`;
+        return `HTTP ${r.status}  tokens de raciocínio: ${u.thoughtsTokenCount ?? 0}${motivo}`;
       });
     }
   }
