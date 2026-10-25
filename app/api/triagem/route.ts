@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { triar } from "@/lib/orquestrador";
+import { medir } from "@/lib/tempo";
 
 const Entrada = z.object({
   protocolo: z.string().optional(),
@@ -11,6 +12,6 @@ const Entrada = z.object({
 export async function POST(req: Request) {
   const dados = Entrada.safeParse(await req.json().catch(() => null));
   if (!dados.success) return NextResponse.json({ erro: "Mensagem inválida" }, { status: 400 });
-  const resposta = await triar(dados.data);
+  const resposta = await medir("POST /api/triagem (total)", () => triar(dados.data));
   return NextResponse.json(resposta);
 }

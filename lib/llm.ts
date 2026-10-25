@@ -2,6 +2,7 @@
 import { z } from "zod";
 import { GEMINI_MODELS, GROQ_MODEL, TIMEOUT_IA_MS } from "./config";
 import { montarPrompt } from "./prompt";
+import { medir } from "./tempo";
 import type { Mensagem } from "./tipos";
 
 export const FichaSchema = z.object({
@@ -41,7 +42,7 @@ async function chamarGemini(modelo: string, system: string, usuario: string): Pr
   const chave = process.env.GEMINI_API_KEY;
   if (!chave) throw new Error("GEMINI_API_KEY não configurada");
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelo}:generateContent`;
-  const resp = await fetch(url, {
+  const resp = await medir(`gemini ${modelo}`, () => fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json", "x-goog-api-key": chave },
     body: JSON.stringify({
@@ -50,7 +51,7 @@ async function chamarGemini(modelo: string, system: string, usuario: string): Pr
       generationConfig: { responseMimeType: "application/json" },
     }),
     signal: AbortSignal.timeout(TIMEOUT_IA_MS),
-  }).catch((e) => { throw new ErroTemporario(`${modelo}: sem resposta (${String(e).slice(0, 80)})`); });
+  })).catch((e) => { throw new ErroTemporario(`${modelo}: sem resposta (${String(e).slice(0, 80)})`); });
   if (resp.status === 429 || resp.status >= 500) throw new ErroTemporario(`${modelo}: HTTP ${resp.status}`);
   const corpo = await resp.json();
   if (!resp.ok) throw new Error(`Gemini ${modelo} ${resp.status}: ${JSON.stringify(corpo).slice(0, 300)}`);
