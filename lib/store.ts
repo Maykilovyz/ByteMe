@@ -35,6 +35,9 @@ async function sb(caminho: string, init: RequestInit = {}): Promise<Response> {
   if (chave.startsWith("eyJ")) headers.Authorization = `Bearer ${chave}`; // chaves antigas (JWT); as novas (sb_secret_) só usam apikey
   const r = await fetch(url, { ...init, headers, cache: "no-store", signal: AbortSignal.timeout(10_000) });
   if (!r.ok) throw new Error(`Supabase ${r.status} em ${caminho.split("?")[0]}: ${(await r.text()).slice(0, 200)}`);
+  if (r.status !== 201 && r.status !== 204 && !(r.headers.get("content-type") ?? "").includes("json")) {
+    throw new Error("Supabase: a SUPABASE_URL parece errada (devolveu uma página, não dados). Use a Project URL, tipo https://xxxx.supabase.co, sem /dashboard e sem /rest/v1.");
+  }
   return r;
 }
 
