@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 
 /** Fila do atendente: tudo que não está em triagem nem resolvido sem fila. */
 export async function GET() {
-  const itens = listar()
+  const itens = (await listar())
     .filter((a) => !["em_triagem", "resolvido_sem_fila"].includes(a.status))
     .map((a) => ({
       ...a,

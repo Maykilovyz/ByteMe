@@ -5,7 +5,7 @@ export const dynamic = "force-dynamic";
 
 // Sugestão dos 4 números do painel (a decidir pelo Mayke). Todos saem dos status gravados.
 export async function GET() {
-  const todos = listar();
+  const todos = await listar();
   const minutos = (a: string, b: string) => (new Date(b).getTime() - new Date(a).getTime()) / 60000;
   const esperas = todos.flatMap((at) => {
     const ini = at.historicoStatus.find((h) => h.status === "aguardando_atendimento");

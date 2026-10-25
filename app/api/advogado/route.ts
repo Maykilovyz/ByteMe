@@ -26,12 +26,12 @@ export async function POST(req: Request) {
   const corpo = await req.json().catch(() => null);
   // Segunda etapa: confirmar horário escolhido.
   if (corpo?.protocolo && corpo?.horario) {
-    const at = obter(corpo.protocolo);
+    const at = await obter(corpo.protocolo);
     if (!at?.advogado) return NextResponse.json({ erro: "Protocolo não encontrado" }, { status: 404 });
     at.advogado.horario = String(corpo.horario);
     registrar(at, "horario_agendado", { horario: at.advogado.horario });
     mudarStatus(at, "aguardando_atendimento");
-    atualizar(at);
+    await atualizar(at);
     return NextResponse.json({ protocolo: at.protocolo, tipo: "agendado", texto: `Agendado para ${at.advogado.horario}. Protocolo ${at.protocolo}.` });
   }
 
@@ -41,7 +41,7 @@ export async function POST(req: Request) {
   const motivo = motivoPorId(motivoId);
   if (!motivo) return NextResponse.json({ erro: "Motivo inválido" }, { status: 400 });
 
-  const at = criarAtendimento("advogado", "web");
+  const at = await criarAtendimento("advogado", "web");
   at.advogado = { oab: oab.toUpperCase(), processo: processo ?? null, motivoId, horario: null };
   at.unidadeId = unidadeId ?? null;
   registrar(at, "menu_advogado", { motivoId, unidadeId });
@@ -49,17 +49,17 @@ export async function POST(req: Request) {
   if (motivoId === "suporte_sistema") {
     const o = orgaoPorId("suporte_sistemas_tjpa");
     mudarStatus(at, "resolvido_sem_fila");
-    atualizar(at);
+    await atualizar(at);
     return NextResponse.json({ protocolo: at.protocolo, tipo: "suporte", texto: `Para login, assinatura ou sistema eletrônico, use o ${o?.nome ?? "suporte oficial do TJPA"}${o?.link ? `: ${o.link}` : ""}.` });
   }
   if (motivo.precisaHorario) {
-    atualizar(at);
+    await atualizar(at);
     return NextResponse.json({ protocolo: at.protocolo, tipo: "horarios", texto: `${motivo.motivo} precisa de horário marcado. Escolha um:`, horarios: horariosSimulados() });
   }
-  at.senha = gerarSenha("A");
-  const espera = previsaoEsperaMin(at.unidadeId);
+  at.senha = await gerarSenha("A");
+  const espera = await previsaoEsperaMin(at.unidadeId);
   mudarStatus(at, "aguardando_atendimento");
-  atualizar(at);
+  await atualizar(at);
   const u = unidadePorId(at.unidadeId);
   return NextResponse.json({ protocolo: at.protocolo, tipo: "fila", texto: `Senha ${at.senha}${u ? ` para ${u.nome}` : ""}. ${espera > 0 ? `Espera prevista: cerca de ${espera} min.` : "Você é o próximo."}` });
 }

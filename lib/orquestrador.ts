@@ -25,41 +25,41 @@ function responderAssistente(at: Atendimento, texto: string) {
   at.historico.push({ papel: "assistente", texto, em: agora() });
 }
 
-function entrarNaFila(at: Atendimento, unidadeId: string | null) {
+async function entrarNaFila(at: Atendimento, unidadeId: string | null) {
   at.unidadeId = unidadeId;
-  at.senha = gerarSenha(at.perfil === "advogado" ? "A" : "C");
-  const espera = previsaoEsperaMin(unidadeId);
+  at.senha = await gerarSenha(at.perfil === "advogado" ? "A" : "C");
+  const espera = await previsaoEsperaMin(unidadeId);
   mudarStatus(at, "aguardando_atendimento");
   return espera;
 }
 
-function encaminhar(at: Atendimento, motivo: string, ficha: Ficha | null, emergencia = false): RespostaTriagem {
+async function encaminhar(at: Atendimento, motivo: string, ficha: Ficha | null, emergencia = false): Promise<RespostaTriagem> {
   at.motivoEncaminhamento = motivo;
-  const espera = entrarNaFila(at, null);
+  const espera = await entrarNaFila(at, null);
   if (emergencia) mudarStatus(at, "emergencia");
   registrar(at, "encaminhado", { motivo });
   const texto = (emergencia ? TEXTO_EMERGENCIA : TEXTO_ENCAMINHADO) + ` Sua senha é ${at.senha}.`;
   at.respostaAoCidadao = texto;
   responderAssistente(at, texto);
-  atualizar(at);
+  await atualizar(at);
   return { protocolo: at.protocolo, tipo: emergencia ? "emergencia" : "atendente", texto, senha: at.senha, esperaMin: espera, ficha };
 }
 
-function finalizar(at: Atendimento, d: Decisao, ficha: Ficha): RespostaTriagem {
+async function finalizar(at: Atendimento, d: Decisao, ficha: Ficha): Promise<RespostaTriagem> {
   at.decisao = { tipo: d.tipo, motivo: d.motivo, assunto: "assunto" in d ? d.assunto?.id : null };
   registrar(at, "decisao", at.decisao);
-  if (d.tipo === "atendente") return encaminhar(at, `ficha_pronta: ${d.motivo}`, ficha);
+  if (d.tipo === "atendente") return await encaminhar(at, `ficha_pronta: ${d.motivo}`, ficha);
 
   let espera: number | null = null;
   if (d.tipo === "unidade") {
-    espera = entrarNaFila(at, d.unidade.id);
+    espera = await entrarNaFila(at, d.unidade.id);
   } else {
     mudarStatus(at, "resolvido_sem_fila");
   }
   const texto = textoResposta(d, at.senha, espera);
   at.respostaAoCidadao = texto;
   responderAssistente(at, texto);
-  atualizar(at);
+  await atualizar(at);
   const u = d.tipo === "unidade" ? unidadePorId(d.unidade.id) : null;
   return {
     protocolo: at.protocolo, tipo: d.tipo, texto, senha: at.senha, esperaMin: espera,
@@ -72,13 +72,13 @@ function finalizar(at: Atendimento, d: Decisao, ficha: Ficha): RespostaTriagem {
 
 export async function triar(entrada: { protocolo?: string; mensagem: string; canal?: string }): Promise<RespostaTriagem> {
   const mensagem = entrada.mensagem.trim().slice(0, 2000);
-  let at = entrada.protocolo ? obter(entrada.protocolo) : undefined;
-  if (!at || at.status !== "em_triagem") at = criarAtendimento("cidadao", entrada.canal ?? "web");
+  let at = entrada.protocolo ? await obter(entrada.protocolo) : undefined;
+  if (!at || at.status !== "em_triagem") at = await criarAtendimento("cidadao", entrada.canal ?? "web");
   at.historico.push({ papel: "cidadao", texto: mensagem, em: agora() });
 
   // 1. Pedido de humano e risco por palavras: sem IA, em toda mensagem.
-  if (pediuHumano(mensagem)) return encaminhar(at, "pedido_do_cidadao", null);
-  if (riscoPorPalavras(mensagem)) return encaminhar(at, "risco_por_palavras", null, true);
+  if (pediuHumano(mensagem)) return await encaminhar(at, "pedido_do_cidadao", null);
+  if (riscoPorPalavras(mensagem)) return await encaminhar(at, "risco_por_palavras", null, true);
 
   // 2. IA monta a ficha (com a conversa inteira).
   let ficha: Ficha;
@@ -88,12 +88,12 @@ export async function triar(entrada: { protocolo?: string; mensagem: string; can
     registrar(at, "ficha_ia", { provedor: r.provedor, ms: r.ms, bruto: r.bruto });
   } catch (e) {
     registrar(at, "erro_ia", String(e));
-    return encaminhar(at, "falha_da_ia", null);
+    return await encaminhar(at, "falha_da_ia", null);
   }
   at.ficha = ficha;
 
-  if (ficha.risco_imediato) return encaminhar(at, "risco_detectado_pela_ia", ficha, true);
-  if (ficha.quer_humano) return encaminhar(at, "pedido_do_cidadao", ficha);
+  if (ficha.risco_imediato) return await encaminhar(at, "risco_detectado_pela_ia", ficha, true);
+  if (ficha.quer_humano) return await encaminhar(at, "pedido_do_cidadao", ficha);
 
   // 3. Perguntas (no máximo MAX_PERGUNTAS; o contador fica no código).
   const passo = proximoPasso(ficha, at.perguntasFeitas);
@@ -101,11 +101,11 @@ export async function triar(entrada: { protocolo?: string; mensagem: string; can
     at.perguntasFeitas += 1;
     responderAssistente(at, passo.pergunta);
     registrar(at, "pergunta", { faltando: passo.faltando, pergunta: passo.pergunta });
-    atualizar(at);
+    await atualizar(at);
     return { protocolo: at.protocolo, tipo: "pergunta", texto: passo.pergunta, ficha };
   }
-  if (passo.tipo === "atendente") return encaminhar(at, passo.motivo, ficha);
+  if (passo.tipo === "atendente") return await encaminhar(at, passo.motivo, ficha);
 
   // 4. Regras fixas decidem.
-  return finalizar(at, aplicarRegras(ficha), ficha);
+  return await finalizar(at, aplicarRegras(ficha), ficha);
 }

@@ -10,7 +10,7 @@ const Patch = z.object({
 
 export async function PATCH(req: Request, ctx: { params: Promise<{ protocolo: string }> }) {
   const { protocolo } = await ctx.params;
-  const at = obter(protocolo);
+  const at = await obter(protocolo);
   if (!at) return NextResponse.json({ erro: "Protocolo não encontrado" }, { status: 404 });
   const dados = Patch.safeParse(await req.json().catch(() => null));
   if (!dados.success) return NextResponse.json({ erro: "Dados inválidos" }, { status: 400 });
@@ -18,6 +18,6 @@ export async function PATCH(req: Request, ctx: { params: Promise<{ protocolo: st
   if (status) mudarStatus(at, status);
   if (triagemCorreta !== undefined) { at.triagemCorreta = triagemCorreta; registrar(at, "triagem_avaliada", { triagemCorreta }); }
   if (satisfacao !== undefined) { at.satisfacao = satisfacao; registrar(at, "satisfacao", { satisfacao }); }
-  atualizar(at);
+  await atualizar(at);
   return NextResponse.json(at);
 }
