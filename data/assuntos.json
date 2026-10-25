@@ -1,0 +1,239 @@
+[
+  {
+    "id": "consumidor_produto_defeito",
+    "nome": "Produto com defeito ou loja que não troca",
+    "exemplos": [
+      "minha geladeira quebrou e a loja não troca",
+      "comprei celular com defeito"
+    ],
+    "competencia": "TJPA",
+    "unidades": {
+      "ananindeua": "jec_civel_ananindeua",
+      "belem": "jec_civel_belem"
+    },
+    "resolveNaHora": false,
+    "comoResolveNaHora": null,
+    "exigeValor": true,
+    "regraAdvogado": "Juizado: regra de valor (20/40 SM)",
+    "documentos": [
+      "Nota fiscal",
+      "conversas ou protocolos com a loja",
+      "RG e CPF",
+      "comprovante de residência"
+    ],
+    "sempreHumano": false,
+    "observacoes": "Confirmar os limites de 20 e 40 SM (Lei 9.099, arts. 3º e 9º).",
+    "status": "Exemplo - confirmar"
+  },
+  {
+    "id": "cobranca_indevida_servico",
+    "nome": "Cobrança indevida de luz, água, telefone ou banco",
+    "exemplos": [
+      "a conta de luz veio absurda",
+      "o banco descontou um empréstimo que eu não fiz"
+    ],
+    "competencia": "TJPA",
+    "unidades": {
+      "ananindeua": "jec_civel_ananindeua",
+      "belem": "jec_civel_belem"
+    },
+    "resolveNaHora": false,
+    "comoResolveNaHora": null,
+    "exigeValor": true,
+    "regraAdvogado": "Juizado: regra de valor (20/40 SM)",
+    "documentos": [
+      "Faturas",
+      "comprovantes de pagamento",
+      "protocolos de reclamação",
+      "RG e CPF"
+    ],
+    "sempreHumano": false,
+    "observacoes": "Indicar Procon como alternativa antes da Justiça? Confirmar.",
+    "status": "Exemplo - confirmar"
+  },
+  {
+    "id": "cobranca_de_divida",
+    "nome": "Cobrar alguém que deve dinheiro (inclui MEI cobrando cliente)",
+    "exemplos": [
+      "uma cliente do meu salão me deve 2 mil",
+      "emprestei dinheiro e ele não paga"
+    ],
+    "competencia": "TJPA",
+    "unidades": {
+      "ananindeua": "jec_civel_ananindeua",
+      "belem": "jec_civel_belem"
+    },
+    "resolveNaHora": false,
+    "comoResolveNaHora": null,
+    "exigeValor": true,
+    "regraAdvogado": "Juizado: regra de valor (20/40 SM)",
+    "documentos": [
+      "Comprovante da dívida (nota, recibo, conversas, contrato)",
+      "RG e CPF ou CNPJ",
+      "endereço do devedor"
+    ],
+    "sempreHumano": false,
+    "observacoes": "MEI, ME e EPP podem ser autoras no Juizado (Lei 9.099, art. 8º, §1º). Empresa média ou grande: Vara Cível.",
+    "status": "Exemplo - confirmar"
+  },
+  {
+    "id": "pensao_alimenticia",
+    "nome": "Pedir ou revisar pensão alimentícia",
+    "exemplos": [
+      "o pai do meu filho não paga pensão",
+      "quero aumentar a pensão"
+    ],
+    "competencia": "TJPA",
+    "unidades": {
+      "ananindeua": "vara_familia_ananindeua",
+      "belem": "vara_familia_belem"
+    },
+    "resolveNaHora": false,
+    "comoResolveNaHora": null,
+    "exigeValor": false,
+    "regraAdvogado": "Confirmar",
+    "documentos": [
+      "Certidão de nascimento da criança",
+      "RG e CPF",
+      "comprovantes de gastos"
+    ],
+    "sempreHumano": false,
+    "observacoes": "Confirmar se a pessoa pode pedir sem advogado e quando indicar a Defensoria.",
+    "status": "Exemplo - confirmar"
+  },
+  {
+    "id": "consulta_processo",
+    "nome": "Saber como está um processo",
+    "exemplos": [
+      "quero saber como tá meu processo"
+    ],
+    "competencia": "TJPA",
+    "unidades": {
+      "ananindeua": null,
+      "belem": null
+    },
+    "resolveNaHora": true,
+    "comoResolveNaHora": "Consulta pública pelo número do processo no site do TJPA (confirmar link)",
+    "exigeValor": false,
+    "regraAdvogado": "Não precisa",
+    "documentos": [
+      "Número do processo ou CPF"
+    ],
+    "sempreHumano": false,
+    "observacoes": null,
+    "status": "Exemplo - confirmar"
+  },
+  {
+    "id": "certidao",
+    "nome": "Pedir certidão (ex.: nada consta)",
+    "exemplos": [
+      "preciso de certidão pra entregar no emprego"
+    ],
+    "competencia": "TJPA",
+    "unidades": {
+      "ananindeua": null,
+      "belem": null
+    },
+    "resolveNaHora": true,
+    "comoResolveNaHora": "Emissão online no site do TJPA (confirmar link e tipos)",
+    "exigeValor": false,
+    "regraAdvogado": "Não precisa",
+    "documentos": [
+      "RG e CPF"
+    ],
+    "sempreHumano": false,
+    "observacoes": null,
+    "status": "Exemplo - confirmar"
+  },
+  {
+    "id": "intimacao_recebida",
+    "nome": "Recebeu papel da Justiça e não entendeu",
+    "exemplos": [
+      "chegou um papel do fórum, não faço ideia do que to lendo"
+    ],
+    "competencia": "TJPA",
+    "unidades": {
+      "ananindeua": null,
+      "belem": null
+    },
+    "resolveNaHora": false,
+    "comoResolveNaHora": null,
+    "exigeValor": false,
+    "regraAdvogado": "Confirmar",
+    "documentos": [
+      "O papel recebido",
+      "RG e CPF"
+    ],
+    "sempreHumano": true,
+    "observacoes": "Pode ter prazo curto: urgência alta. Vai sempre para o atendente, que explica o documento e indica a secretaria da vara do processo.",
+    "status": "Exemplo - confirmar"
+  },
+  {
+    "id": "trabalhista",
+    "nome": "Problema com patrão, demissão ou salário",
+    "exemplos": [
+      "fui demitido e não recebi a rescisão"
+    ],
+    "competencia": "Justiça do Trabalho",
+    "unidades": {
+      "ananindeua": null,
+      "belem": null
+    },
+    "resolveNaHora": false,
+    "comoResolveNaHora": null,
+    "exigeValor": false,
+    "regraAdvogado": "Não se aplica ao TJPA",
+    "documentos": [
+      "Carteira de trabalho",
+      "contracheques",
+      "termo de rescisão"
+    ],
+    "sempreHumano": false,
+    "observacoes": "Indicar órgão externo trt8.",
+    "status": "Exemplo - confirmar"
+  },
+  {
+    "id": "inss_beneficio",
+    "nome": "Benefício do INSS negado ou cortado",
+    "exemplos": [
+      "o INSS cortou meu benefício"
+    ],
+    "competencia": "Justiça Federal",
+    "unidades": {
+      "ananindeua": null,
+      "belem": null
+    },
+    "resolveNaHora": false,
+    "comoResolveNaHora": null,
+    "exigeValor": false,
+    "regraAdvogado": "Não se aplica ao TJPA",
+    "documentos": [
+      "Carta de indeferimento do INSS",
+      "RG e CPF"
+    ],
+    "sempreHumano": false,
+    "observacoes": "Indicar órgão externo jef_dpu.",
+    "status": "Exemplo - confirmar"
+  },
+  {
+    "id": "violencia_domestica",
+    "nome": "Violência ou ameaça em casa",
+    "exemplos": [
+      "meu marido me bate",
+      "ele disse que vai me matar"
+    ],
+    "competencia": "TJPA",
+    "unidades": {
+      "ananindeua": "vara_violencia_domestica_ananindeua",
+      "belem": "vara_violencia_domestica_belem"
+    },
+    "resolveNaHora": false,
+    "comoResolveNaHora": null,
+    "exigeValor": false,
+    "regraAdvogado": "Confirmar",
+    "documentos": [],
+    "sempreHumano": true,
+    "observacoes": "Sempre emergência + atendente humano. Orientar 190 e 180.",
+    "status": "Exemplo - confirmar"
+  }
+]

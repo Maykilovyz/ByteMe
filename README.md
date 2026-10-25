@@ -51,6 +51,16 @@ A chave do Gemini é criada de graça em https://aistudio.google.com (sem cartã
 | `GROQ_API_KEY` / `GROQ_MODEL` | Reserva opcional, usada se todos os modelos do Gemini falharem | vazio / `openai/gpt-oss-120b` |
 | `SALARIO_MINIMO` | Valor em reais usado na regra dos 20/40 salários mínimos | `1621` |
 | `CIDADES` | Cidades atendidas. Com uma só, a IA não pergunta a cidade | `Ananindeua` |
+| `SUPABASE_URL` / `SUPABASE_SERVICE_ROLE_KEY` | Banco de dados online (opcional). Sem elas, os atendimentos ficam num arquivo do computador | vazio |
+
+### Ligar o Supabase (necessário para publicar na internet)
+1. Crie um projeto em https://supabase.com (região São Paulo).
+2. Em **SQL Editor**, cole todo o conteúdo de [`docs/supabase-schema.sql`](docs/supabase-schema.sql) e clique em Run.
+3. Em **Project Settings > API**, copie a **Project URL** e a chave **secreta** (`service_role` ou `sb_secret_...`). Nunca use a chave pública (`anon`/`publishable`) e nunca coloque a secreta em código do navegador ou no GitHub.
+4. Cole as duas no `.env.local` (`SUPABASE_URL=` e `SUPABASE_SERVICE_ROLE_KEY=`) e reinicie o `npm run dev`. Os atendimentos passam a aparecer na tabela `atendimentos`.
+5. Na Vercel, cadastre as mesmas variáveis (e `GEMINI_API_KEY`) em Settings > Environment Variables.
+
+Os arquivos `data/*.json` (assuntos, unidades, órgãos) continuam no repositório: só os atendimentos vão para o banco.
 
 ## Scripts
 
@@ -104,7 +114,7 @@ lib/
   regras.ts          regras fixas: o que falta perguntar, 20/40 salários mínimos, empresas, órgãos externos
   respostas.ts       textos prontos para o cidadão
   orquestrador.ts    o fluxo inteiro de uma mensagem
-  store.ts           armazenamento (memória + data/runtime-db.json na versão 0)
+  store.ts           armazenamento (Supabase se houver chaves; senão memória + data/runtime-db.json)
 data/                tabela de assuntos, unidades, órgãos e frases (gerados da planilha)
 docs/                prompt, relatório de testes, esquema do Supabase
 scripts/             importar planilha, testar regras, testar frases
@@ -122,7 +132,7 @@ Os artigos foram citados pela equipe para conferência e ainda não foram valida
 
 ## Limitações conhecidas (versão 0)
 
-- **Armazenamento local:** os atendimentos ficam num arquivo do computador que roda o sistema. Para publicar na internet (Vercel), trocar `lib/store.ts` pelo Supabase ([`docs/supabase-schema.sql`](docs/supabase-schema.sql)).
+- **Armazenamento:** sem Supabase, os atendimentos ficam num arquivo do computador que roda o sistema. Com Supabase (seção acima), funcionam também na Vercel. O código do Supabase foi testado só contra um servidor de teste que imita a API, e ainda precisa de um teste real com o seu projeto.
 - **Camada grátis do Gemini é instável:** em 25/10 alguns modelos davam "alta demanda" (erro 503). Por isso o sistema troca de modelo sozinho. Para a demo, ter um vídeo de reserva gravado.
 - **Na camada grátis, o Google pode usar o conteúdo enviado** para melhorar os modelos. Mais um motivo para usar só dados fictícios. Em produção, usar um plano pago com contrato de proteção de dados.
 - Unidades, endereços e horários são exemplos. Os horários do advogado são simulados.

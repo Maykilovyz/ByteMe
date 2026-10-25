@@ -1,0 +1,44 @@
+[
+  {
+    "id": "secretaria",
+    "motivo": "Falar com a secretaria da vara",
+    "precisaHorario": false,
+    "destino": "Fila da secretaria da vara informada",
+    "status": "Exemplo - confirmar"
+  },
+  {
+    "id": "despacho_juiz",
+    "motivo": "Despacho com o juiz",
+    "precisaHorario": true,
+    "destino": "Agenda do gabinete da vara",
+    "status": "Exemplo - confirmar"
+  },
+  {
+    "id": "audiencia",
+    "motivo": "Audiência",
+    "precisaHorario": true,
+    "destino": "Agenda de audiências da vara",
+    "status": "Exemplo - confirmar"
+  },
+  {
+    "id": "certidao",
+    "motivo": "Certidão",
+    "precisaHorario": false,
+    "destino": "Emissão online ou secretaria",
+    "status": "Exemplo - confirmar"
+  },
+  {
+    "id": "suporte_sistema",
+    "motivo": "Problema de sistema (login, assinatura)",
+    "precisaHorario": false,
+    "destino": "Órgão externo suporte_sistemas_tjpa (link)",
+    "status": "Exemplo - confirmar"
+  },
+  {
+    "id": "outro",
+    "motivo": "Outro motivo",
+    "precisaHorario": false,
+    "destino": "Atendente (depois de 29/10: IA com lista própria do advogado)",
+    "status": "Exemplo - confirmar"
+  }
+]
