@@ -1,0 +1,82 @@
+[
+  {
+    "id": "jec_civel_ananindeua",
+    "nome": "Juizado Especial Cível de Ananindeua (confirmar nome oficial)",
+    "comarca": "Ananindeua",
+    "endereco": null,
+    "horario": null,
+    "canais": "Presencial; balcão virtual?",
+    "contato": null,
+    "status": "Exemplo - confirmar"
+  },
+  {
+    "id": "jec_civel_belem",
+    "nome": "Juizado Especial Cível de Belém (confirmar qual atende o bairro)",
+    "comarca": "Belém",
+    "endereco": null,
+    "horario": null,
+    "canais": null,
+    "contato": null,
+    "status": "Exemplo - confirmar"
+  },
+  {
+    "id": "vara_civel_ananindeua",
+    "nome": "Vara Cível de Ananindeua (confirmar qual)",
+    "comarca": "Ananindeua",
+    "endereco": null,
+    "horario": null,
+    "canais": null,
+    "contato": null,
+    "status": "Exemplo - confirmar"
+  },
+  {
+    "id": "vara_civel_belem",
+    "nome": "Vara Cível de Belém (confirmar qual)",
+    "comarca": "Belém",
+    "endereco": null,
+    "horario": null,
+    "canais": null,
+    "contato": null,
+    "status": "Exemplo - confirmar"
+  },
+  {
+    "id": "vara_familia_ananindeua",
+    "nome": "Vara de Família de Ananindeua (confirmar)",
+    "comarca": "Ananindeua",
+    "endereco": null,
+    "horario": null,
+    "canais": null,
+    "contato": null,
+    "status": "Exemplo - confirmar"
+  },
+  {
+    "id": "vara_familia_belem",
+    "nome": "Vara de Família de Belém (confirmar)",
+    "comarca": "Belém",
+    "endereco": null,
+    "horario": null,
+    "canais": null,
+    "contato": null,
+    "status": "Exemplo - confirmar"
+  },
+  {
+    "id": "vara_violencia_domestica_ananindeua",
+    "nome": "Vara de violência doméstica de Ananindeua (confirmar se existe ou qual vara acumula)",
+    "comarca": "Ananindeua",
+    "endereco": null,
+    "horario": null,
+    "canais": null,
+    "contato": null,
+    "status": "Exemplo - confirmar"
+  },
+  {
+    "id": "vara_violencia_domestica_belem",
+    "nome": "Vara de violência doméstica de Belém (confirmar)",
+    "comarca": "Belém",
+    "endereco": null,
+    "horario": null,
+    "canais": null,
+    "contato": null,
+    "status": "Exemplo - confirmar"
+  }
+]
