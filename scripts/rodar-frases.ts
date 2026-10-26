@@ -3,7 +3,8 @@
 // Cada frase é testada em UMA mensagem. Se a cidade da planilha não aparece na frase, ela é acrescentada ("moro em X").
 import "./carregar-env";
 import { writeFileSync } from "node:fs";
-import frases from "../data/frases-teste.json";
+import base from "../data/frases-teste.json";
+import extra from "../data/frases-extra.json";
 import { llmMontaFicha } from "../lib/llm";
 import { aplicarRegras, normalizarFicha, proximoPasso } from "../lib/regras";
 import { pediuHumano, riscoPorPalavras, tentouInstruirIA } from "../lib/risco";
@@ -14,6 +15,9 @@ const dormir = (ms: number) => new Promise((r) => setTimeout(r, ms));
 const norm = (t: string) => t.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
 
 type Linha = { n: number; frase: string; assuntoEsp: string; assuntoObt: string; juizoEsp: string; juizoObt: string; riscoEsp: boolean; riscoObt: boolean; okAssunto: boolean; okJuizo: boolean; ms: number; provedor: string; obs: string };
+
+// FRASES=base roda só as 19 da planilha; FRASES=extra só as novas (n 101+); padrão: todas.
+const frases = process.env.FRASES === "base" ? base : process.env.FRASES === "extra" ? extra : [...base, ...extra];
 
 async function main() {
   console.log(`Modelos (em ordem): ${GEMINI_MODELS.join(" > ")} · cidades: ${CIDADES.join(", ")} · ${frases.length} frases\n`);
