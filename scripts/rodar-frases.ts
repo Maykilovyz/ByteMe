@@ -6,7 +6,7 @@ import { writeFileSync } from "node:fs";
 import frases from "../data/frases-teste.json";
 import { llmMontaFicha } from "../lib/llm";
 import { aplicarRegras, normalizarFicha, proximoPasso } from "../lib/regras";
-import { pediuHumano, riscoPorPalavras } from "../lib/risco";
+import { pediuHumano, riscoPorPalavras, tentouInstruirIA } from "../lib/risco";
 import { CIDADES, GEMINI_MODELS } from "../lib/config";
 
 const ESPERA_MS = Number(process.env.ESPERA_MS || 7000); // camada grátis: ~10 pedidos por minuto
@@ -26,6 +26,7 @@ async function main() {
     try {
       if (pediuHumano(msg)) { juizoObt = "Atendente"; obs = "pedido de humano (sem IA)"; }
       else if (riscoPorPalavras(msg)) { juizoObt = "Emergência + atendente"; riscoObt = true; obs = "risco por palavras (sem IA)"; }
+      else if (tentouInstruirIA(msg)) { juizoObt = "Atendente"; assuntoObt = "indefinido"; obs = "ordem ao assistente (sem IA)"; }
       if (juizoObt === "-" || riscoObt) {
         const r = await llmMontaFicha(hist, 0);
         ms = r.ms;
