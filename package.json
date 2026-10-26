@@ -9,7 +9,8 @@
     "start": "next start",
     "importar-planilha": "node scripts/importar-planilha.mjs planilha/tabela-assuntos-amyr.xlsx",
     "testar-frases": "tsx scripts/rodar-frases.ts",
-    "testar-regras": "tsx scripts/testar-regras.ts"
+    "testar-regras": "tsx scripts/testar-regras.ts",
+    "diagnostico-tempo": "tsx scripts/diagnostico-tempo.ts"
   },
   "dependencies": {
     "next": "16.4.3",

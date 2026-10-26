@@ -5,6 +5,7 @@
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { MINUTOS_POR_ATENDIMENTO } from "./config";
+import { medir } from "./tempo";
 import type { Atendimento, Status } from "./tipos";
 
 type Banco = { atendimentos: Record<string, Atendimento>; contadorSenha: number; contadorProtocolo: number };
@@ -33,7 +34,7 @@ async function sb(caminho: string, init: RequestInit = {}): Promise<Response> {
   const url = `${process.env.SUPABASE_URL!.replace(/\/$/, "")}/rest/v1/${caminho}`;
   const headers: Record<string, string> = { apikey: chave, "Content-Type": "application/json", ...(init.headers as Record<string, string>) };
   if (chave.startsWith("eyJ")) headers.Authorization = `Bearer ${chave}`; // chaves antigas (JWT); as novas (sb_secret_) só usam apikey
-  const r = await fetch(url, { ...init, headers, cache: "no-store", signal: AbortSignal.timeout(10_000) });
+  const r = await medir(`supabase ${init.method ?? "GET"} ${caminho.split("?")[0]}`, () => fetch(url, { ...init, headers, cache: "no-store", signal: AbortSignal.timeout(10_000) }));
   if (!r.ok) throw new Error(`Supabase ${r.status} em ${caminho.split("?")[0]}: ${(await r.text()).slice(0, 200)}`);
   return r;
 }

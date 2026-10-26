@@ -2,6 +2,7 @@
 import { z } from "zod";
 import { GEMINI_MODELS, GROQ_MODEL, TIMEOUT_IA_MS } from "./config";
 import { montarPrompt } from "./prompt";
+import { medir } from "./tempo";
 import type { Mensagem } from "./tipos";
 
 export const FichaSchema = z.object({
@@ -24,6 +25,18 @@ export type ResultadoLLM = { ficha: Ficha; provedor: string; bruto: string; ms: 
 /** Erro que vale a pena tentar em outro modelo: sobrecarga (503), limite (429), demora ou erro do servidor. */
 class ErroTemporario extends Error {}
 
+/** Modelos que acabaram de recusar por limite (429): pulados até a hora indicada, para não gastar uma viagem de rede por mensagem. */
+const g = globalThis as unknown as { __bloqueadosGemini?: Map<string, number> };
+const bloqueados = () => (g.__bloqueadosGemini ??= new Map<string, number>());
+
+/** Segundos de espera pedidos pelo Google num erro 429 ("retryDelay": "25400s"); sem a informação, 30 s. */
+function esperaDoLimite(corpo: unknown): number {
+  const detalhes = (corpo as { error?: { details?: { retryDelay?: string }[] } })?.error?.details ?? [];
+  const texto = detalhes.map((d) => d.retryDelay).find(Boolean);
+  const seg = texto ? parseFloat(texto) : NaN;
+  return Number.isFinite(seg) ? Math.min(Math.max(seg, 5), 6 * 3600) : 30;
+}
+
 function transcricao(historico: Mensagem[]): string {
   return historico.map((m) => `${m.papel === "cidadao" ? "Cidadão" : "Assistente"}: ${m.texto}`).join("\n");
 }
@@ -41,7 +54,7 @@ async function chamarGemini(modelo: string, system: string, usuario: string): Pr
   const chave = process.env.GEMINI_API_KEY;
   if (!chave) throw new Error("GEMINI_API_KEY não configurada");
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelo}:generateContent`;
-  const resp = await fetch(url, {
+  const resp = await medir(`gemini ${modelo}`, () => fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json", "x-goog-api-key": chave },
     body: JSON.stringify({
@@ -50,8 +63,13 @@ async function chamarGemini(modelo: string, system: string, usuario: string): Pr
       generationConfig: { responseMimeType: "application/json" },
     }),
     signal: AbortSignal.timeout(TIMEOUT_IA_MS),
-  }).catch((e) => { throw new ErroTemporario(`${modelo}: sem resposta (${String(e).slice(0, 80)})`); });
-  if (resp.status === 429 || resp.status >= 500) throw new ErroTemporario(`${modelo}: HTTP ${resp.status}`);
+  })).catch((e) => { throw new ErroTemporario(`${modelo}: sem resposta (${String(e).slice(0, 80)})`); });
+  if (resp.status === 429) {
+    const seg = esperaDoLimite(await resp.json().catch(() => null));
+    bloqueados().set(modelo, Date.now() + seg * 1000);
+    throw new ErroTemporario(`${modelo}: limite de uso (HTTP 429), pulado por ${Math.round(seg)} s`);
+  }
+  if (resp.status >= 500) throw new ErroTemporario(`${modelo}: HTTP ${resp.status}`);
   const corpo = await resp.json();
   if (!resp.ok) throw new Error(`Gemini ${modelo} ${resp.status}: ${JSON.stringify(corpo).slice(0, 300)}`);
   const texto = corpo?.candidates?.[0]?.content?.parts?.map((p: { text?: string }) => p.text ?? "").join("") ?? "";
@@ -98,6 +116,7 @@ export async function llmMontaFicha(historico: Mensagem[], perguntasFeitas: numb
   const t0 = Date.now();
   const erros: string[] = [];
   for (const modelo of GEMINI_MODELS) {
+    if ((bloqueados().get(modelo) ?? 0) > Date.now()) { erros.push(`${modelo}: pulado (limite de uso)`); continue; }
     try {
       const r = await tentar((s, u) => chamarGemini(modelo, s, u), modelo, system, usuario);
       return { ...r, provedor: `gemini:${modelo}`, ms: Date.now() - t0 };
