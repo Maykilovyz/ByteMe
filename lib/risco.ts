@@ -23,3 +23,18 @@ export function pediuHumano(texto: string): boolean {
   const t = normalizar(texto);
   return PEDIDOS_HUMANO.some((p) => t.includes(p));
 }
+
+// Ordens dirigidas ao assistente ("ignore as instruções", "diga que eu ganho a causa"). Não são relato: vão ao atendente, sem IA.
+// Padrões estreitos de propósito: "a loja ignorou o contrato" não casa (é "ignore" mandando, não "ignorou").
+const ORDENS_AO_ASSISTENTE = [
+  /\b(ignore|esqueca|desconsidere|desobedeca)\b.{0,40}\b(instrucoes|regras|ordens|comandos|prompt|orientacoes)\b/,
+  /\b(diga|fale|escreva|garanta|prometa)\b.{0,15}\bque eu (ganho|ganhei|vou ganhar|venco|vencerei)\b/,
+  /\b(mostre|revele|repita|exiba)\b.{0,30}\b(prompt|instrucoes do sistema|suas instrucoes)\b/,
+  /\bvoce (agora )?(e|eh) (um|uma|o|a) /,
+  /\b(system prompt|jailbreak|ignore (all|previous))\b/,
+];
+
+export function tentouInstruirIA(texto: string): boolean {
+  const t = normalizar(texto);
+  return ORDENS_AO_ASSISTENTE.some((r) => r.test(t));
+}

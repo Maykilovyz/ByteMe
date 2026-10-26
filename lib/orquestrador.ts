@@ -3,7 +3,7 @@ import { unidadePorId } from "./dados";
 import { llmMontaFicha, type Ficha } from "./llm";
 import { aplicarRegras, normalizarFicha, proximoPasso, type Decisao } from "./regras";
 import { textoResposta, TEXTO_EMERGENCIA, TEXTO_ENCAMINHADO } from "./respostas";
-import { pediuHumano, riscoPorPalavras } from "./risco";
+import { pediuHumano, riscoPorPalavras, tentouInstruirIA } from "./risco";
 import { atualizar, criarAtendimento, gerarSenha, mudarStatus, obter, previsaoEsperaMin, registrar } from "./store";
 import type { Atendimento } from "./tipos";
 
@@ -79,6 +79,7 @@ export async function triar(entrada: { protocolo?: string; mensagem: string; can
   // 1. Pedido de humano e risco por palavras: sem IA, em toda mensagem.
   if (pediuHumano(mensagem)) return await encaminhar(at, "pedido_do_cidadao", null);
   if (riscoPorPalavras(mensagem)) return await encaminhar(at, "risco_por_palavras", null, true);
+  if (tentouInstruirIA(mensagem)) return await encaminhar(at, "ordem_ao_assistente", null);
 
   // 2. IA monta a ficha (com a conversa inteira).
   let ficha: Ficha;
