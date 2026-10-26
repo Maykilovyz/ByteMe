@@ -15,7 +15,7 @@
     "cidade": "Ananindeua",
     "assuntoEsperado": "intimacao_recebida",
     "juizoEsperado": "Atendente",
-    "advogadoEsperado": "Confirmar",
+    "advogadoEsperado": "Sim",
     "riscoEsperado": false,
     "oQueTesta": "Frase real do teste com usuário"
   },
@@ -75,9 +75,9 @@
     "cidade": "Ananindeua",
     "assuntoEsperado": "pensao_alimenticia",
     "juizoEsperado": "vara_familia_ananindeua",
-    "advogadoEsperado": "Confirmar",
+    "advogadoEsperado": "Sim",
     "riscoEsperado": false,
-    "oQueTesta": "Família, sem valor"
+    "oQueTesta": "Família, sem valor (exige advogado ou Defensoria)"
   },
   {
     "n": 9,
@@ -111,7 +111,7 @@
   },
   {
     "n": 12,
-    "frase": "o inss cortou meu benefício",
+    "frase": "o INSS cortou meu benefício",
     "cidade": "Belém",
     "assuntoEsperado": "inss_beneficio",
     "juizoEsperado": "Órgão externo: jef_dpu",
@@ -125,7 +125,7 @@
     "cidade": "Ananindeua",
     "assuntoEsperado": "violencia_domestica",
     "juizoEsperado": "Emergência + atendente",
-    "advogadoEsperado": "Confirmar",
+    "advogadoEsperado": "Não",
     "riscoEsperado": true,
     "oQueTesta": "Risco imediato"
   },
@@ -188,5 +188,125 @@
     "advogadoEsperado": "Não",
     "riscoEsperado": false,
     "oQueTesta": "Cidade fora da demo"
+  },
+  {
+    "n": 20,
+    "frase": "quero me separar do meu marido mas ele não quer sair de casa nem assinar o divórcio",
+    "cidade": "Ananindeua",
+    "assuntoEsperado": "divorcio_uniao_estavel",
+    "juizoEsperado": "vara_familia_ananindeua",
+    "advogadoEsperado": "Sim",
+    "riscoEsperado": false,
+    "oQueTesta": "Novo assunto: Divórcio litigioso em Ananindeua"
+  },
+  {
+    "n": 21,
+    "frase": "a mãe do meu filho não deixa eu ver o menino no dia dos pais",
+    "cidade": "Belém",
+    "assuntoEsperado": "guarda_e_visitas",
+    "juizoEsperado": "vara_familia_belem",
+    "advogadoEsperado": "Sim",
+    "riscoEsperado": false,
+    "oQueTesta": "Novo assunto: Regulamentação de visitas"
+  },
+  {
+    "n": 22,
+    "frase": "engravidei e o pai da criança sumiu e não quer registrar o bebê, quero pedir DNA",
+    "cidade": "Ananindeua",
+    "assuntoEsperado": "reconhecimento_paternidade",
+    "juizoEsperado": "vara_familia_ananindeua",
+    "advogadoEsperado": "Sim",
+    "riscoEsperado": false,
+    "oQueTesta": "Novo assunto: Investigação de paternidade / DNA"
+  },
+  {
+    "n": 23,
+    "frase": "minha mãe morreu ano passado e deixou uma casa em Ananindeua, meus irmãos querem vender",
+    "cidade": "Ananindeua",
+    "assuntoEsperado": "inventario_e_heranca",
+    "juizoEsperado": "vara_civel_ananindeua",
+    "advogadoEsperado": "Sim",
+    "riscoEsperado": false,
+    "oQueTesta": "Novo assunto: Inventário e partilha de bens"
+  },
+  {
+    "n": 24,
+    "frase": "fui fazer um crediário e descobri que meu nome ta sujo no Serasa por uma dívida de 800 reais que nunca fiz",
+    "cidade": "Ananindeua",
+    "assuntoEsperado": "nome_sujo_indevido",
+    "juizoEsperado": "jec_civel_ananindeua",
+    "advogadoEsperado": "Não",
+    "riscoEsperado": false,
+    "oQueTesta": "Novo assunto: Negativação indevida abaixo de 20 SM"
+  },
+  {
+    "n": 25,
+    "frase": "aluguei uma kitnet e o inquilino ta devendo 5 meses de aluguel e não entrega a chave",
+    "cidade": "Belém",
+    "assuntoEsperado": "aluguel_e_despejo",
+    "juizoEsperado": "vara_civel_belem",
+    "advogadoEsperado": "Sim",
+    "riscoEsperado": false,
+    "oQueTesta": "Novo assunto: Despejo e cobrança de aluguel"
+  },
+  {
+    "n": 26,
+    "frase": "um carro avançou a preferencial em Ananindeua, bateu na minha moto e o conserto ficou em 3500 reais",
+    "cidade": "Ananindeua",
+    "assuntoEsperado": "acidente_de_transito",
+    "juizoEsperado": "jec_civel_ananindeua",
+    "advogadoEsperado": "Não",
+    "riscoEsperado": false,
+    "oQueTesta": "Novo assunto: Acidente de trânsito até 20 SM"
+  },
+  {
+    "n": 27,
+    "frase": "meu plano de saúde negou a cirurgia do coração da minha mãe e o médico disse que é urgente",
+    "cidade": "Belém",
+    "assuntoEsperado": "plano_de_saude_negativa",
+    "juizoEsperado": "jec_civel_belem",
+    "advogadoEsperado": "Não",
+    "riscoEsperado": false,
+    "oQueTesta": "Novo assunto: Negativa de plano de saúde"
+  },
+  {
+    "n": 28,
+    "frase": "meu ex disse que se eu pedir pensão pra nossa filha ele vai tocar fogo na minha casa comigo dentro",
+    "cidade": "Ananindeua",
+    "assuntoEsperado": "violencia_domestica",
+    "juizoEsperado": "Emergência + atendente",
+    "advogadoEsperado": "Não",
+    "riscoEsperado": true,
+    "oQueTesta": "Caso difícil: mistura pensão alimentícia com ameaça de morte (priorizar emergência)"
+  },
+  {
+    "n": 29,
+    "frase": "trabalhei 3 anos numa padaria sem carteira assinada e o dono me mandou embora sem pagar nada",
+    "cidade": "Belém",
+    "assuntoEsperado": "trabalhista",
+    "juizoEsperado": "Órgão externo: trt8",
+    "advogadoEsperado": "Não se aplica",
+    "riscoEsperado": false,
+    "oQueTesta": "Trabalhista informal (Justiça do Trabalho)"
+  },
+  {
+    "n": 30,
+    "frase": "o INSS negou o benefício do meu filho que tem autismo, o que eu faço?",
+    "cidade": "Ananindeua",
+    "assuntoEsperado": "inss_beneficio",
+    "juizoEsperado": "Órgão externo: jef_dpu",
+    "advogadoEsperado": "Não se aplica",
+    "riscoEsperado": false,
+    "oQueTesta": "BPC/LOAS negado pelo INSS (Justiça Federal)"
+  },
+  {
+    "n": 31,
+    "frase": "bateram no meu caminhão e o prejuízo do conserto deu 85 mil reais",
+    "cidade": "Ananindeua",
+    "assuntoEsperado": "acidente_de_transito",
+    "juizoEsperado": "vara_civel_ananindeua",
+    "advogadoEsperado": "Sim",
+    "riscoEsperado": false,
+    "oQueTesta": "Acidente de trânsito acima de 40 SM: vai para Vara Cível com advogado"
   }
 ]

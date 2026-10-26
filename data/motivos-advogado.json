@@ -3,42 +3,42 @@
     "id": "secretaria",
     "motivo": "Falar com a secretaria da vara",
     "precisaHorario": false,
-    "destino": "Fila da secretaria da vara informada",
-    "status": "Exemplo - confirmar"
+    "destino": "Fila da secretaria da vara informada (presencial ou Balcão Virtual)",
+    "status": "Revisar com Amyr"
   },
   {
     "id": "despacho_juiz",
     "motivo": "Despacho com o juiz",
     "precisaHorario": true,
-    "destino": "Agenda do gabinete da vara",
-    "status": "Exemplo - confirmar"
+    "destino": "Agenda do gabinete da vara (atendimento mediante agendamento ou urgência)",
+    "status": "Revisar com Amyr"
   },
   {
     "id": "audiencia",
     "motivo": "Audiência",
     "precisaHorario": true,
-    "destino": "Agenda de audiências da vara",
-    "status": "Exemplo - confirmar"
+    "destino": "Agenda de audiências da vara (sala de audiência presencial ou link de videoconferência)",
+    "status": "Revisar com Amyr"
   },
   {
     "id": "certidao",
     "motivo": "Certidão",
     "precisaHorario": false,
-    "destino": "Emissão online ou secretaria",
-    "status": "Exemplo - confirmar"
+    "destino": "Emissão online gratuita no Portal de Certidões do TJPA ou secretaria da vara",
+    "status": "Revisar com Amyr"
   },
   {
     "id": "suporte_sistema",
-    "motivo": "Problema de sistema (login, assinatura)",
+    "motivo": "Problema de sistema (login, assinatura, PJe)",
     "precisaHorario": false,
-    "destino": "Órgão externo suporte_sistemas_tjpa (link)",
-    "status": "Exemplo - confirmar"
+    "destino": "Órgão externo suporte_sistemas_tjpa (Central de TI do TJPA)",
+    "status": "Revisar com Amyr"
   },
   {
     "id": "outro",
     "motivo": "Outro motivo",
     "precisaHorario": false,
-    "destino": "Atendente (depois de 29/10: IA com lista própria do advogado)",
-    "status": "Exemplo - confirmar"
+    "destino": "Atendente humano da recepção / triagem forense",
+    "status": "Revisar com Amyr"
   }
 ]

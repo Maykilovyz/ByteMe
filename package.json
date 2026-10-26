@@ -7,7 +7,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "importar-planilha": "node scripts/importar-planilha.mjs planilha/tabela-assuntos-amyr.xlsx",
+    "importar-planilha": "node scripts/importar-planilha.mjs",
     "testar-frases": "tsx scripts/rodar-frases.ts",
     "testar-regras": "tsx scripts/testar-regras.ts",
     "diagnostico-tempo": "tsx scripts/diagnostico-tempo.ts"

@@ -1,82 +1,82 @@
 [
   {
     "id": "jec_civel_ananindeua",
-    "nome": "Juizado Especial Cível de Ananindeua (confirmar nome oficial)",
+    "nome": "Juizado Especial Cível de Ananindeua (1ª, 2ª e 3ª Varas)",
     "comarca": "Ananindeua",
-    "endereco": null,
-    "horario": null,
-    "canais": "Presencial; balcão virtual?",
-    "contato": null,
-    "status": "Exemplo - confirmar"
-  },
-  {
-    "id": "jec_civel_belem",
-    "nome": "Juizado Especial Cível de Belém (confirmar qual atende o bairro)",
-    "comarca": "Belém",
-    "endereco": null,
-    "horario": null,
-    "canais": null,
-    "contato": null,
-    "status": "Exemplo - confirmar"
+    "endereco": "Conjunto Cidade Nova VIII, Estrada da Providência, s/n (Complexo Cohen, entre WE-30 e WE-35), Bairro Coqueiro, Ananindeua/PA (1ª e 2ª Varas) / Rua Itabira, nº 1989, Bairro Paar (3ª Vara)",
+    "horario": "Segunda a sexta-feira, das 08h às 14h",
+    "canais": "Presencial e Balcão Virtual",
+    "contato": "https://www.tjpa.jus.br (Menu Balcão Virtual / Juizados)",
+    "status": "Revisar com Amyr"
   },
   {
     "id": "vara_civel_ananindeua",
-    "nome": "Vara Cível de Ananindeua (confirmar qual)",
+    "nome": "Vara Cível e Empresarial de Ananindeua",
     "comarca": "Ananindeua",
-    "endereco": null,
-    "horario": null,
-    "canais": null,
-    "contato": null,
-    "status": "Exemplo - confirmar"
-  },
-  {
-    "id": "vara_civel_belem",
-    "nome": "Vara Cível de Belém (confirmar qual)",
-    "comarca": "Belém",
-    "endereco": null,
-    "horario": null,
-    "canais": null,
-    "contato": null,
-    "status": "Exemplo - confirmar"
+    "endereco": "Fórum de Ananindeua — Av. Cláudio Saunders (antiga Estrada do Maguari), nº 193, Centro, Ananindeua/PA, CEP 67030-390",
+    "horario": "Segunda a sexta-feira, das 08h às 14h",
+    "canais": "Presencial, PJe e Balcão Virtual",
+    "contato": "https://www.tjpa.jus.br",
+    "status": "Revisar com Amyr"
   },
   {
     "id": "vara_familia_ananindeua",
-    "nome": "Vara de Família de Ananindeua (confirmar)",
+    "nome": "Vara de Família de Ananindeua",
     "comarca": "Ananindeua",
-    "endereco": null,
-    "horario": null,
-    "canais": null,
-    "contato": null,
-    "status": "Exemplo - confirmar"
-  },
-  {
-    "id": "vara_familia_belem",
-    "nome": "Vara de Família de Belém (confirmar)",
-    "comarca": "Belém",
-    "endereco": null,
-    "horario": null,
-    "canais": null,
-    "contato": null,
-    "status": "Exemplo - confirmar"
+    "endereco": "Fórum de Ananindeua — Av. Cláudio Saunders, nº 193, Centro, Ananindeua/PA, CEP 67030-390",
+    "horario": "Segunda a sexta-feira, das 08h às 14h",
+    "canais": "Presencial, PJe e Balcão Virtual",
+    "contato": "https://www.tjpa.jus.br",
+    "status": "Revisar com Amyr"
   },
   {
     "id": "vara_violencia_domestica_ananindeua",
-    "nome": "Vara de violência doméstica de Ananindeua (confirmar se existe ou qual vara acumula)",
+    "nome": "Vara de Violência Doméstica e Familiar contra a Mulher de Ananindeua",
     "comarca": "Ananindeua",
-    "endereco": null,
-    "horario": null,
-    "canais": null,
-    "contato": null,
-    "status": "Exemplo - confirmar"
+    "endereco": "Fórum de Ananindeua — Av. Cláudio Saunders, nº 193, Centro, Ananindeua/PA (atendimento integrado ao Pró-Paz Mulher / Cidade Nova V, WE-31, nº 1112)",
+    "horario": "Segunda a sexta-feira, das 08h às 14h (Plantão 24h para medidas urgentes)",
+    "canais": "Presencial e Balcão Virtual",
+    "contato": "https://www.tjpa.jus.br | Emergência: 190 / 180",
+    "status": "Verificar dado"
+  },
+  {
+    "id": "jec_civel_belem",
+    "nome": "Juizado Especial Cível de Belém",
+    "comarca": "Belém",
+    "endereco": "Fórum Cível de Belém (Rua Cel. Fontoura, s/n, Cidade Velha) e unidades descentralizadas conforme o bairro (UNAMA, Nazaré, Icoaraci, etc.)",
+    "horario": "Segunda a sexta-feira, das 08h às 14h",
+    "canais": "Presencial e Balcão Virtual",
+    "contato": "https://www.tjpa.jus.br (Menu Balcão Virtual / Juizados)",
+    "status": "Verificar dado"
+  },
+  {
+    "id": "vara_civel_belem",
+    "nome": "Vara Cível e Empresarial de Belém",
+    "comarca": "Belém",
+    "endereco": "Fórum Cível da Capital — Rua Cel. Fontoura, s/n, Bairro Cidade Velha, Belém/PA",
+    "horario": "Segunda a sexta-feira, das 08h às 14h",
+    "canais": "Presencial, PJe e Balcão Virtual",
+    "contato": "https://www.tjpa.jus.br",
+    "status": "Revisar com Amyr"
+  },
+  {
+    "id": "vara_familia_belem",
+    "nome": "Vara de Família de Belém",
+    "comarca": "Belém",
+    "endereco": "Fórum Cível da Capital — Rua Cel. Fontoura, s/n, Bairro Cidade Velha, Belém/PA",
+    "horario": "Segunda a sexta-feira, das 08h às 14h",
+    "canais": "Presencial, PJe e Balcão Virtual",
+    "contato": "https://www.tjpa.jus.br",
+    "status": "Revisar com Amyr"
   },
   {
     "id": "vara_violencia_domestica_belem",
-    "nome": "Vara de violência doméstica de Belém (confirmar)",
+    "nome": "Vara de Violência Doméstica e Familiar contra a Mulher de Belém",
     "comarca": "Belém",
-    "endereco": null,
-    "horario": null,
-    "canais": null,
-    "contato": null,
-    "status": "Exemplo - confirmar"
+    "endereco": "Fórum Criminal / Cível de Belém — Rua Cel. Fontoura / Rua Tomázia Perdigão, Cidade Velha, Belém/PA",
+    "horario": "Segunda a sexta-feira, das 08h às 14h (Plantão 24h para medidas urgentes)",
+    "canais": "Presencial e Balcão Virtual",
+    "contato": "https://www.tjpa.jus.br | Emergência: 190 / 180",
+    "status": "Verificar dado"
   }
 ]

@@ -1,11 +1,39 @@
 [
   {
+    "id": "violencia_domestica",
+    "nome": "Violência doméstica, agressão ou ameaça em casa",
+    "exemplos": [
+      "meu marido me bate",
+      "ele disse que vai me matar se eu sair de casa",
+      "meu ex não aceita o fim do relacionamento e está me perseguindo",
+      "quero pedir uma medida protetiva urgente"
+    ],
+    "competencia": "TJPA",
+    "unidades": {
+      "ananindeua": "vara_violencia_domestica_ananindeua",
+      "belem": "vara_violencia_domestica_belem"
+    },
+    "resolveNaHora": false,
+    "comoResolveNaHora": null,
+    "exigeValor": false,
+    "regraAdvogado": "Não precisa",
+    "documentos": [
+      "Documento de identificação (RG ou CPF, se tiver em mãos — a falta de documentos nunca impede o atendimento de urgência)",
+      "Boletim de Ocorrência (se já tiver registrado)",
+      "prints de ameaças, fotos de lesões ou nome de testemunhas"
+    ],
+    "sempreHumano": true,
+    "observacoes": "Prioridade máxima: sempre_humano = S + alerta de emergência (190 Polícia Militar / 180 Central da Mulher / 192 SAMU / DEAM). Conforme a Lei Maria da Penha (Lei 11.340/06, arts. 19 e 27), o pedido inicial de Medida Protetiva de Urgência pode ser feito diretamente pela ofendida sem advogado; para os demais atos processuais, será acompanhada pela Defensoria Pública ou advogado.",
+    "status": "Revisar com Amyr"
+  },
+  {
     "id": "consumidor_produto_defeito",
-    "nome": "Produto com defeito, loja que não troca ou atraso na entrega (inclui imóvel na planta)",
+    "nome": "Produto com defeito ou loja que não troca",
     "exemplos": [
       "minha geladeira quebrou e a loja não troca",
       "comprei celular com defeito",
-      "comprei apartamento na planta e a construtora atrasou a entrega"
+      "comprei um móvel na internet e nunca entregaram",
+      "a assistência técnica não conserta minha tv"
     ],
     "competencia": "TJPA",
     "unidades": {
@@ -17,21 +45,24 @@
     "exigeValor": true,
     "regraAdvogado": "Juizado: regra de valor (20/40 SM)",
     "documentos": [
-      "Nota fiscal",
-      "conversas ou protocolos com a loja",
+      "Nota fiscal ou comprovante de compra",
+      "conversas, e-mails ou números de protocolo com a loja",
+      "fotos ou laudo do defeito (se tiver)",
       "RG e CPF",
-      "comprovante de residência"
+      "comprovante de residência atualizado"
     ],
     "sempreHumano": false,
-    "observacoes": "Confirmar os limites de 20 e 40 SM (Lei 9.099, arts. 3º e 9º). PROVISÓRIO: imóvel na planta com atraso entra aqui até a Amyr decidir se vira assunto próprio.",
-    "status": "Exemplo - confirmar"
+    "observacoes": "Base legal confirmada: Lei 9.099/95, art. 3º, I (competência do JEC até 40 SM) e art. 9º (até 20 SM sem advogado; de 20 a 40 SM com advogado em 1ª instância). Acima de 40 SM: Vara Cível com advogado (CPC, art. 103). Para recurso inominado no JEC, exige-se advogado (art. 41, §2º).",
+    "status": "Revisar com Amyr"
   },
   {
     "id": "cobranca_indevida_servico",
     "nome": "Cobrança indevida de luz, água, telefone ou banco",
     "exemplos": [
       "a conta de luz veio absurda",
-      "o banco descontou um empréstimo que eu não fiz"
+      "o banco descontou um empréstimo que eu não fiz",
+      "estão cobrando tarifa no meu cartão sem eu pedir",
+      "cortaram minha água mesmo com a conta paga"
     ],
     "competencia": "TJPA",
     "unidades": {
@@ -43,21 +74,79 @@
     "exigeValor": true,
     "regraAdvogado": "Juizado: regra de valor (20/40 SM)",
     "documentos": [
-      "Faturas",
+      "Faturas ou extratos bancários com a cobrança indevida",
       "comprovantes de pagamento",
-      "protocolos de reclamação",
-      "RG e CPF"
+      "números de protocolo de reclamação na empresa",
+      "RG e CPF",
+      "comprovante de residência"
     ],
     "sempreHumano": false,
-    "observacoes": "Indicar Procon como alternativa antes da Justiça? Confirmar.",
-    "status": "Exemplo - confirmar"
+    "observacoes": "Lei 9.099/95, arts. 3º, I e 9º. Pode-se informar ao cidadão que ele também tem a opção de tentar acordo administrativo gratuito pelo Procon Pará (151) ou Consumidor.gov.br, sem prejuízo de ir direto ao Juizado. Se envolver a Caixa Econômica Federal (empresa pública federal), a competência passa a ser da Justiça Federal (JEF, art. 109, I da CF).",
+    "status": "Revisar com Amyr"
+  },
+  {
+    "id": "nome_sujo_indevido",
+    "nome": "Nome sujo (SPC ou Serasa) por dívida que já pagou ou nunca fez",
+    "exemplos": [
+      "colocaram meu nome no Serasa por uma conta que eu já paguei",
+      "sujaram meu CPF numa loja onde nunca comprei",
+      "descobri que abriram conta no meu nome e negativaram meu CPF"
+    ],
+    "competencia": "TJPA",
+    "unidades": {
+      "ananindeua": "jec_civel_ananindeua",
+      "belem": "jec_civel_belem"
+    },
+    "resolveNaHora": false,
+    "comoResolveNaHora": null,
+    "exigeValor": true,
+    "regraAdvogado": "Juizado: regra de valor (20/40 SM)",
+    "documentos": [
+      "Comprovante ou print da negativação no SPC/Serasa (com nome da empresa, valor e data)",
+      "comprovante de pagamento da conta (se já pagou)",
+      "protocolo de reclamação ou Boletim de Ocorrência (em caso de golpe/fraude)",
+      "RG, CPF e comprovante de residência"
+    ],
+    "sempreHumano": false,
+    "observacoes": "Competência do JEC Cível até 40 SM (Lei 9.099/95, arts. 3º, I e 9º). Se o pedido de cancelamento do débito somado à indenização por danos morais for de até 20 SM, não precisa de advogado em 1ª instância.",
+    "status": "Revisar com Amyr"
+  },
+  {
+    "id": "plano_de_saude_negativa",
+    "nome": "Plano de saúde negou exame, cirurgia, internação ou remédio",
+    "exemplos": [
+      "meu plano de saúde negou uma cirurgia urgente que o médico pediu",
+      "o convênio aumentou a mensalidade de forma abusiva",
+      "o plano não quer liberar a terapia do meu filho autista"
+    ],
+    "competencia": "TJPA",
+    "unidades": {
+      "ananindeua": "jec_civel_ananindeua",
+      "belem": "jec_civel_belem"
+    },
+    "resolveNaHora": false,
+    "comoResolveNaHora": null,
+    "exigeValor": true,
+    "regraAdvogado": "Juizado: regra de valor (20/40 SM)",
+    "documentos": [
+      "Laudo médico detalhado indicando a urgência do tratamento ou cirurgia",
+      "negativa por escrito do plano de saúde (ou número de protocolo)",
+      "carteirinha e contrato do plano",
+      "comprovantes de pagamento das últimas mensalidades",
+      "RG, CPF e comprovante de residência"
+    ],
+    "sempreHumano": false,
+    "observacoes": "Relações com planos de saúde privados são de consumo (Súmula 608 STJ) e cabem no JEC até 40 SM (Lei 9.099/95, arts. 3º, I e 9º). Atenção: se o pedido for contra o SUS (Estado do Pará ou Município de Belém/Ananindeua), é causa de Fazenda Pública (excluída do JEC Cível comum, art. 3º, §2º), devendo ir ao Juizado da Fazenda Pública ou Defensoria Pública.",
+    "status": "Revisar com Amyr"
   },
   {
     "id": "cobranca_de_divida",
     "nome": "Cobrar alguém que deve dinheiro (inclui MEI cobrando cliente)",
     "exemplos": [
       "uma cliente do meu salão me deve 2 mil",
-      "emprestei dinheiro e ele não paga"
+      "emprestei dinheiro e ele não paga",
+      "fiz um serviço de pedreiro e o dono da obra não me pagou",
+      "venderam fiado na minha lojinha e sumiram"
     ],
     "competencia": "TJPA",
     "unidades": {
@@ -69,20 +158,76 @@
     "exigeValor": true,
     "regraAdvogado": "Juizado: regra de valor (20/40 SM)",
     "documentos": [
-      "Comprovante da dívida (nota, recibo, conversas, contrato)",
-      "RG e CPF ou CNPJ",
-      "endereço do devedor"
+      "Comprovante da dívida (nota promissória, cheque, recibo, contrato, prints de conversas de WhatsApp ou comprovante de Pix)",
+      "RG e CPF (e Certificado MEI/CNPJ se for empresa)",
+      "nome completo e endereço com CEP de quem deve"
     ],
     "sempreHumano": false,
-    "observacoes": "MEI, ME e EPP podem ser autoras no Juizado (Lei 9.099, art. 8º, §1º). Empresa média ou grande: Vara Cível.",
-    "status": "Exemplo - confirmar"
+    "observacoes": "Base legal confirmada: MEI, Microempresas (ME) e Empresas de Pequeno Porte (EPP) podem ser autoras no JEC (Lei 9.099/95, art. 8º, §1º, II c/c LC 123/2006, art. 74). Empresas de médio ou grande porte e cessionários de crédito não podem ser autores no JEC, devendo ir à Vara Cível com advogado.",
+    "status": "Revisar com Amyr"
+  },
+  {
+    "id": "aluguel_e_despejo",
+    "nome": "Problema de aluguel, inquilino que não paga ou despejo",
+    "exemplos": [
+      "meu inquilino está há 4 meses sem pagar o aluguel e não quer sair da casa",
+      "entreguei o imóvel alugado e o proprietário não devolve a caução",
+      "quero cobrar aluguéis atrasados"
+    ],
+    "competencia": "TJPA",
+    "unidades": {
+      "ananindeua": "vara_civel_ananindeua",
+      "belem": "vara_civel_belem"
+    },
+    "resolveNaHora": false,
+    "comoResolveNaHora": null,
+    "exigeValor": true,
+    "regraAdvogado": "Sempre precisa de advogado",
+    "documentos": [
+      "Contrato de aluguel (ou conversas e recibos que provem a locação)",
+      "comprovantes dos aluguéis ou contas em atraso",
+      "documento do imóvel",
+      "RG, CPF e comprovante de residência"
+    ],
+    "sempreHumano": false,
+    "observacoes": "Regra geral: ações de despejo por falta de pagamento tramitam na Vara Cível (Lei 8.245/91) e exigem advogado (CPC, art. 103). Exceção: a Lei 9.099/95 (art. 3º, III) admite no JEC apenas o despejo para uso próprio e cobrança de aluguéis até 40 SM. Por segurança na triagem, encaminha-se à Vara Cível com orientação de advogado/Defensoria.",
+    "status": "Verificar dado"
+  },
+  {
+    "id": "acidente_de_transito",
+    "nome": "Batida de carro ou moto e cobrança de conserto de veículo",
+    "exemplos": [
+      "bateram na traseira do meu carro e o motorista sumiu e não quer pagar o conserto",
+      "uma moto avançou o sinal, amassou meu carro e tive prejuízo de 4 mil reais na oficina"
+    ],
+    "competencia": "TJPA",
+    "unidades": {
+      "ananindeua": "jec_civel_ananindeua",
+      "belem": "jec_civel_belem"
+    },
+    "resolveNaHora": false,
+    "comoResolveNaHora": null,
+    "exigeValor": true,
+    "regraAdvogado": "Juizado: regra de valor (20/40 SM)",
+    "documentos": [
+      "Boletim de Ocorrência de trânsito",
+      "fotos ou vídeos da batida e das placas dos veículos",
+      "pelo menos 3 orçamentos de oficinas mecânicas ou notas fiscais do conserto",
+      "documento do veículo (CRLV) e CNH",
+      "nome e endereço ou placa do causador do acidente"
+    ],
+    "sempreHumano": false,
+    "observacoes": "Ação de reparação de danos causados em acidente de veículo de via terrestre compete ao JEC até 40 SM (Lei 9.099/95, art. 3º, I e II; art. 9º — até 20 SM sem advogado). Se houver vítima com lesão corporal grave ou morte com repercussão criminal, a esfera penal corre separadamente.",
+    "status": "Revisar com Amyr"
   },
   {
     "id": "pensao_alimenticia",
-    "nome": "Pedir ou revisar pensão alimentícia",
+    "nome": "Pedir, revisar ou cobrar pensão alimentícia",
     "exemplos": [
       "o pai do meu filho não paga pensão",
-      "quero aumentar a pensão"
+      "quero aumentar a pensão",
+      "quero pedir pensão pro meu filho",
+      "fiquei desempregado e preciso diminuir o valor da pensão"
     ],
     "competencia": "TJPA",
     "unidades": {
@@ -92,88 +237,209 @@
     "resolveNaHora": false,
     "comoResolveNaHora": null,
     "exigeValor": false,
-    "regraAdvogado": "Confirmar",
+    "regraAdvogado": "Sempre precisa de advogado",
     "documentos": [
-      "Certidão de nascimento da criança",
-      "RG e CPF",
-      "comprovantes de gastos"
+      "Certidão de nascimento da criança ou adolescente",
+      "RG e CPF do responsável",
+      "comprovante de residência",
+      "comprovantes das despesas do filho (escola, farmácia, alimentação)",
+      "dados do outro genitor (nome, endereço, local de trabalho ou chave Pix)"
     ],
     "sempreHumano": false,
-    "observacoes": "Confirmar se a pessoa pode pedir sem advogado e quando indicar a Defensoria.",
-    "status": "Exemplo - confirmar"
+    "observacoes": "Causas de família são excluídas do Juizado Especial Cível (Lei 9.099/95, art. 3º, §2º) e tramitam na Vara de Família (CPC, art. 103). Embora o art. 2º da Lei 5.478/68 preveja pedido inicial verbal de alimentos, na prática forense do TJPA (PJe) o ajuizamento e acompanhamento ocorrem por Advogado ou pela Defensoria Pública (Disque 129 para quem não pode pagar).",
+    "status": "Revisar com Amyr"
   },
   {
-    "id": "consulta_processo",
-    "nome": "Saber como está um processo",
+    "id": "divorcio_uniao_estavel",
+    "nome": "Divórcio, separação ou dissolução de união estável",
     "exemplos": [
-      "quero saber como tá meu processo"
+      "quero me divorciar do meu marido",
+      "moramos juntos há 5 anos sem casar no papel e quero separar e dividir a casa",
+      "minha ex-mulher não quer assinar o divórcio"
     ],
     "competencia": "TJPA",
     "unidades": {
-      "ananindeua": null,
-      "belem": null
-    },
-    "resolveNaHora": true,
-    "comoResolveNaHora": "Consulta pública pelo número do processo no site do TJPA (confirmar link)",
-    "exigeValor": false,
-    "regraAdvogado": "Não precisa",
-    "documentos": [
-      "Número do processo ou CPF"
-    ],
-    "sempreHumano": false,
-    "observacoes": null,
-    "status": "Exemplo - confirmar"
-  },
-  {
-    "id": "certidao",
-    "nome": "Pedir certidão (ex.: nada consta)",
-    "exemplos": [
-      "preciso de certidão pra entregar no emprego"
-    ],
-    "competencia": "TJPA",
-    "unidades": {
-      "ananindeua": null,
-      "belem": null
-    },
-    "resolveNaHora": true,
-    "comoResolveNaHora": "Emissão online no site do TJPA (confirmar link e tipos)",
-    "exigeValor": false,
-    "regraAdvogado": "Não precisa",
-    "documentos": [
-      "RG e CPF"
-    ],
-    "sempreHumano": false,
-    "observacoes": null,
-    "status": "Exemplo - confirmar"
-  },
-  {
-    "id": "intimacao_recebida",
-    "nome": "Recebeu papel da Justiça e não entendeu",
-    "exemplos": [
-      "chegou um papel do fórum, não faço ideia do que to lendo"
-    ],
-    "competencia": "TJPA",
-    "unidades": {
-      "ananindeua": null,
-      "belem": null
+      "ananindeua": "vara_familia_ananindeua",
+      "belem": "vara_familia_belem"
     },
     "resolveNaHora": false,
     "comoResolveNaHora": null,
     "exigeValor": false,
-    "regraAdvogado": "Confirmar",
+    "regraAdvogado": "Sempre precisa de advogado",
     "documentos": [
-      "O papel recebido",
-      "RG e CPF"
+      "Certidão de casamento (ou provas da união estável)",
+      "certidão de nascimento dos filhos (se houver)",
+      "documentos dos bens (casa, carro, contas)",
+      "RG, CPF e comprovante de residência"
+    ],
+    "sempreHumano": false,
+    "observacoes": "Competência da Vara de Família (Lei 9.099/95, art. 3º, §2º; CPC, art. 103). Exige advogado ou Defensoria Pública (Disque 129). Nota: se o casal estiver em total acordo, não tiver filhos menores/incapazes e tiver condições de pagar taxas cartorárias, o divórcio pode ser feito em Cartório de Notas, mas também requer advogado (CPC, art. 733).",
+    "status": "Revisar com Amyr"
+  },
+  {
+    "id": "guarda_e_visitas",
+    "nome": "Guarda de filhos ou regulamentação de visitas",
+    "exemplos": [
+      "quero regularizar a guarda do meu filho que já mora comigo",
+      "a mãe do meu filho não deixa eu visitar ele no fim de semana",
+      "sou avó e crio meu neto, preciso da guarda dele"
+    ],
+    "competencia": "TJPA",
+    "unidades": {
+      "ananindeua": "vara_familia_ananindeua",
+      "belem": "vara_familia_belem"
+    },
+    "resolveNaHora": false,
+    "comoResolveNaHora": null,
+    "exigeValor": false,
+    "regraAdvogado": "Sempre precisa de advogado",
+    "documentos": [
+      "Certidão de nascimento da criança",
+      "RG, CPF e comprovante de residência",
+      "comprovante de matrícula escolar ou cartão de vacinação (para provar com quem a criança mora)",
+      "nome e endereço do outro genitor"
+    ],
+    "sempreHumano": false,
+    "observacoes": "Competência da Vara de Família (CPC, art. 103). Exige advogado ou Defensoria Pública (Disque 129). Se houver relato de abandono, maus-tratos ou risco à criança, envolve também a Vara da Infância e Juventude / Conselho Tutelar.",
+    "status": "Revisar com Amyr"
+  },
+  {
+    "id": "reconhecimento_paternidade",
+    "nome": "Reconhecimento de paternidade ou exame de DNA",
+    "exemplos": [
+      "o pai do meu bebê não quis registrar ele e quero pedir exame de DNA",
+      "quero colocar o nome do pai na certidão do meu filho",
+      "quero reconhecer a paternidade de um filho"
+    ],
+    "competencia": "TJPA",
+    "unidades": {
+      "ananindeua": "vara_familia_ananindeua",
+      "belem": "vara_familia_belem"
+    },
+    "resolveNaHora": false,
+    "comoResolveNaHora": null,
+    "exigeValor": false,
+    "regraAdvogado": "Sempre precisa de advogado",
+    "documentos": [
+      "Certidão de nascimento da criança (sem o nome do pai)",
+      "RG, CPF e comprovante de residência da mãe",
+      "nome completo e endereço do suposto pai (e conversas ou fotos, se tiver)"
+    ],
+    "sempreHumano": false,
+    "observacoes": "Ação de investigação de paternidade (Lei 8.560/92) cumulada ou não com alimentos tramita na Vara de Família com advogado ou Defensoria Pública (129). Se o pai quiser reconhecer voluntariamente sem briga judicial, pode fazer direto no Cartório de Registro Civil ou no programa Pai Legal do TJPA/CEJUSC.",
+    "status": "Revisar com Amyr"
+  },
+  {
+    "id": "inventario_e_heranca",
+    "nome": "Inventário, partilha de bens ou herança de familiar falecido",
+    "exemplos": [
+      "meu pai faleceu e deixou uma casa, precisamos fazer o inventário",
+      "meus irmãos não querem dividir a herança da nossa mãe",
+      "como faço pra liberar um dinheiro que meu marido falecido deixou no banco?"
+    ],
+    "competencia": "TJPA",
+    "unidades": {
+      "ananindeua": "vara_civel_ananindeua",
+      "belem": "vara_familia_belem"
+    },
+    "resolveNaHora": false,
+    "comoResolveNaHora": null,
+    "exigeValor": false,
+    "regraAdvogado": "Sempre precisa de advogado",
+    "documentos": [
+      "Certidão de óbito da pessoa falecida",
+      "RG, CPF e certidão de nascimento/casamento dos herdeiros",
+      "documentos dos bens deixados (escritura/IPTU de imóvel, documento de veículo, extratos bancários)",
+      "certidões negativas de débitos fiscais"
+    ],
+    "sempreHumano": false,
+    "observacoes": "Matéria de Sucessões é excluída do JEC (Lei 9.099/95, art. 3º, §2º) e exige sempre advogado ou Defensoria Pública (CPC, art. 610). Em Ananindeua, as Varas Cíveis detêm competência para sucessões/inventários; em Belém, há Varas de Família/Sucessões no Fórum Cível.",
+    "status": "Verificar dado"
+  },
+  {
+    "id": "consulta_processo",
+    "nome": "Saber como está o andamento de um processo",
+    "exemplos": [
+      "quero saber como tá meu processo",
+      "meu processo já saiu sentença?",
+      "quero ver o andamento de uma ação pelo meu CPF",
+      "como consulto meu processo na justiça?"
+    ],
+    "competencia": "TJPA",
+    "unidades": {
+      "ananindeua": null,
+      "belem": null
+    },
+    "resolveNaHora": true,
+    "comoResolveNaHora": "Você pode consultar gratuitamente na hora pelo site oficial do TJPA (https://www.tjpa.jus.br na opção Consulta Processual) usando o número do processo, seu nome completo ou CPF. Se o processo tiver segredo de justiça (como casos de família), compareça ao balcão da secretaria da vara com RG e CPF.",
+    "exigeValor": false,
+    "regraAdvogado": "Não precisa",
+    "documentos": [
+      "Número do processo ou documento de identificação com foto (RG e CPF)"
+    ],
+    "sempreHumano": false,
+    "observacoes": "Autosserviço imediato. Processos em segredo de justiça (CPC, art. 189 — ex.: família, violência doméstica) não exibem movimentações completas na consulta pública, exigindo atendimento presencial da parte ou de seu advogado com senha de acesso.",
+    "status": "Revisar com Amyr"
+  },
+  {
+    "id": "certidao",
+    "nome": "Pedir certidão da Justiça (ex.: nada consta criminal ou cível)",
+    "exemplos": [
+      "preciso de certidão pra entregar no emprego",
+      "quero tirar antecedentes criminais do fórum",
+      "preciso de certidão negativa cível e criminal",
+      "onde tiro folha corrida?"
+    ],
+    "competencia": "TJPA",
+    "unidades": {
+      "ananindeua": null,
+      "belem": null
+    },
+    "resolveNaHora": true,
+    "comoResolveNaHora": "A certidão judicial negativa (cível e criminal / nada consta) é emitida gratuitamente na hora pela internet no Portal de Certidões do TJPA: https://portal-certidao.tjpa.jus.br/solicitacao-certidao",
+    "exigeValor": false,
+    "regraAdvogado": "Não precisa",
+    "documentos": [
+      "RG, CPF, nome completo da mãe e data de nascimento"
+    ],
+    "sempreHumano": false,
+    "observacoes": "Autosserviço online imediato. Se houver homônimo ou apontamento positivo que impeça a emissão automática online, o cidadão deve solicitar a certidão narratória na distribuição/secretaria do fórum.",
+    "status": "Revisar com Amyr"
+  },
+  {
+    "id": "intimacao_recebida",
+    "nome": "Recebeu papel da Justiça (intimação ou citação) e não entendeu",
+    "exemplos": [
+      "chegou um papel do fórum, não faço ideia do que to lendo",
+      "o oficial de justiça deixou uma intimação lá em casa",
+      "recebi uma carta de citação pra audiência e não sei o que fazer"
+    ],
+    "competencia": "TJPA",
+    "unidades": {
+      "ananindeua": "vara_civel_ananindeua",
+      "belem": "vara_civel_belem"
+    },
+    "resolveNaHora": false,
+    "comoResolveNaHora": null,
+    "exigeValor": false,
+    "regraAdvogado": "Sempre precisa de advogado",
+    "documentos": [
+      "O documento recebido da Justiça (intimação, mandado ou carta)",
+      "RG e CPF",
+      "comprovante de residência"
     ],
     "sempreHumano": true,
-    "observacoes": "Pode ter prazo curto: urgência alta. Vai sempre para o atendente, que explica o documento e indica a secretaria da vara do processo.",
-    "status": "Exemplo - confirmar"
+    "observacoes": "Urgência alta por causa de prazo processual em curso (revelia ou perda de prazo). Sempre encaminhar ao atendente humano (sempre_humano = S), que lerá o cabeçalho do mandado, identificará a vara exata do processo e orientará sobre a Defensoria Pública (129) ou Juizado.",
+    "status": "Verificar dado"
   },
   {
     "id": "trabalhista",
-    "nome": "Problema com patrão, demissão ou salário",
+    "nome": "Problema com patrão, demissão, carteira sem assinar ou salário",
     "exemplos": [
-      "fui demitido e não recebi a rescisão"
+      "fui demitido e não recebi a rescisão",
+      "trabalhei 2 anos sem carteira assinada",
+      "meu patrão não depositou meu FGTS",
+      "sofri acidente trabalhando na empresa e me mandaram embora"
     ],
     "competencia": "Justiça do Trabalho",
     "unidades": {
@@ -185,19 +451,24 @@
     "exigeValor": false,
     "regraAdvogado": "Não se aplica ao TJPA",
     "documentos": [
-      "Carteira de trabalho",
-      "contracheques",
-      "termo de rescisão"
+      "Carteira de trabalho (física ou digital)",
+      "contracheques ou comprovantes de recebimento",
+      "termo de rescisão (se houver)",
+      "conversas e provas do trabalho",
+      "RG e CPF"
     ],
     "sempreHumano": false,
-    "observacoes": "Indicar órgão externo trt8.",
-    "status": "Exemplo - confirmar"
+    "observacoes": "Competência exclusiva da Justiça do Trabalho (CF, art. 114). Encaminhar ao órgão externo trt8 (TRT da 8ª Região — Foro Trabalhista de Belém ou de Ananindeua).",
+    "status": "Revisar com Amyr"
   },
   {
     "id": "inss_beneficio",
-    "nome": "Benefício do INSS negado ou cortado",
+    "nome": "Benefício do INSS negado, cortado ou aposentadoria",
     "exemplos": [
-      "o INSS cortou meu benefício"
+      "o INSS cortou meu auxílio-doença",
+      "meu pedido de aposentadoria foi negado",
+      "quero pedir LOAS/BPC pro meu filho autista e o INSS negou",
+      "problema com salário-maternidade no INSS"
     ],
     "competencia": "Justiça Federal",
     "unidades": {
@@ -209,32 +480,12 @@
     "exigeValor": false,
     "regraAdvogado": "Não se aplica ao TJPA",
     "documentos": [
-      "Carta de indeferimento do INSS",
-      "RG e CPF"
+      "Carta de indeferimento ou extrato do Meu INSS",
+      "laudos, receitas e exames médicos atualizados (se for benefício por incapacidade ou deficiência)",
+      "RG, CPF e comprovante de residência"
     ],
     "sempreHumano": false,
-    "observacoes": "Indicar órgão externo jef_dpu.",
-    "status": "Exemplo - confirmar"
-  },
-  {
-    "id": "violencia_domestica",
-    "nome": "Violência ou ameaça em casa",
-    "exemplos": [
-      "meu marido me bate",
-      "ele disse que vai me matar"
-    ],
-    "competencia": "TJPA",
-    "unidades": {
-      "ananindeua": "vara_violencia_domestica_ananindeua",
-      "belem": "vara_violencia_domestica_belem"
-    },
-    "resolveNaHora": false,
-    "comoResolveNaHora": null,
-    "exigeValor": false,
-    "regraAdvogado": "Confirmar",
-    "documentos": [],
-    "sempreHumano": true,
-    "observacoes": "Sempre emergência + atendente humano. Orientar 190 e 180.",
-    "status": "Exemplo - confirmar"
+    "observacoes": "Competência da Justiça Federal (CF, art. 109, I — Juizado Especial Federal / Lei 10.259/01), exceto acidente de trabalho típico (Súmula 15 STJ / art. 109, I parte final, que tramita na Justiça Estadual). Na regra geral de benefícios previdenciários/assistenciais, encaminhar ao órgão externo jef_dpu.",
+    "status": "Revisar com Amyr"
   }
 ]

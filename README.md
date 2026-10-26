@@ -73,15 +73,17 @@ Os arquivos `data/*.json` (assuntos, unidades, órgãos) continuam no repositór
 | `npm run importar-planilha` | Lê `planilha/tabela-assuntos-amyr.xlsx` e gera os arquivos de `data/` |
 
 ### Trocar a tabela de assuntos
-A equipe jurídica preenche `planilha/tabela-assuntos-amyr.xlsx` (abas Assuntos, Unidades, Órgãos externos, Motivos advogado, Frases de teste). Depois:
+A equipe jurídica mantém `planilha/base-de-conhecimento-organizada.xlsx` (abas Assuntos, Unidades, Órgãos externos, Motivos advogado, Frases de teste; cabeçalho legível na linha 3). Depois de receber uma versão nova:
 
 ```bash
-npm run importar-planilha
+npm run importar-planilha      # lê a planilha e gera data/*.json
 npm run testar-regras
 npm run testar-frases
 ```
 
-Linhas com status "Descartar" ficam de fora. Enquanto a tabela não estiver confirmada, as linhas "Exemplo - confirmar" também entram (constante `INCLUIR_EXEMPLOS` em `scripts/importar-planilha.mjs`).
+O importador também lê o modelo antigo (`planilha/tabela-assuntos-amyr.xlsx`, passado como argumento: `node scripts/importar-planilha.mjs planilha/tabela-assuntos-amyr.xlsx`). O formato é detectado pela aba "Resumo".
+
+Linhas com status "Descartar" ficam de fora. Enquanto a tabela não estiver toda confirmada ("Revisar com Amyr" e "Verificar dado" ainda entram), vale a constante `INCLUIR_EXEMPLOS` em `scripts/importar-planilha.mjs`. Com `false`, só as linhas "Confirmado" entram.
 
 ## Resultado dos testes (25/10/2026)
 

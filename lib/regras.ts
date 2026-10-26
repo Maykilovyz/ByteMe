@@ -33,8 +33,10 @@ export function camposFaltando(f: Ficha): ("assunto" | "cidade" | "valor" | "por
   if (exigeCidade(a) && f.cidade === "outra") return [];
   const faltam: ("cidade" | "valor" | "porte_empresa")[] = [];
   if (exigeCidade(a) && !f.cidade) faltam.push("cidade");
-  if (a.exigeValor && f.valor_estimado_reais == null) faltam.push("valor");
-  if (a.exigeValor && f.tipo_autor == null) faltam.push("porte_empresa");
+  // Valor e porte só importam na regra do Juizado (20/40 SM). Assuntos que sempre vão à Vara Cível (ex.: aluguel) não perguntam.
+  const regraDeValor = a.exigeValor && a.regraAdvogado.startsWith("Juizado");
+  if (regraDeValor && f.valor_estimado_reais == null) faltam.push("valor");
+  if (regraDeValor && f.tipo_autor == null) faltam.push("porte_empresa");
   return faltam;
 }
 
