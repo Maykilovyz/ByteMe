@@ -1,58 +1,58 @@
 [
   {
     "id": "emergencia",
-    "nome": "Polícia 190 / Central de Atendimento à Mulher 180 / SAMU 192",
-    "quandoIndicar": "Risco imediato: violência, ameaça, perigo à vida",
-    "contato": "Ligar 190, 180 ou 192",
-    "link": null,
-    "status": "Exemplo - confirmar"
+    "nome": "Polícia Militar 190 / Central de Atendimento à Mulher 180 / SAMU 192",
+    "quandoIndicar": "Risco imediato: violência doméstica, agressão em andamento, ameaça de morte ou perigo à vida",
+    "contato": "Ligar gratuitamente para 190 (Polícia Militar), 180 (Central da Mulher) ou 192 (SAMU) — funcionamento 24h",
+    "link": "https://www.gov.br/mulheres/pt-br/ligue180",
+    "status": "Revisar com Amyr"
   },
   {
     "id": "procon_pa",
-    "nome": "Procon Pará",
-    "quandoIndicar": "Consumo: quando a pessoa quer tentar acordo antes da Justiça",
-    "contato": null,
-    "link": null,
-    "status": "Exemplo - confirmar"
+    "nome": "Procon Pará (Diretoria de Proteção e Defesa do Consumidor)",
+    "quandoIndicar": "Problemas de consumo quando a pessoa prefere tentar acordo rápido antes de abrir processo judicial",
+    "contato": "Disque 151 | WhatsApp: (91) 99230-0151 | Telefone: (91) 3073-2827 | Presencial: Tv. Lomas Valentinas, nº 1150, Pedreira, Belém/PA e Estações Cidadania",
+    "link": "https://www.procon.pa.gov.br",
+    "status": "Revisar com Amyr"
   },
   {
     "id": "defensoria_pa",
-    "nome": "Defensoria Pública do Pará",
-    "quandoIndicar": "Quem precisa de advogado e não pode pagar",
-    "contato": null,
-    "link": null,
-    "status": "Exemplo - confirmar"
+    "nome": "Defensoria Pública do Estado do Pará (DPE-PA)",
+    "quandoIndicar": "Quando a pessoa precisa obrigatoriamente de advogado na Justiça Estadual e não tem condições financeiras de pagar",
+    "contato": "Disque 129 (Conexão Defensoria) | Telefone: (91) 3251-3700 | Belém: Rua Padre Prudêncio, nº 154, Comércio | Ananindeua: Núcleo da Defensoria Pública em Ananindeua",
+    "link": "https://www.defensoria.pa.def.br",
+    "status": "Verificar dado"
   },
   {
     "id": "trt8",
-    "nome": "Justiça do Trabalho (TRT da 8ª Região)",
-    "quandoIndicar": "Problemas trabalhistas",
-    "contato": null,
-    "link": null,
-    "status": "Exemplo - confirmar"
+    "nome": "Justiça do Trabalho — TRT da 8ª Região (Pará/Amapá)",
+    "quandoIndicar": "Problemas trabalhistas: demissão, rescisão, carteira não assinada, horas extras, FGTS ou assédio no trabalho",
+    "contato": "Telefone: (91) 4008-7000 | Presencial (8h às 13h): Foro Trabalhista de Belém (Tv. Dom Pedro I, nº 698/746, Umarizal) ou Foro Trabalhista de Ananindeua (Rod. BR-316, km 8)",
+    "link": "https://www.trt8.jus.br",
+    "status": "Verificar dado"
   },
   {
     "id": "jef_dpu",
-    "nome": "Justiça Federal / Defensoria Pública da União",
-    "quandoIndicar": "INSS, Caixa e outros órgãos federais",
-    "contato": null,
-    "link": null,
-    "status": "Exemplo - confirmar"
+    "nome": "Justiça Federal (JEF) / Defensoria Pública da União (DPU)",
+    "quandoIndicar": "Causas contra o INSS (aposentadoria, auxílio-doença, BPC/LOAS), Caixa Econômica Federal, CEF, FIES ou União",
+    "contato": "Justiça Federal PA: Av. Domingos Marreiros, nº 598, Umarizal, Belém/PA — Tel: (91) 3299-6194 | DPU Belém: (91) 3201-5000",
+    "link": "https://www.trf1.jus.br/sjpa",
+    "status": "Verificar dado"
   },
   {
     "id": "deam",
-    "nome": "Delegacia da Mulher (DEAM)",
-    "quandoIndicar": "Registrar ocorrência de violência contra a mulher",
-    "contato": null,
-    "link": null,
-    "status": "Exemplo - confirmar"
+    "nome": "Delegacia Especializada no Atendimento à Mulher (DEAM)",
+    "quandoIndicar": "Registrar Boletim de Ocorrência e pedir medida protetiva policial em casos de violência contra a mulher",
+    "contato": "DEAM Ananindeua: Conj. Cidade Nova V, Tv. WE-31, nº 1112, Coqueiro — Plantão: (91) 98435-2596 | DEAM Belém: Tv. Mauriti, nº 2394, Marco | Ligue 180 ou 190",
+    "link": "https://www.pc.pa.gov.br",
+    "status": "Verificar dado"
   },
   {
     "id": "suporte_sistemas_tjpa",
-    "nome": "Suporte oficial de sistemas do TJPA",
-    "quandoIndicar": "Advogado com problema de login, assinatura digital ou sistema eletrônico",
-    "contato": null,
-    "link": null,
-    "status": "Exemplo - confirmar"
+    "nome": "Central de Serviços e Suporte de TI do TJPA (PJe / SEEU)",
+    "quandoIndicar": "Advogado ou parte com problema técnico de login, token/certificado digital ou erro no sistema PJe",
+    "contato": "Central de Atendimento de TI do TJPA: (91) 3205-3000 / Suporte PJe no portal do TJPA",
+    "link": "https://www.tjpa.jus.br/PortalExterno/institucional/Secretaria-de-Informatica/409-Suporte-ao-Usuario.xhtml",
+    "status": "Verificar dado"
   }
 ]
