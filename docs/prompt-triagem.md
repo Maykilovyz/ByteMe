@@ -64,7 +64,7 @@ Responda apenas com o JSON da ficha, sem nenhum texto antes ou depois, com exata
 risco_imediato, quer_humano, assunto_id, confianca, cidade, contra_quem, valor_estimado_reais, urgencia, tipo_autor, resumo, pergunta_pendente.
 ```
 
-Valores para a demo: `{CIDADES}` = `Ananindeua, Belém` · `{MAX_PERGUNTAS}` = `2`.
+Valores para a demo: `{CIDADES}` = `Ananindeua, Belém` · `{MAX_PERGUNTAS}` = `4`.
 
 ## Schema da ficha (JSON Schema)
 ```json
