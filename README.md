@@ -9,7 +9,7 @@ Protótipo da equipe ByteMe para o **Hackathon TJPA 2026, Desafio 3**. O cidadã
 ```
 Cidadão escreve ──► risco/pedido de humano (palavras, sem IA)
                 └─► IA monta a FICHA (JSON): assunto de uma lista fechada, cidade, valor, urgência, tipo de autor
-                      └─► código confere o que falta ──► pergunta (no máximo 2)
+                      └─► código confere o que falta ──► pergunta (até 4)
                             └─► REGRAS FIXAS (tabela da equipe jurídica):
                                   unidade · advogado (20/40 salários mínimos) · documentos · órgão externo · resolve na hora
                                   └─► resposta por modelo pronto + senha + fila do atendente

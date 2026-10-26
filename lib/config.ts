@@ -1,5 +1,5 @@
 // Parâmetros do sistema. Os valores vêm do .env.local (veja .env.example).
-export const MAX_PERGUNTAS = 2; // decidido em 25/10
+export const MAX_PERGUNTAS = 4; // até 4 perguntas; decidido em 26/10 (era 2)
 // Salário mínimo 2026: R$ 1.621 (decreto federal). Confirme antes da demo.
 export const SALARIO_MINIMO = Number(process.env.SALARIO_MINIMO || 1621);
 export const CIDADES = (process.env.CIDADES || "Ananindeua").split(",").map((c) => c.trim()).filter(Boolean);
