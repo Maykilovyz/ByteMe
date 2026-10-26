@@ -1,10 +1,11 @@
 [
   {
     "id": "consumidor_produto_defeito",
-    "nome": "Produto com defeito ou loja que não troca",
+    "nome": "Produto com defeito, loja que não troca ou atraso na entrega (inclui imóvel na planta)",
     "exemplos": [
       "minha geladeira quebrou e a loja não troca",
-      "comprei celular com defeito"
+      "comprei celular com defeito",
+      "comprei apartamento na planta e a construtora atrasou a entrega"
     ],
     "competencia": "TJPA",
     "unidades": {
@@ -22,7 +23,7 @@
       "comprovante de residência"
     ],
     "sempreHumano": false,
-    "observacoes": "Confirmar os limites de 20 e 40 SM (Lei 9.099, arts. 3º e 9º).",
+    "observacoes": "Confirmar os limites de 20 e 40 SM (Lei 9.099, arts. 3º e 9º). PROVISÓRIO: imóvel na planta com atraso entra aqui até a Amyr decidir se vira assunto próprio.",
     "status": "Exemplo - confirmar"
   },
   {
