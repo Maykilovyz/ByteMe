@@ -55,11 +55,17 @@ html.alto-contraste .tj-prototipo { background: #000; color: #fff; border-bottom
 .tj-atalhos-teclado a { color: #444; font-size: .7rem; font-weight: 700; text-transform: uppercase; text-decoration: none; }
 .tj-atalhos-teclado a:hover { color: #000; text-decoration: underline; }
 .tj-barra kbd { font: inherit; font-size: .6rem; font-weight: 700; padding: 1px 4px; margin-left: 3px; border-radius: 3px; background: #5a6268; color: #fff; }
-.tj-ferramentas { gap: 2px !important; }
-.tj-ferramentas button { display: flex; align-items: center; gap: 4px; min-height: 32px; padding: 2px 8px; border: 0; border-radius: 4px; background: transparent; color: #333; font-size: .85rem; }
-.tj-ferramentas button:hover { background: #ddd; }
-.tj-ferramentas button[aria-pressed="true"] { background: #222; color: #fff; }
+.tj-ferramentas-bloco { display: flex; align-items: center; gap: 10px; }
+.tj-ac-rotulo { display: flex; align-items: center; gap: 5px; font-size: .78rem; font-weight: 700; text-transform: uppercase; color: #1a2a4a; }
+.tj-ferramentas { gap: 6px !important; }
+.tj-ferramentas button { display: flex; align-items: center; gap: 6px; min-height: 34px; padding: 4px 12px; border: 1px solid #b9c2cc; border-radius: 999px; background: #fff; color: #1a2a4a; font-size: .85rem; font-weight: 500; transition: background .2s, border-color .2s, transform .15s; }
+.tj-ferramentas button:hover { border-color: var(--azul); background: #e8eef7; }
+.tj-ferramentas button:active { transform: scale(.96); }
+.tj-ferramentas button[aria-pressed="true"] { background: #1a2a4a; border-color: #1a2a4a; color: #fff; }
+.tj-ac-ic { font-size: .95rem; line-height: 1; }
 .tj-ferramentas svg { flex: none; }
+html.alto-contraste .tj-ac-rotulo { color: #ffff00; }
+html.alto-contraste .tj-ferramentas button { background: #000; border-color: #ffff00; }
 html.alto-contraste .tj-barra a, html.alto-contraste .tj-ferramentas button { color: #ffff00; }
 html.alto-contraste .tj-barra kbd { background: #ffff00; color: #000; }
 html.alto-contraste .tj-ferramentas button[aria-pressed="true"] { background: #ffff00; color: #000; }
@@ -269,6 +275,15 @@ footer a { color: #fff; text-decoration: none; }
 footer a:hover { color: var(--rodape-hover); }
 .tj-credito { margin-top: 28px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,.2); font-size: .78rem; color: #d6deea; }
 
+/* Barra lateral fixa de acessibilidade, como a do portal */
+.tj-lateral { position: fixed; left: 0; top: 42%; z-index: 26; display: flex; flex-direction: column; gap: 4px; list-style: none; margin: 0; padding: 0; }
+.tj-lateral button { position: relative; display: grid; place-items: center; width: 42px; height: 42px; padding: 0; border: 0; border-radius: 0 8px 8px 0; background: #2f64a2; color: #fff; box-shadow: 2px 2px 8px rgba(0,0,0,.2); transition: width .25s cubic-bezier(.2,.8,.2,1), background .2s; }
+.tj-lateral button:hover, .tj-lateral button:focus-visible { width: 50px; background: #1a2a4a; }
+.tj-lateral button[aria-pressed="true"] { background: #1a2a4a; box-shadow: inset -3px 0 0 #ffa001, 2px 2px 8px rgba(0,0,0,.2); }
+.tj-lateral .tj-dica { position: absolute; left: calc(100% + 8px); top: 50%; padding: 4px 10px; border-radius: 6px; background: #1a2a4a; color: #fff; font-size: .8rem; white-space: nowrap; pointer-events: none; opacity: 0; transform: translate(-6px, -50%); transition: opacity .2s, transform .2s; }
+.tj-lateral button:hover .tj-dica, .tj-lateral button:focus-visible .tj-dica { opacity: 1; transform: translate(0, -50%); }
+html.alto-contraste .tj-lateral button { background: #000; color: #ffff00; border: 1px solid #ffff00; border-left: 0; }
+
 /* Um botão só no canto: atendimento, Juciara, ASA e acesso rápido */
 .tj-canto { position: fixed; right: 16px; bottom: 16px; z-index: 30; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
 .tj-canto-botao { display: flex; align-items: center; gap: 8px; padding: 12px 18px; border: 0; border-radius: 999px; background: #c62832; color: #fff; font-weight: 500; box-shadow: 0 4px 14px rgba(0,0,0,.3); }
@@ -311,9 +326,12 @@ html.alto-contraste .tj-cookies button { background: #ffff00; color: #000; }
 @media (max-width: 700px) {
   .tj-so-pc { display: none !important; }
   .tj-so-celular { display: grid !important; }
-  .tj-barra .tj-limite { justify-content: center; padding-top: 2px; padding-bottom: 2px; }
-  .tj-ferramentas button span { display: none; }
-  .tj-ferramentas button { min-width: 40px; min-height: 40px; justify-content: center; }
+  .tj-barra .tj-limite { justify-content: center; padding-top: 6px; padding-bottom: 8px; }
+  .tj-ferramentas-bloco { flex-direction: column; align-items: stretch; gap: 4px; width: 100%; }
+  .tj-ac-rotulo { justify-content: center; font-size: .7rem; }
+  .tj-ferramentas { display: grid !important; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px !important; }
+  .tj-ferramentas button { flex-direction: column; justify-content: center; gap: 2px; width: 100%; min-height: 54px; padding: 6px 2px; border-radius: 10px; font-size: .7rem; }
+  .tj-ac-ic { font-size: 1.15rem; }
   .tj-cabecalho { position: sticky; top: 0; z-index: 25; padding: 8px 12px; background: var(--bg); border-bottom: 3px solid var(--menu-borda); gap: 10px; }
   .tj-icone-botao { width: 44px; height: 44px; border-radius: 6px; background: var(--menu); color: var(--menu-texto); }
   .tj-marca { flex: 1; }
@@ -365,16 +383,16 @@ html.alto-contraste .tj-cookies button { background: #ffff00; color: #000; }
       <li><a href="#todos-os-links" accesskey="4">Mapa do site<kbd>ALT+4</kbd></a></li>
       <li><a href="#transparencia" accesskey="5">Transparência<kbd>ALT+5</kbd></a></li>
     </ul>
-    <ul class="tj-ferramentas">
-      <li><button type="button" data-fonte="1" aria-label="Aumentar letra">A+</button></li>
-      <li><button type="button" data-fonte="-1" aria-label="Diminuir letra">A-</button></li>
-      <li><button type="button" id="libras" aria-label="Libras">
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M7 21v-6l-3-4 2-1 3 3V5a1 1 0 0 1 2 0v6 M11 4a1 1 0 0 1 2 0v7 M13 5a1 1 0 0 1 2 0v6 M15 7a1 1 0 0 1 2 0v6c0 4-2 8-6 8H9"/></svg><span>Libras</span></button></li>
-      <li><button type="button" id="ouvir" aria-pressed="false" aria-label="Ouvir a página">
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z M16 9a4 4 0 0 1 0 6 M19 6a8 8 0 0 1 0 12"/></svg><span>Ouvir</span></button></li>
-      <li><button type="button" data-contraste aria-pressed="false" aria-label="Alto contraste">
-        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M12 2a10 10 0 0 0 0 20z" fill="currentColor"/></svg><span>Contraste</span></button></li>
-    </ul>
+    <div class="tj-ferramentas-bloco" role="group" aria-labelledby="rotulo-acess">
+      <span class="tj-ac-rotulo" id="rotulo-acess"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><circle cx="12" cy="4" r="2.2"/><path d="M4 7.5l8 1.6 8-1.6.5 2-6 1.6V14l2.5 7-2 .7L12 15.5 9 21.7l-2-.7 2.5-7v-2.9l-6-1.6z"/></svg>Acessibilidade</span>
+      <ul class="tj-ferramentas">
+        <li><button type="button" data-fonte="1" aria-label="Aumentar letra"><b class="tj-ac-ic" aria-hidden="true">A+</b><span>Aumentar</span></button></li>
+        <li><button type="button" data-fonte="-1" aria-label="Diminuir letra"><b class="tj-ac-ic" aria-hidden="true">A−</b><span>Diminuir</span></button></li>
+        <li><button type="button" data-libras><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M7 21v-6l-3-4 2-1 3 3V5a1 1 0 0 1 2 0v6 M11 4a1 1 0 0 1 2 0v7 M13 5a1 1 0 0 1 2 0v6 M15 7a1 1 0 0 1 2 0v6c0 4-2 8-6 8H9"/></svg><span>Libras</span></button></li>
+        <li><button type="button" data-ouvir aria-pressed="false"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z M16 9a4 4 0 0 1 0 6 M19 6a8 8 0 0 1 0 12"/></svg><span>Ouvir</span></button></li>
+        <li><button type="button" data-contraste aria-pressed="false"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M12 2a10 10 0 0 0 0 20z" fill="currentColor"/></svg><span>Contraste</span></button></li>
+      </ul>
+    </div>
   </div>
 </div>
 
@@ -548,6 +566,13 @@ html.alto-contraste .tj-cookies button { background: #ffff00; color: #000; }
   </div>
 </footer>
 
+<ul class="tj-lateral tj-so-pc" aria-label="Atalhos de acessibilidade">
+  <li><button type="button" data-libras aria-label="Libras"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M7 21v-6l-3-4 2-1 3 3V5a1 1 0 0 1 2 0v6 M11 4a1 1 0 0 1 2 0v7 M13 5a1 1 0 0 1 2 0v6 M15 7a1 1 0 0 1 2 0v6c0 4-2 8-6 8H9"/></svg><span class="tj-dica" aria-hidden="true">Libras</span></button></li>
+  <li><button type="button" data-ouvir aria-pressed="false" aria-label="Ouvir a página"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z M16 9a4 4 0 0 1 0 6 M19 6a8 8 0 0 1 0 12"/></svg><span class="tj-dica" aria-hidden="true">Ouvir a página</span></button></li>
+  <li><button type="button" data-contraste aria-pressed="false" aria-label="Alto contraste"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M12 2a10 10 0 0 0 0 20z" fill="currentColor"/></svg><span class="tj-dica" aria-hidden="true">Alto contraste</span></button></li>
+  <li><button type="button" data-fonte="1" aria-label="Aumentar letra"><b class="tj-ac-ic" aria-hidden="true">A+</b><span class="tj-dica" aria-hidden="true">Aumentar letra</span></button></li>
+</ul>
+
 <div class="tj-canto">
   <div class="tj-canto-painel" id="canto-painel" role="region" aria-labelledby="canto-titulo" hidden>
     <h2 id="canto-titulo">Como prefere ser atendido?</h2>
@@ -604,17 +629,22 @@ html.alto-contraste .tj-cookies button { background: #ffff00; color: #000; }
     fechar.onclick = function () { aviso.hidden = true; };
     aviso.appendChild(fechar); aviso.hidden = false;
   }
-  $("libras").addEventListener("click", function () { mostrarAviso("Aqui entra o tradutor de Libras (o Rybena que o TJPA já usa, ou o VLibras)."); });
+  document.querySelectorAll("[data-libras]").forEach(function (b) {
+    b.addEventListener("click", function () { mostrarAviso("Aqui entra o tradutor de Libras (o Rybena que o TJPA já usa, ou o VLibras)."); });
+  });
 
   // Leitura em voz
-  var ouvir = $("ouvir"), lendo = false;
-  ouvir.addEventListener("click", function () {
-    if (!("speechSynthesis" in window)) { mostrarAviso("Seu navegador não lê textos em voz alta."); return; }
-    if (lendo) { speechSynthesis.cancel(); lendo = false; ouvir.setAttribute("aria-pressed", "false"); return; }
-    var fala = new SpeechSynthesisUtterance($("conteudo").innerText);
-    fala.lang = "pt-BR";
-    fala.onend = function () { lendo = false; ouvir.setAttribute("aria-pressed", "false"); };
-    speechSynthesis.speak(fala); lendo = true; ouvir.setAttribute("aria-pressed", "true");
+  var botoesOuvir = document.querySelectorAll("[data-ouvir]"), lendo = false;
+  function marcarLeitura(sim) { lendo = sim; botoesOuvir.forEach(function (b) { b.setAttribute("aria-pressed", String(sim)); }); }
+  botoesOuvir.forEach(function (b) {
+    b.addEventListener("click", function () {
+      if (!("speechSynthesis" in window)) { mostrarAviso("Seu navegador não lê textos em voz alta."); return; }
+      if (lendo) { speechSynthesis.cancel(); marcarLeitura(false); return; }
+      var fala = new SpeechSynthesisUtterance($("conteudo").innerText);
+      fala.lang = "pt-BR";
+      fala.onend = function () { marcarLeitura(false); };
+      speechSynthesis.speak(fala); marcarLeitura(true);
+    });
   });
 
   // Gaveta do menu (celular)
