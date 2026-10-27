@@ -16,4 +16,4 @@ Levantamento para a página teste `/hub`. A página é só visual: os itens marc
 
 ## Links
 
-Os links de serviços foram conferidos no "Acesso Rápido" do portal do TJPA em 27/10/2026. O TJPA usa hoje o Rybena para Libras e voz. No protótipo, o botão Libras só mostra um aviso; a integração (VLibras ou Rybena) fica para depois.
+Os links de serviços, do rodapé e do aviso de cookies foram conferidos na página inicial do portal do TJPA (www.tjpa.jus.br/PortalExterno) em 27/10/2026. O link do PJe aponta para a página "Portal PJe" do TJPA, como no portal. Endereço e telefones do rodapé (Av. Almirante Barroso, 3089; Telejudiciário (91) 3205-2000; Central de Serviços (91) 3289-7100) foram copiados do rodapé do portal. O visual (cores, fonte Roboto Condensed, barra de acessibilidade com Alt+1 a Alt+4, faixa azul em degradê, menu cinza, abas Cidadão e Advogado, rodapé azul-marinho) segue o portal; o brasão oficial não foi copiado e ficou um selo provisório. O TJPA usa hoje o Rybena para Libras e voz. No protótipo, o botão Libras só mostra um aviso; a integração (VLibras ou Rybena) fica para depois.

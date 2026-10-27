@@ -41,19 +41,21 @@ export function BarraAcessibilidade() {
   return (
     <div className="hub-barra" role="region" aria-label="Acessibilidade">
       <ul className="hub-atalhos">
-        <li><a href="#conteudo" accessKey="1">Ir para o conteúdo <kbd>1</kbd></a></li>
-        <li><a href="#menu" accessKey="2">Ir para o menu <kbd>2</kbd></a></li>
-        <li><a href="#busca" accessKey="3">Ir para a busca <kbd>3</kbd></a></li>
-        <li><a href="#rodape" accessKey="4">Ir para o rodapé <kbd>4</kbd></a></li>
+        <li><a href="#conteudo" accessKey="1">Conteúdo <kbd>Alt+1</kbd></a></li>
+        <li><a href="#menu" accessKey="2">Menu principal <kbd>Alt+2</kbd></a></li>
+        <li><a href="#busca" accessKey="3">Busca <kbd>Alt+3</kbd></a></li>
+        <li><a href="#rodape" accessKey="4">Rodapé <kbd>Alt+4</kbd></a></li>
+        <li><a href="#acessibilidade">Acessibilidade</a></li>
       </ul>
       <ul className="hub-ferramentas">
-        <li><a href="#acessibilidade">Acessibilidade</a></li>
         <li><button onClick={() => setTamanho((t) => Math.min(t + 1, TAMANHOS.length - 1))} aria-label="Aumentar letra">A+</button></li>
         <li><button onClick={() => setTamanho((t) => Math.max(t - 1, 0))} aria-label="Diminuir letra">A-</button></li>
         <li><button onClick={() => setTamanho(0)} aria-label="Letra normal">A</button></li>
-        <li><button onClick={() => setContraste(!contraste)} aria-pressed={contraste}>Alto contraste</button></li>
-        <li><button onClick={() => setAviso("Aqui entra o tradutor de Libras (VLibras ou o Rybena que o TJPA já usa).")}>Libras</button></li>
         <li><button onClick={ouvir} aria-pressed={lendo}>{lendo ? "Parar leitura" : "Ouvir página"}</button></li>
+        <li><button onClick={() => setAviso("Aqui entra o tradutor de Libras (VLibras ou o Rybena que o TJPA já usa).")}>Libras</button></li>
+        <li><button className="hub-contraste" onClick={() => setContraste(!contraste)} aria-pressed={contraste} aria-label="Alto contraste" title="Alto contraste">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" strokeWidth="2.5" /><path d="M12 2a10 10 0 0 0 0 20z" fill="currentColor" /></svg>
+        </button></li>
       </ul>
       {aviso && <p className="hub-aviso-barra" role="status">{aviso} <button onClick={() => setAviso("")} aria-label="Fechar aviso">×</button></p>}
     </div>
@@ -69,8 +71,9 @@ export function AvisoCookies() {
   if (!visivel) return null;
   return (
     <div className="hub-cookies" role="dialog" aria-label="Aviso de cookies">
-      <p>Este portal usa cookies apenas para estatísticas de visita e para melhorar o atendimento, conforme a{" "}
-        <a href="#privacidade">Política de Privacidade e Proteção de Dados Pessoais</a>.</p>
+      <p>O Tribunal de Justiça do Pará usa cookies, guardados só por um tempo, para contar as visitas e melhorar o atendimento on-line, conforme a{" "}
+        <a href="https://www.tjpa.jus.br/PortalExterno/institucional/Lei-Geral-de-Protecao-de-Dados---LGPD/1209309-politica-de-privacidade-de-dados-pessoais.xhtml">Política de Privacidade e Proteção de Dados Pessoais</a> e a{" "}
+        <a href="https://www.tjpa.jus.br/PortalExterno/institucional/Lei-Geral-de-Protecao-de-Dados---LGPD/1209301-politica-de-privacidade-para-navegacao.xhtml">Política de Privacidade para Navegação</a>. Ao usar o portal, você concorda com isso.</p>
       <button onClick={() => { setVisivel(false); try { localStorage.setItem("hub-cookies", "1"); } catch { /* sem armazenamento */ } }}>Ciente</button>
     </div>
   );

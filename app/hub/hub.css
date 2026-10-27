@@ -1,84 +1,156 @@
-/* Hub de links do TJPA (protótipo visual). Esconde o topo do app ByteMe nesta página. */
+/* Hub de links do TJPA (protótipo visual). Cores, fontes e medidas tiradas do portal www.tjpa.jus.br/PortalExterno em 27/10/2026. */
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap");
+
+/* Esconde o topo do app ByteMe nesta página. */
 body:has(.portal) > header.topo, body:has(.portal) > .aviso-prototipo { display: none; }
 body:has(.portal) > main { max-width: none; padding: 0; }
 
 .portal {
-  --bg: #f3f5f8; --card: #ffffff; --texto: #1b2330; --suave: #4d5566; --borda: #d3d9e3;
-  --primaria: #0b3d6e; --primaria-texto: #ffffff; --destaque: #c8a24a; --foco: #ffbf47;
+  --bg: #ffffff; --card: #ffffff; --texto: #212529; --suave: #555555; --borda: #dddddd;
+  --primaria: #2f64a2; --primaria-texto: #ffffff; --foco: #ffa001;
+  --barra: #eeeeee; --barra-borda: #aaaaaa; --menu: #eaeeef; --menu-borda: #a8c0c8; --menu-texto: #222222;
+  --bloco: #eaeeef; --bloco-hover: #c6cacb; --titulo: #1a2a4a;
+  --rodape: #172542; --rodape-faixa: #1a2a4a; --rodape-hover: #ffa001;
+  --degrade: linear-gradient(to right, #004e92, #000428);
+  --condensada: "Roboto Condensed", "Arial Narrow", Arial, sans-serif;
   background: var(--bg); color: var(--texto); min-height: 100vh;
+  font-family: Roboto, -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  color-scheme: light;
 }
 html.alto-contraste .portal {
   --bg: #000000; --card: #000000; --texto: #ffffff; --suave: #ffffff; --borda: #ffffff;
-  --primaria: #ffff00; --primaria-texto: #000000; --destaque: #ffff00; --foco: #00ffff;
+  --primaria: #ffff00; --primaria-texto: #000000; --foco: #00ffff;
+  --barra: #000000; --barra-borda: #ffffff; --menu: #000000; --menu-borda: #ffff00; --menu-texto: #ffff00;
+  --bloco: #000000; --bloco-hover: #222222; --titulo: #ffffff;
+  --rodape: #000000; --rodape-faixa: #000000; --rodape-hover: #00ffff;
+  --degrade: #000000;
 }
 html.alto-contraste .portal a { color: #ffff00; text-decoration: underline; }
 .portal :focus-visible { outline: 3px solid var(--foco); outline-offset: 2px; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 
-.hub-faixa-prototipo { margin: 0; padding: 6px 16px; background: #fff4d6; color: #5a4300; font-size: .85rem; text-align: center; }
+.hub-faixa-prototipo { margin: 0; padding: 6px 16px; background: #fff3cd; color: #5a4300; font-size: .85rem; text-align: center; }
 html.alto-contraste .hub-faixa-prototipo { background: #000; color: #fff; border-bottom: 1px solid #fff; }
 
-.hub-barra { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; padding: 6px 16px; background: #082b4d; color: #fff; font-size: .85rem; }
-html.alto-contraste .hub-barra { background: #000; border-bottom: 1px solid #fff; }
-.hub-barra ul { display: flex; flex-wrap: wrap; gap: 4px 14px; list-style: none; margin: 0; padding: 0; align-items: center; }
-.hub-barra a { color: #fff; text-decoration: none; }
-.hub-barra a:hover { text-decoration: underline; }
-.hub-barra kbd { font: inherit; font-size: .75rem; padding: 0 5px; border: 1px solid rgba(255,255,255,.6); border-radius: 4px; }
-.hub-barra button { padding: 2px 8px; border-radius: 6px; background: transparent; color: #fff; border: 1px solid rgba(255,255,255,.6); font-size: .85rem; }
-.hub-barra button[aria-pressed="true"] { background: #fff; color: #082b4d; }
-.hub-aviso-barra { flex-basis: 100%; margin: 4px 0 0; }
+/* Barra de acessibilidade: cinza claro, atalhos em caixa alta com etiqueta Alt+N, como no portal. */
+.hub-barra { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 6px 16px; padding: 8px 24px; background: var(--barra); border-bottom: 1px solid var(--barra-borda); font-size: .75rem; }
+.hub-barra ul { display: flex; flex-wrap: wrap; gap: 4px 18px; list-style: none; margin: 0; padding: 0; align-items: center; }
+.hub-atalhos a { color: #444444; font-weight: 700; text-transform: uppercase; text-decoration: none; }
+.hub-atalhos a:hover { color: #000; text-decoration: underline; }
+.hub-barra kbd { font: inherit; font-size: .65rem; font-weight: 700; padding: 1px 4px; border-radius: 3px; background: #5a6268; color: #fff; }
+.hub-ferramentas { gap: 4px 10px !important; }
+.hub-barra button { padding: 2px 6px; border-radius: 4px; background: transparent; color: #444444; border: 0; font-size: .95rem; }
+.hub-barra button:hover { background: #dddddd; }
+.hub-barra button[aria-pressed="true"] { background: #222; color: #fff; }
+.hub-barra .hub-contraste { display: grid; place-items: center; width: 30px; height: 30px; padding: 0; border-radius: 50%; background: #222; color: #fff; }
+html.alto-contraste .hub-barra a, html.alto-contraste .hub-barra button { color: #ffff00; }
+html.alto-contraste .hub-barra kbd { background: #ffff00; color: #000; }
+html.alto-contraste .hub-barra .hub-contraste { background: #ffff00; color: #000; }
+.hub-aviso-barra { flex-basis: 100%; margin: 4px 0 0; font-size: .85rem; }
 
-.hub-cabecalho { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between; padding: 18px 16px; background: var(--primaria); color: var(--primaria-texto); border-bottom: 4px solid var(--destaque); }
-html.alto-contraste .hub-cabecalho { background: #000; color: #fff; border-bottom-color: #ffff00; }
-html.alto-contraste .hub-busca button { border: 2px solid #ffff00; }
-.hub-marca { display: flex; align-items: center; gap: 12px; line-height: 1.25; }
-.hub-marca strong { font-size: 1.25rem; }
-.hub-selo { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; border: 2px solid var(--destaque); font-weight: 800; font-size: .85rem; letter-spacing: 1px; }
-.hub-busca { display: flex; gap: 6px; flex: 0 1 360px; }
-.hub-busca input { border-radius: 8px; }
-.hub-busca button { background: var(--destaque); color: #1b2330; border-radius: 8px; }
+/* Faixa azul em degradê com links das unidades. */
+.hub-topbar { background: var(--degrade); padding: 10px 24px; }
+html.alto-contraste .hub-topbar { border-bottom: 1px solid #fff; }
+.hub-topbar ul { display: flex; flex-wrap: wrap; gap: 4px 16px; list-style: none; margin: 0 auto; padding: 0; max-width: 1180px; }
+.hub-topbar a { color: #fff; font-size: .8rem; text-decoration: none; }
+.hub-topbar a:hover { text-decoration: underline; }
 
-.hub-menu { background: var(--card); border-bottom: 1px solid var(--borda); }
-.hub-menu ul { display: flex; flex-wrap: wrap; gap: 0; list-style: none; margin: 0 auto; padding: 0 8px; max-width: 1180px; }
-.hub-menu a { display: block; padding: 12px 14px; color: var(--primaria); font-weight: 600; text-decoration: none; }
-.hub-menu a:hover { background: var(--bg); }
+/* Cabeçalho branco: marca em Roboto Condensed + busca. */
+.hub-cabecalho { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; justify-content: space-between; max-width: 1180px; margin: 0 auto; padding: 12px 16px; }
+.hub-marca { display: flex; align-items: center; gap: 10px; }
+.hub-selo { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 4px 4px 50% 50%; background: #9b1c1c; color: #fff; border: 2px solid #c8a24a; font-family: var(--condensada); font-weight: 700; font-size: .75rem; line-height: 1; text-align: center; }
+.hub-marca-nome { font-family: var(--condensada); font-weight: 700; font-size: 1.2rem; text-transform: uppercase; color: var(--menu-texto); letter-spacing: .2px; }
+html.alto-contraste .hub-marca-nome { color: #fff; }
+.hub-busca { display: flex; flex: 0 1 380px; }
+.hub-busca input { border-radius: 4px 0 0 4px; border: 1px solid #ced4da; padding: 7px 12px; font-family: var(--condensada); }
+.hub-busca button { display: grid; place-items: center; padding: 0 14px; border-radius: 0 4px 4px 0; background: #555; color: #fff; }
+html.alto-contraste .hub-busca input { border-color: #fff; }
+html.alto-contraste .hub-busca button { background: #ffff00; color: #000; }
 
-.hub-conteudo { max-width: 1180px; margin: 0 auto; padding: 24px 16px 40px; }
-.hub-conteudo h2 { color: var(--primaria); margin: 32px 0 12px; }
-.hub-conteudo h3 { margin: 20px 0 8px; }
+/* Menu principal: cinza-azulado com borda inferior de 3px, caixa alta condensada. */
+.hub-menu { background: var(--menu); border-bottom: 3px solid var(--menu-borda); }
+.hub-menu ul { display: flex; flex-wrap: wrap; list-style: none; margin: 0 auto; padding: 0 8px; max-width: 1180px; }
+.hub-menu a { display: block; padding: 12px 11px; color: var(--menu-texto); font-family: var(--condensada); font-weight: 500; font-size: .9rem; text-transform: uppercase; text-decoration: none; }
+.hub-menu a:hover, .hub-menu a[aria-current="page"] { background: #d7dfe2; }
+html.alto-contraste .hub-menu a:hover, html.alto-contraste .hub-menu a[aria-current="page"] { background: #222; }
 
-.hub-atendimento { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 24px; align-items: start; background: var(--card); border: 1px solid var(--borda); border-top: 6px solid var(--primaria); border-radius: 14px; padding: 24px; }
-.hub-atendimento h1 { margin: 0 0 8px; color: var(--primaria); font-size: 1.9rem; }
-.hub-atendimento p { font-size: 1.05rem; }
-.hub-chat .card { margin-bottom: 8px; }
-.hub-chat .chat { max-height: 360px; overflow-y: auto; }
+.hub-conteudo { max-width: 1180px; margin: 0 auto; padding: 20px 16px 40px; }
+.hub-titulo { font-family: var(--condensada); font-weight: 600; font-size: 1.15rem; text-transform: uppercase; color: var(--titulo); margin: 28px 0 12px; }
 
-.hub-servicos { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; list-style: none; margin: 0; padding: 0; }
-.hub-servicos a { display: flex; flex-direction: column; gap: 4px; height: 100%; padding: 14px 16px; background: var(--card); border: 1px solid var(--borda); border-left: 4px solid var(--destaque); border-radius: 10px; color: var(--texto); text-decoration: none; }
-.hub-servicos a:hover { border-color: var(--primaria); }
-.hub-servicos strong { color: var(--primaria); }
-.hub-servicos span { color: var(--suave); font-size: .92rem; }
-.hub-colunas { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
-.hub-colunas .hub-servicos { grid-template-columns: 1fr; }
+.hub-destaque { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); gap: 24px; align-items: start; }
 
-.hub-caixa { margin-top: 32px; padding: 4px 20px 12px; background: var(--card); border: 1px solid var(--borda); border-radius: 12px; }
-.hub-pequeno { font-size: .9rem; color: var(--suave); }
+/* Atendimento ByteMe no lugar do destaque principal; topo azul como a caixa "Consulta Processual Unificada". */
+.hub-atendimento { border: 1px solid #888888; background: var(--card); }
+.hub-atendimento-topo { background: var(--degrade); color: #fff; padding: 12px 16px; }
+.hub-atendimento-topo h1 { margin: 0 0 6px; padding-bottom: 6px; border-bottom: 1px solid #eeeeee; font-size: 1.15rem; font-weight: 500; }
+.hub-atendimento-topo p { margin: 0; font-size: .95rem; }
+html.alto-contraste .hub-atendimento-topo { border-bottom: 1px solid #fff; }
+.hub-chat { padding: 12px; }
+.hub-chat .card { margin-bottom: 8px; border-radius: 4px; }
+.hub-chat .chat { max-height: 340px; overflow-y: auto; background: #f5f7fc; }
+html.alto-contraste .hub-chat .chat { background: #000; }
+.hub-chat button { border-radius: 4px; }
+.hub-chat textarea { border-radius: 4px; }
 
-.hub-rodape { background: #082b4d; color: #fff; padding: 24px 16px 80px; }
-html.alto-contraste .hub-rodape { background: #000; border-top: 1px solid #fff; }
-.hub-rodape .hub-pequeno { color: #d6deea; max-width: 1180px; margin: 16px auto 0; }
-.hub-rodape-colunas { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; max-width: 1180px; margin: 0 auto; }
-.hub-rodape h2 { font-size: 1rem; margin: 0 0 8px; color: var(--destaque); }
+/* Acesso rápido: blocos cinza com texto azul, como os atalhos "Portal PJe", "Diário de Justiça" do portal. */
+.hub-acesso .hub-titulo { margin-top: 0; }
+.hub-blocos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; list-style: none; margin: 0; padding: 0; }
+.hub-blocos a { display: flex; flex-direction: column; justify-content: center; gap: 4px; height: 100%; min-height: 96px; padding: 14px 10px; background: var(--bloco); text-align: center; text-decoration: none; }
+.hub-blocos a:hover { background: var(--bloco-hover); }
+.hub-blocos strong { color: var(--primaria); font-weight: 500; }
+.hub-blocos span { color: var(--suave); font-size: .82rem; line-height: 1.3; }
+html.alto-contraste .hub-blocos a { border: 1px solid #fff; }
+.hub-emergencia { margin: 14px 0 0; padding: 10px 12px; border-left: 4px solid #b42318; background: #fdf1f0; font-size: .9rem; }
+html.alto-contraste .hub-emergencia { background: #000; border-left-color: #ffff00; }
+
+/* Abas Cidadão / Advogado como no bloco de abas do portal. */
+.hub-abas { border: 1px solid #cccccc; }
+.hub-abas-lista { display: flex; flex-wrap: wrap; background: var(--primaria); }
+.hub-abas-lista button { flex: 0 1 160px; padding: 12px 16px; border-radius: 0; border-right: 1px solid rgba(255,255,255,.35); background: var(--primaria); color: #fff; font-size: .95rem; }
+.hub-abas-lista button:hover { background: #24508a; }
+.hub-abas-lista button[aria-selected="true"] { background: #f5f5f5; color: #212529; box-shadow: inset 0 3px 0 var(--primaria); }
+html.alto-contraste .hub-abas-lista button { background: #000; color: #ffff00; border: 1px solid #fff; }
+html.alto-contraste .hub-abas-lista button[aria-selected="true"] { background: #ffff00; color: #000; }
+.hub-abas-painel { padding: 16px 24px 20px; }
+.hub-lista { columns: 2 300px; column-gap: 32px; list-style: none; margin: 0; padding: 0; }
+.hub-lista li { break-inside: avoid; position: relative; padding: 0 0 12px 14px; }
+.hub-lista li::before { content: "-"; position: absolute; left: 0; color: var(--texto); }
+.hub-lista a { color: var(--texto); text-decoration: none; }
+.hub-lista a:hover { color: var(--primaria); text-decoration: underline; }
+.hub-lista-para { display: block; color: var(--suave); font-size: .85rem; }
+
+.hub-caixa { margin-top: 28px; padding: 4px 20px 12px; border: 1px solid #cccccc; }
+.hub-caixa .hub-titulo { margin-top: 14px; }
+.hub-caixa a { color: var(--primaria); }
+
+/* Rodapé azul-marinho com faixa "Mapa do site" e bloco de endereço. */
+.hub-rodape { background: var(--rodape); color: #fff; padding: 0 0 80px; }
+html.alto-contraste .hub-rodape { border-top: 1px solid #fff; }
+.hub-rodape-mapa { margin: 0 0 24px; padding: 10px 28px; background: var(--rodape-faixa); border-bottom: 1px solid #323f45; font-weight: 700; text-transform: uppercase; }
+.hub-rodape-colunas { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px 24px; max-width: 1180px; margin: 0 auto; padding: 0 16px; }
+.hub-rodape h2 { font-family: var(--condensada); font-size: 1rem; text-transform: uppercase; margin: 0 0 8px; color: #fff; }
 .hub-rodape ul { list-style: none; margin: 0; padding: 0; }
-.hub-rodape li { margin: 4px 0; }
-.hub-rodape a { color: #fff; }
+.hub-rodape li { padding: 0 0 6px; font-size: .92rem; }
+.hub-rodape a { color: #fff; text-decoration: none; }
+.hub-rodape a:hover { color: var(--rodape-hover); text-decoration: underline; }
+.hub-rodape-base { display: flex; flex-wrap: wrap; gap: 20px 48px; align-items: center; max-width: 1180px; margin: 28px auto 0; padding: 24px 16px 0; border-top: 1px solid rgba(255,255,255,.2); }
+.hub-rodape-nome { font-family: var(--condensada); font-weight: 700; font-size: 1.6rem; line-height: 1.1; text-transform: uppercase; }
+.hub-rodape address { font-style: normal; font-size: .9rem; line-height: 1.6; }
 
-.hub-cookies { position: fixed; left: 16px; right: 16px; bottom: 16px; max-width: 760px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; padding: 12px 16px; background: var(--card); color: var(--texto); border: 1px solid var(--borda); border-radius: 12px; box-shadow: 0 6px 24px rgba(0,0,0,.18); font-size: .9rem; }
-.hub-cookies p { flex: 1 1 300px; margin: 0; }
+/* Aviso de cookies: faixa amarela fixa no rodapé, botão "Ciente" azul. */
+.hub-cookies { position: fixed; left: 0; right: 0; bottom: 0; display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; padding: 14px 24px; background: #fff3cd; color: #5a4300; border-top: 1px solid #ffeeba; font-size: .95rem; z-index: 10; }
+.hub-cookies p { flex: 1 1 320px; margin: 0; }
+.hub-cookies a { color: #0056b3; }
+.hub-cookies button { background: #0062cc; color: #fff; border-radius: 4px; }
+html.alto-contraste .hub-cookies { background: #000; color: #fff; border-top: 1px solid #fff; }
+html.alto-contraste .hub-cookies button { background: #ffff00; color: #000; }
 
-@media (max-width: 760px) {
-  .hub-atendimento { grid-template-columns: 1fr; padding: 16px; }
-  .hub-atendimento h1 { font-size: 1.5rem; }
-  .hub-colunas { grid-template-columns: 1fr; }
+@media (max-width: 860px) {
+  .hub-destaque { grid-template-columns: 1fr; }
+  .hub-barra, .hub-topbar { padding-left: 16px; padding-right: 16px; }
+  .hub-marca-nome { font-size: 1rem; }
   .hub-busca { flex-basis: 100%; }
+  .hub-abas-lista button { flex: 1 1 50%; }
+  .hub-abas-painel { padding: 14px 16px; }
+  .hub-rodape-nome { font-size: 1.3rem; }
 }
