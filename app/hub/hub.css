@@ -1,0 +1,84 @@
+/* Hub de links do TJPA (protótipo visual). Esconde o topo do app ByteMe nesta página. */
+body:has(.portal) > header.topo, body:has(.portal) > .aviso-prototipo { display: none; }
+body:has(.portal) > main { max-width: none; padding: 0; }
+
+.portal {
+  --bg: #f3f5f8; --card: #ffffff; --texto: #1b2330; --suave: #4d5566; --borda: #d3d9e3;
+  --primaria: #0b3d6e; --primaria-texto: #ffffff; --destaque: #c8a24a; --foco: #ffbf47;
+  background: var(--bg); color: var(--texto); min-height: 100vh;
+}
+html.alto-contraste .portal {
+  --bg: #000000; --card: #000000; --texto: #ffffff; --suave: #ffffff; --borda: #ffffff;
+  --primaria: #ffff00; --primaria-texto: #000000; --destaque: #ffff00; --foco: #00ffff;
+}
+html.alto-contraste .portal a { color: #ffff00; text-decoration: underline; }
+.portal :focus-visible { outline: 3px solid var(--foco); outline-offset: 2px; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+.hub-faixa-prototipo { margin: 0; padding: 6px 16px; background: #fff4d6; color: #5a4300; font-size: .85rem; text-align: center; }
+html.alto-contraste .hub-faixa-prototipo { background: #000; color: #fff; border-bottom: 1px solid #fff; }
+
+.hub-barra { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; padding: 6px 16px; background: #082b4d; color: #fff; font-size: .85rem; }
+html.alto-contraste .hub-barra { background: #000; border-bottom: 1px solid #fff; }
+.hub-barra ul { display: flex; flex-wrap: wrap; gap: 4px 14px; list-style: none; margin: 0; padding: 0; align-items: center; }
+.hub-barra a { color: #fff; text-decoration: none; }
+.hub-barra a:hover { text-decoration: underline; }
+.hub-barra kbd { font: inherit; font-size: .75rem; padding: 0 5px; border: 1px solid rgba(255,255,255,.6); border-radius: 4px; }
+.hub-barra button { padding: 2px 8px; border-radius: 6px; background: transparent; color: #fff; border: 1px solid rgba(255,255,255,.6); font-size: .85rem; }
+.hub-barra button[aria-pressed="true"] { background: #fff; color: #082b4d; }
+.hub-aviso-barra { flex-basis: 100%; margin: 4px 0 0; }
+
+.hub-cabecalho { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between; padding: 18px 16px; background: var(--primaria); color: var(--primaria-texto); border-bottom: 4px solid var(--destaque); }
+html.alto-contraste .hub-cabecalho { background: #000; color: #fff; border-bottom-color: #ffff00; }
+html.alto-contraste .hub-busca button { border: 2px solid #ffff00; }
+.hub-marca { display: flex; align-items: center; gap: 12px; line-height: 1.25; }
+.hub-marca strong { font-size: 1.25rem; }
+.hub-selo { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; border: 2px solid var(--destaque); font-weight: 800; font-size: .85rem; letter-spacing: 1px; }
+.hub-busca { display: flex; gap: 6px; flex: 0 1 360px; }
+.hub-busca input { border-radius: 8px; }
+.hub-busca button { background: var(--destaque); color: #1b2330; border-radius: 8px; }
+
+.hub-menu { background: var(--card); border-bottom: 1px solid var(--borda); }
+.hub-menu ul { display: flex; flex-wrap: wrap; gap: 0; list-style: none; margin: 0 auto; padding: 0 8px; max-width: 1180px; }
+.hub-menu a { display: block; padding: 12px 14px; color: var(--primaria); font-weight: 600; text-decoration: none; }
+.hub-menu a:hover { background: var(--bg); }
+
+.hub-conteudo { max-width: 1180px; margin: 0 auto; padding: 24px 16px 40px; }
+.hub-conteudo h2 { color: var(--primaria); margin: 32px 0 12px; }
+.hub-conteudo h3 { margin: 20px 0 8px; }
+
+.hub-atendimento { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 24px; align-items: start; background: var(--card); border: 1px solid var(--borda); border-top: 6px solid var(--primaria); border-radius: 14px; padding: 24px; }
+.hub-atendimento h1 { margin: 0 0 8px; color: var(--primaria); font-size: 1.9rem; }
+.hub-atendimento p { font-size: 1.05rem; }
+.hub-chat .card { margin-bottom: 8px; }
+.hub-chat .chat { max-height: 360px; overflow-y: auto; }
+
+.hub-servicos { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; list-style: none; margin: 0; padding: 0; }
+.hub-servicos a { display: flex; flex-direction: column; gap: 4px; height: 100%; padding: 14px 16px; background: var(--card); border: 1px solid var(--borda); border-left: 4px solid var(--destaque); border-radius: 10px; color: var(--texto); text-decoration: none; }
+.hub-servicos a:hover { border-color: var(--primaria); }
+.hub-servicos strong { color: var(--primaria); }
+.hub-servicos span { color: var(--suave); font-size: .92rem; }
+.hub-colunas { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
+.hub-colunas .hub-servicos { grid-template-columns: 1fr; }
+
+.hub-caixa { margin-top: 32px; padding: 4px 20px 12px; background: var(--card); border: 1px solid var(--borda); border-radius: 12px; }
+.hub-pequeno { font-size: .9rem; color: var(--suave); }
+
+.hub-rodape { background: #082b4d; color: #fff; padding: 24px 16px 80px; }
+html.alto-contraste .hub-rodape { background: #000; border-top: 1px solid #fff; }
+.hub-rodape .hub-pequeno { color: #d6deea; max-width: 1180px; margin: 16px auto 0; }
+.hub-rodape-colunas { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; max-width: 1180px; margin: 0 auto; }
+.hub-rodape h2 { font-size: 1rem; margin: 0 0 8px; color: var(--destaque); }
+.hub-rodape ul { list-style: none; margin: 0; padding: 0; }
+.hub-rodape li { margin: 4px 0; }
+.hub-rodape a { color: #fff; }
+
+.hub-cookies { position: fixed; left: 16px; right: 16px; bottom: 16px; max-width: 760px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; padding: 12px 16px; background: var(--card); color: var(--texto); border: 1px solid var(--borda); border-radius: 12px; box-shadow: 0 6px 24px rgba(0,0,0,.18); font-size: .9rem; }
+.hub-cookies p { flex: 1 1 300px; margin: 0; }
+
+@media (max-width: 760px) {
+  .hub-atendimento { grid-template-columns: 1fr; padding: 16px; }
+  .hub-atendimento h1 { font-size: 1.5rem; }
+  .hub-colunas { grid-template-columns: 1fr; }
+  .hub-busca { flex-basis: 100%; }
+}
