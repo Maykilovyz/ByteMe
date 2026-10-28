@@ -173,6 +173,8 @@ html.alto-contraste .tj-bolha.assistente { background: #000; border-color: #fff;
 .tj-sugestoes { display: flex; gap: 8px; overflow-x: auto; padding: 10px 12px 0; scrollbar-width: thin; }
 .tj-sugestoes button { flex: none; padding: 6px 12px; border: 1px solid var(--azul); border-radius: 999px; background: var(--bg); color: var(--azul); font-size: .85rem; }
 .tj-sugestoes button:hover { background: #e8eef7; }
+.tj-sugestoes { cursor: grab; }
+.tj-sugestoes.arrastando, .tj-sugestoes.arrastando button { cursor: grabbing; user-select: none; }
 html.alto-contraste .tj-sugestoes button:hover { background: #222; }
 .tj-resultado { padding: 12px 14px; border-left: 6px solid #1e7a46; background: #f1f8f3; margin: 10px 12px 0; }
 .tj-resultado.emergencia { border-left-color: #b42318; background: #fdf1f0; }
@@ -1020,6 +1022,29 @@ ${o}
   form.addEventListener("submit", function (e) { e.preventDefault(); enviar(msg.value); });
   msg.addEventListener("keydown", function (e) { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); enviar(msg.value); } });
   sugestoes.querySelectorAll("button").forEach(function (b) { b.addEventListener("click", function () { enviar(b.textContent); }); });
+  // Faixa de sugestões: com o mouse, dá para clicar em qualquer ponto e arrastar para os lados, sem pegar a barra de rolagem.
+  // No toque o dedo já rola sozinho, então só o mouse entra aqui.
+  function arrastarParaRolar(faixa) {
+    var inicioX = 0, inicioRolagem = 0, pressionado = false, arrastou = false;
+    faixa.addEventListener("pointerdown", function (e) {
+      arrastou = false;
+      if (e.pointerType !== "mouse" || e.button !== 0 || faixa.scrollWidth <= faixa.clientWidth) return;
+      pressionado = true; inicioX = e.clientX; inicioRolagem = faixa.scrollLeft;
+    });
+    faixa.addEventListener("pointermove", function (e) {
+      if (!pressionado) return;
+      var dx = e.clientX - inicioX;
+      if (!arrastou && Math.abs(dx) < 6) return; // mão que treme no clique ainda é clique
+      if (!arrastou) { arrastou = true; faixa.setPointerCapture(e.pointerId); faixa.classList.add("arrastando"); }
+      faixa.scrollLeft = inicioRolagem - dx;
+    });
+    function soltar() { pressionado = false; faixa.classList.remove("arrastando"); }
+    faixa.addEventListener("pointerup", soltar);
+    faixa.addEventListener("pointercancel", soltar);
+    // Soltar o mouse em cima de uma sugestão depois de arrastar não envia a sugestão
+    faixa.addEventListener("click", function (e) { if (arrastou) { e.stopPropagation(); e.preventDefault(); arrastou = false; } }, true);
+  }
+  arrastarParaRolar(sugestoes);
 
   // Contar o problema ou entender um papel (abre direto no papel com #papel no endereço, bom para QR Code no totem)
   var modoChat = $("modo-chat"), modoPapel = $("modo-papel"), painelChat = $("painel-chat"), painelPapel = $("painel-papel");
