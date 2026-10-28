@@ -27,20 +27,28 @@ const ERROS: Record<string, string> = {
   network: "O ditado precisa de internet. Tente de novo ou escreva.",
 };
 
+/** Por que o ditado não pode funcionar aqui, ou null. O botão Falar fica sempre à vista e mostra este motivo em vez de sumir. */
+function motivoSemDitado(): string | null {
+  const w = window as unknown as { SpeechRecognition?: unknown; webkitSpeechRecognition?: unknown };
+  if (!w.SpeechRecognition && !w.webkitSpeechRecognition)
+    return "Este navegador não tem ditado por voz. Abra a página no Chrome, no Edge ou no Safari. No Firefox e dentro de apps (WhatsApp, Instagram) o microfone não funciona.";
+  if (!window.isSecureContext)
+    return "O microfone só funciona quando a página é aberta por um endereço https ou por localhost. Pelo IP da rede (http://192.168…) o navegador bloqueia.";
+  return null;
+}
+
 /** Ditado: escreve no campo o que a pessoa fala, para ela conferir antes de enviar. Falar de novo continua o texto. */
 export function useDitado(aoMudar: (texto: string) => void) {
-  const [suportado, setSuportado] = useState(false);
   const [ouvindo, setOuvindo] = useState(false);
   const [erro, setErro] = useState<string | null>(null);
   const rec = useRef<Reconhecimento | null>(null);
 
-  useEffect(() => {
-    setSuportado(!!criarReconhecimento());
-    return () => rec.current?.abort();
-  }, []);
+  useEffect(() => () => rec.current?.abort(), []);
 
   const parar = useCallback(() => rec.current?.stop(), []);
   const comecar = useCallback((textoAtual: string) => {
+    const motivo = motivoSemDitado();
+    if (motivo) return setErro(motivo);
     const r = criarReconhecimento();
     if (!r) return;
     rec.current?.abort();
@@ -59,10 +67,10 @@ export function useDitado(aoMudar: (texto: string) => void) {
     rec.current = r;
     setErro(null);
     setOuvindo(true);
-    try { r.start(); } catch { setOuvindo(false); }
+    try { r.start(); } catch { setOuvindo(false); setErro("Não deu para ligar o microfone. Tente de novo ou escreva."); }
   }, [aoMudar]);
 
-  return { suportado, ouvindo, erro, comecar, parar };
+  return { ouvindo, erro, comecar, parar };
 }
 
 export const temLeituraEmVoz = () => typeof window !== "undefined" && "speechSynthesis" in window;
@@ -84,7 +92,7 @@ export function calar() {
   if (temLeituraEmVoz()) speechSynthesis.cancel();
 }
 
-/** Botão de microfone. Some quando o navegador não tem ditado. */
+/** Botão de microfone. */
 export function BotaoMicrofone({ ouvindo, onClick, disabled }: { ouvindo: boolean; onClick: () => void; disabled?: boolean }) {
   return (
     <button type="button" className={`mic${ouvindo ? " ouvindo" : ""}`} onClick={onClick} disabled={disabled} aria-pressed={ouvindo}>

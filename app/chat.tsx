@@ -103,12 +103,12 @@ export function ChatTriagem() {
         </div>
       ) : (
         <div className="card">
-          <label htmlFor="msg">Sua mensagem{ditado.suportado ? " (escreva ou toque em Falar)" : ""}</label>
+          <label htmlFor="msg">Sua mensagem (escreva ou toque em Falar)</label>
           <div className="linha">
             <textarea id="msg" rows={3} value={texto} onChange={(e) => setTexto(e.target.value)}
               onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); enviar(texto); } }}
               placeholder="Ex.: comprei uma geladeira que chegou quebrada e a loja não quer trocar" />
-            {ditado.suportado && <BotaoMicrofone ouvindo={ditado.ouvindo} onClick={microfone} disabled={enviando} />}
+            <BotaoMicrofone ouvindo={ditado.ouvindo} onClick={microfone} disabled={enviando} />
             <button onClick={() => enviar(texto)} disabled={enviando || !texto.trim()}>Enviar</button>
           </div>
           {ditado.ouvindo && <p className="suave" role="status">Pode falar. Quando terminar, confira o texto e toque em Enviar.</p>}
