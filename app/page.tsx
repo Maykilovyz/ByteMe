@@ -15,7 +15,7 @@ export default function Inicio() {
         </Link>
         <Link className="porta" href="/advogado">
           <h2>Sou advogado</h2>
-          <p>Fila do gabinete, despacho com o juiz, audiência ou certidão: escolha o motivo e receba senha ou horário.</p>
+          <p>Secretaria, despacho, audiência ou certidão: escolha o motivo e receba senha ou horário.</p>
         </Link>
       </div>
     </>
