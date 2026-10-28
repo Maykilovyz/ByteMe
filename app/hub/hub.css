@@ -91,7 +91,7 @@ html.alto-contraste .hub-atendimento-topo { border-bottom: 1px solid #fff; }
 html.alto-contraste .hub-chat .chat { background: #000; }
 .hub-chat button { border-radius: 4px; }
 .hub-chat textarea { border-radius: 4px; }
-.hub-modos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 10px; }
+.hub-modos { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 10px; }
 .hub-modos button { padding: 10px 8px; font-weight: 600; }
 .hub-chat .papel-bloco, .hub-chat .papel-prazo, .hub-chat .papel-senha { border-radius: 4px; }
 
