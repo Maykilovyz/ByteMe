@@ -371,7 +371,7 @@ html.alto-contraste .tj-transp-grupo { --cor: #ffff00; border-color: #fff; }
 
 /* Todos os links */
 .tj-filtro { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
-.tj-filtro input { flex: 1 1 320px; padding: 10px 14px; border: 1px solid #ced4da; border-radius: 4px; background: var(--bg); color: var(--texto); }
+.tj-filtro input { flex: 1 1 320px; min-width: 0; max-width: 100%; padding: 10px 14px; border: 1px solid #ced4da; border-radius: 4px; background: var(--bg); color: var(--texto); }
 html.alto-contraste .tj-filtro input { border-color: #fff; }
 .tj-filtro output { color: var(--suave); font-size: .9rem; }
 .tj-grupos { columns: 2 420px; column-gap: 20px; }
@@ -443,7 +443,7 @@ html.alto-contraste .tj-cookies { background: #000; color: #fff; border-top: 1px
 html.alto-contraste .tj-cookies button { background: #ffff00; color: #000; }
 
 @media (max-width: 1000px) {
-  .tj-destaque { grid-template-columns: 1fr; }
+  .tj-destaque { grid-template-columns: minmax(0, 1fr); } /* 1fr sozinho deixa a faixa de sugestões alargar a página no celular */
   .tj-atalhos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .tj-guia { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); }
   .tj-faixa-noticias .tj-limite { flex-wrap: wrap; }
