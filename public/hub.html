@@ -189,7 +189,7 @@ html.alto-contraste .tj-linha textarea { border-color: #fff; }
 html.alto-contraste .tj-botao { color: #000; }
 html.alto-contraste .tj-botao.sec { color: #ffff00; }
 /* Contar o problema ou entender um papel */
-.tj-modos { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--borda); }
+.tj-modos { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid var(--borda); }
 .tj-modos button { padding: 10px 8px; border: 0; border-bottom: 3px solid transparent; background: var(--fundo); color: var(--azul); font-weight: 500; cursor: pointer; }
 .tj-modos button[aria-pressed="true"] { background: var(--bg); border-bottom-color: var(--azul); color: var(--titulo); font-weight: 700; }
 html.alto-contraste .tj-modos button { color: #ffff00; }
@@ -255,6 +255,17 @@ html.alto-contraste a.tj-botao { color: #000 !important; }
 html.alto-contraste .tj-papel-senha { border-color: #fff; }
 .tj-papel-senha p { margin: 4px 0 0; }
 .tj-papel-aviso { margin: 0; font-size: .78rem; color: var(--suave); }
+/* Atendimento do advogado */
+.tj-adv-intro { margin: 0 0 10px; font-size: .9rem; }
+.tj-adv-campos { display: grid; grid-template-columns: 1fr 1fr; gap: 0 10px; }
+.tj-adv input, .tj-adv select { display: block; width: 100%; margin-bottom: 8px; padding: 8px 10px; border: 1px solid #ced4da; border-radius: 4px; background: var(--bg); color: var(--texto); }
+html.alto-contraste .tj-adv input, html.alto-contraste .tj-adv select { border-color: #fff; }
+.tj-adv .tj-papel-dica:empty { display: none; }
+.tj-adv .tj-papel-dica { margin-top: -2px; }
+#adv-resultado .tj-resultado { margin: 12px 0 0; }
+#adv-resultado .tj-resultado p { margin: 4px 0; }
+.tj-adv-erro { margin: 10px 0 0; color: #b42318; font-weight: 700; }
+html.alto-contraste .tj-adv-erro { color: #ffff00; }
 .tj-emergencia { margin: 0; padding: 8px 12px; font-size: .85rem; border-top: 1px solid var(--borda); background: #fdf1f0; }
 html.alto-contraste .tj-emergencia { background: #000; }
 
@@ -409,6 +420,7 @@ html.alto-contraste .tj-cookies button { background: #ffff00; color: #000; }
   .tj-atendimento-topo h1 { font-size: 1.4rem; }
   .tj-atendimento-topo p { font-size: .92rem; }
   .tj-chat { height: 200px; }
+  .tj-adv-campos { grid-template-columns: 1fr; }
   .tj-linha { flex-wrap: wrap; }
   .tj-linha textarea { flex-basis: 100%; font-size: 1rem; }
   .tj-linha .tj-botao { flex: 1; min-height: 46px; }
@@ -536,7 +548,8 @@ html.alto-contraste .tj-cookies button { background: #ffff00; color: #000; }
       </div>
       <div class="tj-modos" role="group" aria-label="O que você quer fazer">
         <button type="button" id="modo-chat" aria-pressed="true">Contar meu problema</button>
-        <button type="button" id="modo-papel" aria-pressed="false">Entender um papel que recebi</button>
+        <button type="button" id="modo-papel" aria-pressed="false">Entender um papel</button>
+        <button type="button" id="modo-adv" aria-pressed="false">Sou advogado</button>
       </div>
       <div id="painel-chat">
       <div class="tj-chat" id="chat" aria-live="polite" tabindex="0" aria-label="Conversa com o atendimento">
@@ -575,6 +588,22 @@ html.alto-contraste .tj-cookies button { background: #ffff00; color: #000; }
         </div>
         <div class="tj-papel-resultado" id="papel-resultado" tabindex="-1" aria-labelledby="papel-titulo" hidden></div>
       </div>
+      <div id="painel-adv" class="tj-papel tj-adv" hidden>
+        <p class="tj-adv-intro"><strong>Fila do gabinete</strong> com senha e previsão de espera. A secretaria continua no Balcão Virtual, que já mostra a fila dela.</p>
+        <form id="form-adv" novalidate>
+          <div class="tj-adv-campos">
+            <div><label for="adv-oab" class="tj-papel-rotulo">Número da OAB</label><input id="adv-oab" placeholder="PA 12345" autocomplete="off" autocapitalize="characters"></div>
+            <div><label for="adv-processo" class="tj-papel-rotulo">Processo (opcional)</label><input id="adv-processo" placeholder="0000000-00.0000.8.14.0000"></div>
+          </div>
+          <label for="adv-motivo" class="tj-papel-rotulo">Motivo</label>
+          <select id="adv-motivo"><option value="gabinete">Atendimento no gabinete (assessoria do juiz)</option><option value="despacho_juiz">Despacho com o juiz</option><option value="audiencia">Audiência</option><option value="secretaria">Secretaria da vara (pelo Balcão Virtual)</option><option value="certidao">Certidão</option><option value="suporte_sistema">Problema de sistema (login, assinatura, PJe)</option><option value="outro">Outro motivo</option></select>
+          <p class="tj-papel-dica" id="adv-dica" aria-live="polite"></p>
+          <label for="adv-vara" class="tj-papel-rotulo" id="adv-vara-rotulo">Vara ou setor</label>
+          <select id="adv-vara"><option value="">Não sei / não se aplica</option><option value="jec_civel_ananindeua">Juizado Especial Cível de Ananindeua (1ª, 2ª e 3ª Varas)</option><option value="vara_civel_ananindeua">Vara Cível e Empresarial de Ananindeua</option><option value="vara_familia_ananindeua">Vara de Família de Ananindeua</option><option value="vara_violencia_domestica_ananindeua">Vara de Violência Doméstica e Familiar contra a Mulher de Ananindeua</option><option value="jec_civel_belem">Juizado Especial Cível de Belém</option><option value="vara_civel_belem">Vara Cível e Empresarial de Belém</option><option value="vara_familia_belem">Vara de Família de Belém</option><option value="vara_violencia_domestica_belem">Vara de Violência Doméstica e Familiar contra a Mulher de Belém</option></select>
+          <button class="tj-botao" type="submit" id="adv-enviar">Continuar</button>
+        </form>
+        <div id="adv-resultado" aria-live="polite"></div>
+      </div>
       <p class="tj-emergencia">Em caso de violência ou ameaça, ligue <strong>190</strong> (Polícia) ou <strong>180</strong> (Central da Mulher).</p>
     </section>
 
@@ -601,7 +630,7 @@ html.alto-contraste .tj-cookies button { background: #ffff00; color: #000; }
         <button role="tab" id="aba-advogado" aria-controls="painel-advogado" aria-selected="false" tabindex="-1">Sou advogado</button>
       </div>
       <div role="tabpanel" id="painel-cidadao" aria-labelledby="aba-cidadao"><ul class="tj-atalhos"><li style="--i:0"><a href="https://consultas.tjpa.jus.br/consultaunificada/consulta/principal#" target="_blank" rel="noopener noreferrer"><strong>Consultar um processo</strong><span>Pelo número ou pelo nome da parte</span><span class="sr-only"> (abre em nova aba)</span></a></li><li style="--i:0"><a href="https://www.tjpa.jus.br/PortalExterno/institucional/Atermacao-Online/1590300-atermacao-online.xhtml" target="_blank" rel="noopener noreferrer"><strong>Entrar com ação sem advogado</strong><span>Atermação on-line nos Juizados, causas de até 20 salários mínimos</span><span class="sr-only"> (abre em nova aba)</span></a></li><li style="--i:0"><a href="https://docs.google.com/forms/d/e/1FAIpQLSctMJmgjs6jjRDWCfqxY0-0B5AB3ctXT6iG7XQWQEwOi_u6Uw/viewform" target="_blank" rel="noopener noreferrer"><strong>Tentar um acordo antes</strong><span>CEJUSC Virtual: audiência de conciliação ou mediação</span><span class="sr-only"> (abre em nova aba)</span></a></li><li style="--i:0"><a href="https://www.tjpa.jus.br/PortalExterno/institucional/Balcao-Virtual-e-Contatos/785286-atendimento-tjpa.xhtml" target="_blank" rel="noopener noreferrer"><strong>Falar com a vara por vídeo</strong><span>Balcão Virtual e contatos das unidades</span><span class="sr-only"> (abre em nova aba)</span></a></li><li class="tj-extra" style="--i:0"><a href="https://www.tjpa.jus.br/PortalExterno/institucional/Balcao-Virtual-e-Contatos/844288-agendamento-online.xhtml" target="_blank" rel="noopener noreferrer"><strong>Marcar atendimento presencial</strong><span>Agendamento on-line</span><span class="sr-only"> (abre em nova aba)</span></a></li><li class="tj-extra" style="--i:1"><a href="https://portal-certidao.tjpa.jus.br/" target="_blank" rel="noopener noreferrer"><strong>Tirar uma certidão</strong><span>Cível ou criminal, grátis, e conferir autenticidade</span><span class="sr-only"> (abre em nova aba)</span></a></li><li class="tj-extra" style="--i:2"><a href="https://www.consumidor.gov.br/pages/principal/?1568897284901" target="_blank" rel="noopener noreferrer"><strong>Reclamar de uma empresa</strong><span>Consumidor.gov.br, antes de ir à Justiça</span><span class="sr-only"> (abre em nova aba)</span></a></li><li class="tj-extra" style="--i:3"><a href="https://apps.tjpa.jus.br/ouvidoria/externo/cadastro.do" target="_blank" rel="noopener noreferrer"><strong>Reclamar ou elogiar o Tribunal</strong><span>Ouvidoria (Fale com o Tribunal)</span><span class="sr-only"> (abre em nova aba)</span></a></li></ul></div>
-      <div role="tabpanel" id="painel-advogado" aria-labelledby="aba-advogado" hidden><ul class="tj-atalhos"><li style="--i:0"><a href="https://www.tjpa.jus.br/PortalExterno/institucional/Portal-PJE/942-Apresentacao.xhtml" target="_blank" rel="noopener noreferrer"><strong>Portal PJe</strong><span>Peticionar e acompanhar processos eletrônicos</span><span class="sr-only"> (abre em nova aba)</span></a></li><li style="--i:0"><a href="https://consultas.tjpa.jus.br/push/login" target="_blank" rel="noopener noreferrer"><strong>Push · Agenda do advogado</strong><span>Aviso de andamento dos seus processos</span><span class="sr-only"> (abre em nova aba)</span></a></li><li style="--i:0"><a href="https://dje.tjpa.jus.br/ClientDJEletronico/app/home.html" target="_blank" rel="noopener noreferrer"><strong>Diário da Justiça Eletrônico</strong><span>Publicações e intimações</span><span class="sr-only"> (abre em nova aba)</span></a></li><li style="--i:0"><a href="https://apps.tjpa.jus.br/custas/" target="_blank" rel="noopener noreferrer"><strong>Emissão de custas</strong><span>Gerar guia de custas processuais</span><span class="sr-only"> (abre em nova aba)</span></a></li><li class="tj-extra" style="--i:0"><a href="https://apps.tjpa.jus.br/DepositosJudiciaisOnline/" target="_blank" rel="noopener noreferrer"><strong>Depósitos judiciais</strong><span>Emitir guias de depósito</span><span class="sr-only"> (abre em nova aba)</span></a></li><li class="tj-extra" style="--i:1"><a href="https://jurisprudencia.tjpa.jus.br/login" target="_blank" rel="noopener noreferrer"><strong>Jurisprudência e súmulas</strong><span>Pesquisar decisões do Tribunal</span><span class="sr-only"> (abre em nova aba)</span></a></li><li class="tj-extra" style="--i:2"><a href="https://www.tjpa.jus.br/PortalExterno/institucional/Secretaria-de-Tecnologia-da-Informacao-e-Comunicacao-do-TJPA/611283-sustentacao-oral-advogados.xhtml" target="_blank" rel="noopener noreferrer"><strong>Sustentação oral</strong><span>Inscrição para sustentação oral</span><span class="sr-only"> (abre em nova aba)</span></a></li><li class="tj-extra" style="--i:3"><a href="https://www.tjpa.jus.br/PortalExterno/institucional/Manuais-e-videos---PJe-(externo)/1087291-advogados.xhtml" target="_blank" rel="noopener noreferrer"><strong>Manuais e vídeos do PJe</strong><span>Passo a passo para advogados</span><span class="sr-only"> (abre em nova aba)</span></a></li></ul></div>
+      <div role="tabpanel" id="painel-advogado" aria-labelledby="aba-advogado" hidden><ul class="tj-atalhos"><li style="--i:0"><a href="#advogado"><strong>Fila do gabinete</strong><span>Senha e previsão de espera no gabinete da vara (ByteMe)</span></a></li><li style="--i:0"><a href="https://www.tjpa.jus.br/PortalExterno/institucional/Portal-PJE/942-Apresentacao.xhtml" target="_blank" rel="noopener noreferrer"><strong>Portal PJe</strong><span>Peticionar e acompanhar processos eletrônicos</span><span class="sr-only"> (abre em nova aba)</span></a></li><li style="--i:0"><a href="https://consultas.tjpa.jus.br/push/login" target="_blank" rel="noopener noreferrer"><strong>Push · Agenda do advogado</strong><span>Aviso de andamento dos seus processos</span><span class="sr-only"> (abre em nova aba)</span></a></li><li style="--i:0"><a href="https://dje.tjpa.jus.br/ClientDJEletronico/app/home.html" target="_blank" rel="noopener noreferrer"><strong>Diário da Justiça Eletrônico</strong><span>Publicações e intimações</span><span class="sr-only"> (abre em nova aba)</span></a></li><li class="tj-extra" style="--i:0"><a href="https://apps.tjpa.jus.br/custas/" target="_blank" rel="noopener noreferrer"><strong>Emissão de custas</strong><span>Gerar guia de custas processuais</span><span class="sr-only"> (abre em nova aba)</span></a></li><li class="tj-extra" style="--i:1"><a href="https://apps.tjpa.jus.br/DepositosJudiciaisOnline/" target="_blank" rel="noopener noreferrer"><strong>Depósitos judiciais</strong><span>Emitir guias de depósito</span><span class="sr-only"> (abre em nova aba)</span></a></li><li class="tj-extra" style="--i:2"><a href="https://jurisprudencia.tjpa.jus.br/login" target="_blank" rel="noopener noreferrer"><strong>Jurisprudência e súmulas</strong><span>Pesquisar decisões do Tribunal</span><span class="sr-only"> (abre em nova aba)</span></a></li><li class="tj-extra" style="--i:3"><a href="https://www.tjpa.jus.br/PortalExterno/institucional/Secretaria-de-Tecnologia-da-Informacao-e-Comunicacao-do-TJPA/611283-sustentacao-oral-advogados.xhtml" target="_blank" rel="noopener noreferrer"><strong>Sustentação oral</strong><span>Inscrição para sustentação oral</span><span class="sr-only"> (abre em nova aba)</span></a></li><li class="tj-extra" style="--i:4"><a href="https://www.tjpa.jus.br/PortalExterno/institucional/Manuais-e-videos---PJe-(externo)/1087291-advogados.xhtml" target="_blank" rel="noopener noreferrer"><strong>Manuais e vídeos do PJe</strong><span>Passo a passo para advogados</span><span class="sr-only"> (abre em nova aba)</span></a></li></ul></div>
       <button type="button" class="tj-ver-mais" id="ver-mais" aria-expanded="false"><span>Ver mais serviços</span>
         <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg></button>
     </div>
@@ -971,16 +1000,81 @@ html.alto-contraste .tj-cookies button { background: #ffff00; color: #000; }
   msg.addEventListener("keydown", function (e) { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); enviar(msg.value); } });
   sugestoes.querySelectorAll("button").forEach(function (b) { b.addEventListener("click", function () { enviar(b.textContent); }); });
 
-  // Contar o problema ou entender um papel (abre direto no papel com #papel no endereço, bom para QR Code no totem)
-  var modoChat = $("modo-chat"), modoPapel = $("modo-papel"), painelChat = $("painel-chat"), painelPapel = $("painel-papel");
-  function modo(papel) {
-    modoChat.setAttribute("aria-pressed", String(!papel)); modoPapel.setAttribute("aria-pressed", String(papel));
-    painelChat.hidden = papel; painelPapel.hidden = !papel;
+  // Contar o problema, entender um papel ou atendimento do advogado.
+  // #papel e #advogado no endereço abrem direto na opção (bom para QR Code no totem e para o atalho "Fila do gabinete").
+  var painelPapel = $("painel-papel");
+  var MODOS = { chat: ["modo-chat", "painel-chat"], papel: ["modo-papel", "painel-papel"], adv: ["modo-adv", "painel-adv"] };
+  function modo(nome) {
+    Object.keys(MODOS).forEach(function (k) {
+      $(MODOS[k][0]).setAttribute("aria-pressed", String(k === nome));
+      $(MODOS[k][1]).hidden = k !== nome;
+    });
     calar(); pararDitado();
   }
-  modoChat.addEventListener("click", function () { modo(false); });
-  modoPapel.addEventListener("click", function () { modo(true); });
-  if (location.hash === "#papel") modo(true);
+  Object.keys(MODOS).forEach(function (k) { $(MODOS[k][0]).addEventListener("click", function () { modo(k); }); });
+  function modoDoEndereco(rolar) {
+    var nome = { "#papel": "papel", "#advogado": "adv" }[location.hash];
+    if (!nome) return;
+    modo(nome);
+    if (rolar) $("titulo-atendimento").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+  modoDoEndereco(false);
+  window.addEventListener("hashchange", function () { modoDoEndereco(true); });
+
+  // Atendimento do advogado: mesma API do app (/api/advogado).
+  // A fila oferecida é a do gabinete; a secretaria vai para o Balcão Virtual, que já mostra a fila dela (sugestão de advogada, 28/10/2026).
+  var advMotivo = $("adv-motivo"), advVara = $("adv-vara"), advDica = $("adv-dica"), advRes = $("adv-resultado"), advEnviar = $("adv-enviar");
+  var DICAS_ADV = {
+    gabinete: "Fila do gabinete da vara, com senha e previsão de espera. A fila da secretaria você já vê no Balcão Virtual.",
+    secretaria: "A secretaria atende pelo Balcão Virtual do TJPA, por vídeo. Lá você vê o tamanho da fila."
+  };
+  function dicaAdv() {
+    advDica.textContent = DICAS_ADV[advMotivo.value] || "";
+    $("adv-vara-rotulo").textContent = "Vara ou setor" + (advMotivo.value === "gabinete" ? " (obrigatório para a fila do gabinete)" : "");
+  }
+  advMotivo.addEventListener("change", dicaAdv); dicaAdv();
+  function mostrarAdv(r) {
+    advRes.innerHTML = "";
+    if (r.erro) { advRes.appendChild(el("p", r.erro, "tj-adv-erro")); return; }
+    var box = el("div", null, "tj-resultado");
+    var senha = /Senha (\S+)/.exec(r.texto || "");
+    if (senha) { box.appendChild(el("div", "Sua senha")); box.appendChild(el("div", senha[1], "tj-senha")); }
+    box.appendChild(el("p", r.texto));
+    if (r.horarios) {
+      var horas = el("div", null, "tj-papel-acoes");
+      r.horarios.forEach(function (h) {
+        var b = el("button", h, "tj-botao sec"); b.type = "button";
+        b.onclick = function () { enviarAdv({ protocolo: r.protocolo, horario: h }); };
+        horas.appendChild(b);
+      });
+      box.appendChild(horas);
+    }
+    if (r.link) {
+      var a = el("a", "Abrir o Balcão Virtual", "tj-botao"); a.href = r.link; a.target = "_blank"; a.rel = "noopener noreferrer";
+      a.appendChild(el("span", " (abre em nova aba)", "sr-only"));
+      var p = el("p"); p.appendChild(a); box.appendChild(p);
+    }
+    if (r.protocolo && (r.texto || "").indexOf(r.protocolo) < 0) box.appendChild(el("p", "Protocolo: " + r.protocolo, "tj-papel-sub"));
+    advRes.appendChild(box);
+  }
+  function enviarAdv(corpo) {
+    advEnviar.disabled = true;
+    advRes.innerHTML = ""; advRes.appendChild(el("p", "Enviando…", "tj-papel-status lendo"));
+    fetch("/api/advogado", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(corpo) })
+      .then(function (r) { return r.json(); })
+      .then(mostrarAdv, function () {
+        mostrarAdv({ erro: location.protocol === "file:"
+          ? "O atendimento do advogado precisa do servidor ByteMe. Rode o app (npm run dev) e abra http://localhost:3000/hub.html."
+          : "Tivemos um problema. Tente de novo ou use o Balcão Virtual." });
+      })
+      .then(function () { advEnviar.disabled = false; });
+  }
+  $("form-adv").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var oab = $("adv-oab").value.trim();
+    if (!oab) { mostrarAdv({ erro: "Informe o número da OAB (UF + número, ex.: PA 12345)." }); $("adv-oab").focus(); return; }
+    enviarAdv({ oab: oab, processo: $("adv-processo").value.trim() || null, motivoId: advMotivo.value, unidadeId: advVara.value || null });
+  });
 
   // Entenda seu papel: usa a mesma API do app ByteMe (/api/papel). A IA lê; as regras do servidor decidem o que fazer.
   var EXEMPLOS_PAPEL = [{"nome": "Intimação para audiência", "texto": "PODER JUDICIÁRIO DO ESTADO DO PARÁ\n1ª VARA DO JUIZADO ESPECIAL CÍVEL DE ANANINDEUA\n\nINTIMAÇÃO DE AUDIÊNCIA\n\nProcesso nº 0801234-56.2026.8.14.0006\nRequerente: Rita de Cássia Souza\nRequerido: Loja Exemplo Eletrodomésticos Ltda.\n\nDe ordem do(a) MM. Juiz(a) de Direito, fica a parte requerente INTIMADA para comparecer à AUDIÊNCIA DE CONCILIAÇÃO designada para o dia 18/11/2026, às 10h30min.\n\nLocal: Fórum de Ananindeua, Rua Exemplo, 100, Centro, Ananindeua/PA.\n\nO não comparecimento da parte autora à audiência implicará a extinção do processo sem resolução do mérito e a condenação ao pagamento de custas (art. 51, I, da Lei nº 9.099/95).\n\nAnanindeua, 21 de outubro de 2026."}, {"nome": "Citação com prazo", "texto": "PODER JUDICIÁRIO DO ESTADO DO PARÁ\n2ª VARA CÍVEL E EMPRESARIAL DE ANANINDEUA\n\nCARTA DE CITAÇÃO\n\nProcesso nº 0805678-90.2026.8.14.0006\nAutor: Banco Exemplo S.A.\nRéu: José Carlos Pereira\n\nPela presente, fica V. Sa. CITADO(A) para, querendo, apresentar CONTESTAÇÃO no prazo de 15 (quinze) dias úteis, por meio de advogado ou da Defensoria Pública, sob pena de revelia, presumindo-se verdadeiras as alegações de fato formuladas pelo autor (art. 344 do CPC).\n\nAnanindeua, 22 de outubro de 2026."}, {"nome": "Sentença", "texto": "PODER JUDICIÁRIO DO ESTADO DO PARÁ\n1ª VARA DO JUIZADO ESPECIAL CÍVEL DE ANANINDEUA\n\nSENTENÇA\n\nProcesso nº 0801234-56.2026.8.14.0006\nRequerente: Rita de Cássia Souza\nRequerido: Loja Exemplo Eletrodomésticos Ltda.\n\nDispensado o relatório (art. 38 da Lei nº 9.099/95). A requerente comprovou a compra da geladeira e o defeito apresentado em 10 dias de uso, sem solução pela loja.\n\nAnte o exposto, JULGO PROCEDENTE o pedido para condenar a requerida a restituir à requerente o valor de R$ 2.500,00, com correção monetária.\n\nSem custas e honorários nesta fase (art. 55 da Lei nº 9.099/95). Publique-se. Registre-se. Intimem-se.\n\nAnanindeua, 2 de dezembro de 2026."}];
