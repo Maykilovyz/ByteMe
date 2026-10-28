@@ -62,6 +62,25 @@ for (const [f, esperado] of frases) {
   if (passou) okF++;
   console.log(`${passou ? "OK  " : "FALHA"} ordem ao assistente? "${f}" -> ${tentouInstruirIA(f)}`);
 }
-const total = casos.length + frases.length, certos = ok + okF;
+// Alerta de perigo por palavras: frases comuns não podem disparar (o ditado por voz escreve "faça" com cedilha).
+const riscos: [string, boolean][] = [
+  ["quero que a loja faça a troca", false],
+  ["fui na farmácia e cobraram errado", false],
+  ["o armário veio quebrado", false],
+  ["a empresa armazenou meus dados", false],
+  ["ele ameaçou me bater", true],
+  ["ele ameacou", true],
+  ["ele tem uma arma em casa", true],
+  ["levei uma facada", true],
+  ["meu marido me bateu ontem", true],
+  ["estou sofrendo violência em casa", true],
+];
+let okR = 0;
+for (const [f, esperado] of riscos) {
+  const passou = riscoPorPalavras(f) === esperado;
+  if (passou) okR++;
+  console.log(`${passou ? "OK  " : "FALHA"} perigo? "${f}" -> ${riscoPorPalavras(f)}`);
+}
+const total = casos.length + frases.length + riscos.length, certos = ok + okF + okR;
 console.log(`\n${certos}/${total} regras corretas`);
 process.exit(certos === total ? 0 : 1);
