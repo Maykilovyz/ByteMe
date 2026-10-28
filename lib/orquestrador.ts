@@ -1,9 +1,11 @@
 // Função principal do backend: segue o fluxograma "raciocínio da IA" (v2) com as correções de 25/10.
+import { ATRASO_SIMULADOR_MS, modoSimulador } from "./config";
 import { unidadePorId } from "./dados";
+import { checarSemIA, etapaDepoisDaFicha } from "./fluxo";
 import { llmMontaFicha, type Ficha } from "./llm";
-import { aplicarRegras, normalizarFicha, proximoPasso, type Decisao } from "./regras";
+import { normalizarFicha, type Decisao } from "./regras";
 import { textoResposta, TEXTO_EMERGENCIA, TEXTO_ENCAMINHADO } from "./respostas";
-import { pediuHumano, riscoPorPalavras, tentouInstruirIA } from "./risco";
+import { simularFicha } from "./simulador";
 import { atualizar, criarAtendimento, gerarSenha, mudarStatus, obter, previsaoEsperaMin, registrar } from "./store";
 import type { Atendimento } from "./tipos";
 
@@ -70,6 +72,13 @@ async function finalizar(at: Atendimento, d: Decisao, ficha: Ficha): Promise<Res
   };
 }
 
+/** Quem lê a conversa: a IA ou, sem chave de IA (ou com MODO_IA=simulador), o simulador de demonstração. */
+async function lerConversa(at: Atendimento) {
+  if (!modoSimulador()) return llmMontaFicha(at.historico, at.perguntasFeitas);
+  await new Promise((ok) => setTimeout(ok, ATRASO_SIMULADOR_MS));
+  return simularFicha(at.historico, at.perguntasFeitas);
+}
+
 export async function triar(entrada: { protocolo?: string; mensagem: string; canal?: string }): Promise<RespostaTriagem> {
   const mensagem = entrada.mensagem.trim().slice(0, 2000);
   let at = entrada.protocolo ? await obter(entrada.protocolo) : undefined;
@@ -77,14 +86,13 @@ export async function triar(entrada: { protocolo?: string; mensagem: string; can
   at.historico.push({ papel: "cidadao", texto: mensagem, em: agora() });
 
   // 1. Pedido de humano e risco por palavras: sem IA, em toda mensagem.
-  if (pediuHumano(mensagem)) return await encaminhar(at, "pedido_do_cidadao", null);
-  if (riscoPorPalavras(mensagem)) return await encaminhar(at, "risco_por_palavras", null, true);
-  if (tentouInstruirIA(mensagem)) return await encaminhar(at, "ordem_ao_assistente", null);
+  const semIA = checarSemIA(mensagem);
+  if (semIA) return await encaminhar(at, semIA.motivo, null, semIA.emergencia);
 
   // 2. IA monta a ficha (com a conversa inteira).
   let ficha: Ficha;
   try {
-    const r = await llmMontaFicha(at.historico, at.perguntasFeitas);
+    const r = await lerConversa(at);
     ficha = normalizarFicha(r.ficha);
     registrar(at, "ficha_ia", { provedor: r.provedor, ms: r.ms, bruto: r.bruto });
   } catch (e) {
@@ -93,20 +101,17 @@ export async function triar(entrada: { protocolo?: string; mensagem: string; can
   }
   at.ficha = ficha;
 
-  if (ficha.risco_imediato) return await encaminhar(at, "risco_detectado_pela_ia", ficha, true);
-  if (ficha.quer_humano) return await encaminhar(at, "pedido_do_cidadao", ficha);
-
-  // 3. Perguntas (no máximo MAX_PERGUNTAS; o contador fica no código).
-  const passo = proximoPasso(ficha, at.perguntasFeitas);
-  if (passo.tipo === "pergunta") {
+  // 3. Risco ou pedido de humano vistos pela IA, perguntas (no máximo MAX_PERGUNTAS; o contador fica no código) ou regras fixas.
+  const etapa = etapaDepoisDaFicha(ficha, at.perguntasFeitas);
+  if (etapa.tipo === "encaminhar") return await encaminhar(at, etapa.motivo, ficha, etapa.emergencia);
+  if (etapa.tipo === "pergunta") {
     at.perguntasFeitas += 1;
-    responderAssistente(at, passo.pergunta);
-    registrar(at, "pergunta", { faltando: passo.faltando, pergunta: passo.pergunta });
+    responderAssistente(at, etapa.pergunta);
+    registrar(at, "pergunta", { faltando: etapa.faltando, pergunta: etapa.pergunta });
     await atualizar(at);
-    return { protocolo: at.protocolo, tipo: "pergunta", texto: passo.pergunta, ficha };
+    return { protocolo: at.protocolo, tipo: "pergunta", texto: etapa.pergunta, ficha };
   }
-  if (passo.tipo === "atendente") return await encaminhar(at, passo.motivo, ficha);
 
   // 4. Regras fixas decidem.
-  return await finalizar(at, aplicarRegras(ficha), ficha);
+  return await finalizar(at, etapa.decisao, ficha);
 }

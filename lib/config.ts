@@ -13,6 +13,15 @@ export const GROQ_MODEL = process.env.GROQ_MODEL || "openai/gpt-oss-120b";
 export const CONFIANCA_MINIMA = 0.7;
 export const MINUTOS_POR_ATENDIMENTO = 8; // usado na previsão de espera; ajustar com dados reais
 
+// Quem lê a conversa na triagem. MODO_IA=simulador: sempre o simulador de demonstração (lib/simulador.ts), sem IA.
+// MODO_IA=ia: sempre a IA (sem chave, todo caso vai ao atendente). Sem MODO_IA: a IA, ou o simulador quando não há chave de IA.
+export function modoSimulador(): boolean {
+  if (process.env.MODO_IA === "simulador") return true;
+  if (process.env.MODO_IA === "ia") return false;
+  return !process.env.GEMINI_API_KEY && !process.env.GROQ_API_KEY;
+}
+export const ATRASO_SIMULADOR_MS = 700; // o simulador responde na hora; a pausa deixa ver o "Lendo o que você escreveu…", como com a IA
+
 export function slug(texto: string | null | undefined): string {
   return (texto ?? "")
     .normalize("NFD").replace(/[̀-ͯ]/g, "")

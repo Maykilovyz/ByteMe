@@ -19,6 +19,37 @@ Cidadão escreve ──► risco/pedido de humano (palavras, sem IA)
 - Toda decisão fica gravada com o motivo (auditoria e painel).
 - "Falar com uma pessoa" funciona a qualquer momento. Sinal de violência ou ameaça mostra 190/180/192 e chama um atendente.
 
+## Entenda seu papel (`/papel` e no hub)
+
+A pessoa recebeu uma intimação, citação ou sentença e não entendeu. Ela tira uma foto (ou manda o PDF, ou cola o texto) e recebe 3 blocos em linguagem simples: **o que é**, **o que fazer** e **até quando**, com o prazo em destaque, botão "Ouvir a explicação", link da Defensoria Pública e "Falar com uma pessoa" (gera senha na mesma fila).
+
+```
+Foto, PDF ou texto ──► IA LÊ o papel (tipo, quem mandou, prazo, audiência, palavras difíceis; o texto do papel é dado, nunca ordem)
+                   └─► código confere: com texto colado, prazo e número do processo vêm do próprio texto; prazo que não está escrito é descartado
+                         └─► REGRAS FIXAS (lib/papel.ts): o que fazer, Defensoria, atendente, emergência
+```
+
+- A IA só explica o que o papel diz. **O que fazer vem de textos fixos**, revisáveis pelo jurídico.
+- O sistema **não calcula a data final do prazo**: mostra o prazo como está escrito e avisa que a contagem pode já ter começado.
+- Violência doméstica, medida protetiva ou crime: vai para um atendente, com calma, e mostra 190 e 180.
+- Foto borrada ou papel que não é da Justiça: atendente.
+- **Sem chave da IA**, o texto colado é lido por regras (palavras-chave, prazo, data e hora da audiência, número CNJ e um glossário de ~30 termos). Foto e PDF precisam da IA. A demo tem 3 papéis fictícios de exemplo (`lib/papel-exemplos.ts`).
+- O papel é usado só para a leitura e não fica guardado no ByteMe.
+
+## Falar em vez de escrever
+
+O chat (em `/cidadao`, no `/hub` e no `hub.html`) tem botão **Falar**: o que a pessoa diz aparece no campo para ela conferir antes de enviar. Quem fala recebe a resposta lida em voz alta (dá para ligar e desligar). Usa o que o navegador já tem (Web Speech API), sem custo: funciona no Chrome, Edge e Safari, só em https ou localhost. No Firefox o botão não aparece.
+
+## Modo demonstração: simulador da IA
+
+Enquanto a IA não está ligada, a triagem funciona com um **simulador** (`lib/simulador.ts`). Ele faz o papel da IA, ler a conversa e montar a ficha, e as **regras fixas continuam decidindo** do mesmo jeito: perguntas (no máximo 4), 20/40 salários mínimos, órgãos externos, emergência e atendente.
+
+- **Quando liga:** sozinho quando não há `GEMINI_API_KEY` nem `GROQ_API_KEY`, ou sempre com `MODO_IA=simulador`. Com `MODO_IA=ia`, nunca (sem chave, todo caso vai ao atendente).
+- **Como lê:** pistas por assunto, os exemplos "Como o cidadão costuma falar" da planilha e expressões para valor ("paguei 2500", "dois mil e quinhentos", "45 mil"), cidade, porte da empresa, risco e pedido de humano. A pergunta do valor sai no jeito de cada assunto ("Quanto você pagou pela geladeira, mais ou menos?").
+- **Transparência:** a tela mostra "Modo demonstração" abaixo da conversa, e a auditoria registra `provedor: simulador`.
+- **Resultado** (`npm run testar-simulador`): 53/53 frases de teste da planilha, 62/62 exemplos da planilha e 85/85 frases novas escritas para o teste. Mas as regras foram ajustadas olhando essas frases: em frases nunca vistas, ele acertou de 76% a 85% (17 de 20 na última rodada). Das que erra, cerca de metade cai no atendente e metade vai para o assunto errado.
+- **hub.html sem servidor:** o simulador também vai embutido no `public/hub.html` (`npm run gerar-simulador-hub`). Aberto direto do computador, sem internet, o chat e o "Entenda seu papel" (texto colado e exemplos) funcionam. Foto e PDF continuam precisando da IA. Nesse modo o hub atende Ananindeua e Belém.
+
 ## Como rodar no seu computador
 
 Precisa do **Node.js 20.12 ou mais novo** (recomendado 22).
@@ -51,6 +82,7 @@ A chave do Gemini é criada de graça em https://aistudio.google.com (sem cartã
 | `GROQ_API_KEY` / `GROQ_MODEL` | Reserva opcional, usada se todos os modelos do Gemini falharem | vazio / `openai/gpt-oss-120b` |
 | `SALARIO_MINIMO` | Valor em reais usado na regra dos 20/40 salários mínimos | `1621` |
 | `CIDADES` | Cidades atendidas. Com uma só, a IA não pergunta a cidade | `Ananindeua` |
+| `MODO_IA` | `simulador` (sempre o simulador de demonstração) ou `ia` (nunca). Vazio: o simulador só entra sem chave de IA | vazio |
 | `SUPABASE_URL` / `SUPABASE_SERVICE_ROLE_KEY` | Banco de dados online (opcional). Sem elas, os atendimentos ficam num arquivo do computador | vazio |
 
 ### Ligar o Supabase (necessário para publicar na internet)
@@ -69,7 +101,10 @@ Os arquivos `data/*.json` (assuntos, unidades, órgãos) continuam no repositór
 | `npm run dev` | Sobe o sistema em modo de desenvolvimento |
 | `npm run build` e `npm start` | Versão de produção |
 | `npm run testar-regras` | Testa as regras fixas sem IA (grátis, instantâneo) |
+| `npm run testar-papel` | Testa o "Entenda seu papel": leitura por regras, decisões e o caminho com IA usando um Gemini falso |
 | `npm run testar-frases` | Roda as frases de teste na IA de verdade e grava `docs/relatorio-testes.md` |
+| `npm run testar-simulador` | Testa o simulador da IA com as frases e os exemplos da planilha (sem IA, instantâneo) |
+| `npm run gerar-simulador-hub` | Embute o simulador no `public/hub.html`, para ele funcionar sem servidor. Rodar de novo depois de mudar `lib/` ou importar a planilha |
 | `npm run importar-planilha` | Lê `planilha/tabela-assuntos-amyr.xlsx` e gera os arquivos de `data/` |
 
 ### Trocar a tabela de assuntos
@@ -109,10 +144,17 @@ app/                 telas (Next.js App Router) e rotas da API
   api/fila           GET: fila do atendente · PATCH [protocolo]: status, triagem correta, satisfação
   api/advogado       POST: menu do advogado (OAB + motivo) → senha, horários ou link de suporte
   api/indicadores    GET: tempo médio de espera, % resolvido sem fila, % triagem correta, satisfação
+  api/papel          POST: foto, PDF ou texto de um papel da Justiça → o que é, o que fazer, até quando
+  papel/             tela "Entenda seu papel"
+  voz.tsx            ditado pelo microfone e leitura em voz alta
 lib/
   prompt.ts          prompt de sistema da IA (v1.4; cópia comentada em docs/prompt-triagem.md)
   llm.ts             única parte que fala com a IA (Gemini, troca de modelo, reserva Groq, validação com Zod)
+  simulador.ts       simulador da IA para demonstração: monta a mesma ficha sem IA
+  fluxo.ts           passos do fluxo sem banco nem IA, usados pelo orquestrador e pela triagem local
+  triagem-local.ts   triagem e papel sem servidor, embutidos no hub.html
   risco.ts           palavras de risco e pedido de humano (sem IA)
+  papel.ts           "Entenda seu papel": prompt de leitura, leitura por regras, glossário e regras do que fazer
   regras.ts          regras fixas: o que falta perguntar, 20/40 salários mínimos, empresas, órgãos externos
   respostas.ts       textos prontos para o cidadão
   orquestrador.ts    o fluxo inteiro de uma mensagem
@@ -130,6 +172,8 @@ scripts/             importar planilha, testar regras, testar frases
 - **Fora do TJPA:** assunto trabalhista vai para a Justiça do Trabalho (TRT-8); INSS vai para a Justiça Federal.
 - Assuntos marcados como "sempre humano" (intimação, violência doméstica) vão direto ao atendente.
 
+- **Prazo para recorrer de sentença:** 10 dias no Juizado Especial (Lei 9.099/95, art. 42); nas outras varas, em geral 15 dias úteis (CPC, art. 1.003, §5º). Aparece no "Entenda seu papel" quando a sentença não traz o prazo escrito.
+
 Os artigos foram citados pela equipe para conferência e ainda não foram validados por um profissional.
 
 ## Limitações conhecidas (versão 0)
@@ -139,6 +183,8 @@ Os artigos foram citados pela equipe para conferência e ainda não foram valida
 - **Na camada grátis, o Google pode usar o conteúdo enviado** para melhorar os modelos. Mais um motivo para usar só dados fictícios. Em produção, usar um plano pago com contrato de proteção de dados.
 - Unidades, endereços e horários são exemplos. Os horários do advogado são simulados.
 - Sem login de atendente na versão 0.
+- **Ditado por voz no Chrome:** o áudio é processado pelo serviço de reconhecimento do Google (no Safari, pela Apple). Para a LGPD, isso precisa constar no aviso de privacidade; em produção, avaliar reconhecimento de voz contratado com acordo de tratamento de dados.
+- **Foto do papel vai para a IA (Gemini)** para ser lida. Na camada grátis vale o mesmo aviso acima: usar só papéis fictícios.
 
 ## Software e serviços usados (exigência do edital)
 
@@ -158,7 +204,8 @@ Os artigos foram citados pela equipe para conferência e ainda não foram valida
 
 | Serviço | Uso |
 |---|---|
-| Google Gemini (API do Google AI Studio) | Montar a ficha a partir do relato |
+| Google Gemini (API do Google AI Studio) | Montar a ficha a partir do relato e ler a foto ou o texto do papel |
+| Reconhecimento e síntese de voz do navegador (Web Speech API) | Ditado no chat e leitura em voz alta; no Chrome, o ditado usa o serviço do Google |
 | Groq (opcional) | Hospedagem do modelo de reserva |
 
 ## Equipe ByteMe

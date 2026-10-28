@@ -7,7 +7,11 @@ export default function Inicio() {
       <div className="portas">
         <Link className="porta" href="/cidadao">
           <h2>Sou cidadão</h2>
-          <p>Conte seu problema com suas palavras. A gente diz para onde ir, o que levar e se precisa de advogado.</p>
+          <p>Conte seu problema com suas palavras, escrevendo ou falando. A gente diz para onde ir, o que levar e se precisa de advogado.</p>
+        </Link>
+        <Link className="porta" href="/papel">
+          <h2>Recebi um papel da Justiça</h2>
+          <p>Mande a foto da intimação, citação ou sentença. A gente explica o que é, o que fazer e até quando.</p>
         </Link>
         <Link className="porta" href="/advogado">
           <h2>Sou advogado</h2>

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { ChatTriagem } from "../chat";
 import { AbasServicos, type Servico } from "./abas-servicos";
+import { AtendimentoHub } from "./atendimento";
 import { AvisoCookies, BarraAcessibilidade } from "./barra-acessibilidade";
 import "./hub.css";
 
@@ -96,10 +96,10 @@ export default function Hub() {
           <section className="hub-atendimento" aria-labelledby="titulo-atendimento">
             <div className="hub-atendimento-topo">
               <h1 id="titulo-atendimento">Como podemos ajudar?</h1>
-              <p>Conte seu problema com suas palavras. A gente diz para onde ir, o que levar e se você precisa de advogado.</p>
+              <p>Conte seu problema com suas palavras, escrevendo ou falando, ou mande a foto de um papel da Justiça que você recebeu.</p>
             </div>
             <div className="hub-chat">
-              <ChatTriagem />
+              <AtendimentoHub />
             </div>
           </section>
 

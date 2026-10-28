@@ -10,7 +10,10 @@
     "importar-planilha": "node scripts/importar-planilha.mjs",
     "testar-frases": "tsx scripts/rodar-frases.ts",
     "testar-regras": "tsx scripts/testar-regras.ts",
-    "diagnostico-tempo": "tsx scripts/diagnostico-tempo.ts"
+    "testar-papel": "tsx scripts/testar-papel.ts",
+    "diagnostico-tempo": "tsx scripts/diagnostico-tempo.ts",
+    "testar-simulador": "tsx scripts/testar-simulador.ts",
+    "gerar-simulador-hub": "node scripts/gerar-simulador-hub.mjs"
   },
   "dependencies": {
     "next": "16.4.3",
@@ -22,6 +25,7 @@
     "@types/node": "26.6.5",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
+    "esbuild": "0.28.2",
     "exceljs": "4.4.0",
     "tsx": "4.23.15",
     "typescript": "5.9.3"

@@ -1,11 +1,12 @@
 "use client";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { BotaoMicrofone, BotaoOuvir, calar, falar, temLeituraEmVoz, useDitado } from "./voz";
 
 type Bolha = { papel: "cidadao" | "assistente"; texto: string };
 type Resposta = {
   protocolo: string; tipo: string; texto: string; senha?: string | null; esperaMin?: number | null;
   unidade?: { nome: string; endereco: string | null; horario: string | null } | null;
-  documentos?: string[]; advogado?: string | null;
+  documentos?: string[]; advogado?: string | null; modoDemo?: boolean;
 };
 
 const TEXTO_ADVOGADO: Record<string, string> = {
@@ -24,10 +25,17 @@ export function ChatTriagem() {
   const [final, setFinal] = useState<Resposta | null>(null);
   const [enviando, setEnviando] = useState(false);
   const [nota, setNota] = useState<number | null>(null);
+  const [demo, setDemo] = useState(false);
+  // Quem fala recebe a resposta falada; dá para ligar e desligar no botão
+  const [emVoz, setEmVoz] = useState(false);
+  const [podeLer, setPodeLer] = useState(false);
+  useEffect(() => setPodeLer(temLeituraEmVoz()), []);
+  const ditado = useDitado(setTexto);
   const fim = useRef<HTMLDivElement>(null);
 
   async function enviar(mensagem: string) {
     if (!mensagem.trim() || enviando) return;
+    ditado.parar();
     setEnviando(true);
     setBolhas((b) => [...b, { papel: "cidadao", texto: mensagem }]);
     setTexto("");
@@ -39,8 +47,10 @@ export function ChatTriagem() {
       });
       const dados: Resposta = await r.json();
       setProtocolo(dados.protocolo);
+      setDemo(!!dados.modoDemo);
       setBolhas((b) => [...b, { papel: "assistente", texto: dados.texto }]);
       if (dados.tipo !== "pergunta") setFinal(dados);
+      if (emVoz) falar(dados.texto);
     } catch {
       setBolhas((b) => [...b, { papel: "assistente", texto: "Tivemos um problema. Procure o balcão de atendimento." }]);
     } finally {
@@ -54,7 +64,14 @@ export function ChatTriagem() {
     if (protocolo) await fetch(`/api/fila/${protocolo}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ satisfacao: n }) });
   }
 
+  function microfone() {
+    if (ditado.ouvindo) return ditado.parar();
+    if (podeLer) setEmVoz(true);
+    ditado.comecar(texto);
+  }
+
   function recomecar() {
+    calar();
     setBolhas([{ papel: "assistente", texto: "Olá! Conte com suas palavras o que aconteceu." }]);
     setProtocolo(undefined); setFinal(null); setNota(null);
   }
@@ -66,6 +83,7 @@ export function ChatTriagem() {
         {enviando && <div className="bolha assistente suave">Lendo o que você escreveu…</div>}
         <div ref={fim} />
       </div>
+      {demo && <p className="suave aviso-demo">Modo demonstração: quem lê a conversa é um simulador que segue a base de conhecimento, não a IA.</p>}
 
       {final ? (
         <div className={`card resultado ${final.tipo === "emergencia" ? "emergencia" : ""}`}>
@@ -76,6 +94,7 @@ export function ChatTriagem() {
             <><strong>O que levar:</strong><ul>{final.documentos.map((d) => <li key={d}>{d}</li>)}</ul></>
           )}
           {final.advogado && <p><strong>{TEXTO_ADVOGADO[final.advogado]}</strong></p>}
+          <p><BotaoOuvir texto={final.texto} rotulo="Ouvir a resposta" /></p>
           <p className="suave">Protocolo: {final.protocolo}</p>
           <div className="estrelas linha">
             <span>Esse atendimento ajudou?</span>
@@ -87,14 +106,24 @@ export function ChatTriagem() {
         </div>
       ) : (
         <div className="card">
-          <label htmlFor="msg">Sua mensagem</label>
+          <label htmlFor="msg">Sua mensagem (escreva ou toque em Falar)</label>
           <div className="linha">
             <textarea id="msg" rows={3} value={texto} onChange={(e) => setTexto(e.target.value)}
               onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); enviar(texto); } }}
               placeholder="Ex.: comprei uma geladeira que chegou quebrada e a loja não quer trocar" />
+            <BotaoMicrofone ouvindo={ditado.ouvindo} onClick={microfone} disabled={enviando} />
             <button onClick={() => enviar(texto)} disabled={enviando || !texto.trim()}>Enviar</button>
           </div>
-          <p><button className="sec" onClick={() => enviar("Quero falar com uma pessoa")} disabled={enviando}>Falar com uma pessoa</button></p>
+          {ditado.ouvindo && <p className="suave" role="status">Pode falar. Quando terminar, confira o texto e toque em Enviar.</p>}
+          {ditado.erro && <p className="erro-voz" role="alert">{ditado.erro}</p>}
+          <div className="linha acoes-chat">
+            <button className="sec" onClick={() => enviar("Quero falar com uma pessoa")} disabled={enviando}>Falar com uma pessoa</button>
+            {podeLer && (
+              <button className="sec" aria-pressed={emVoz} onClick={() => { if (emVoz) calar(); setEmVoz(!emVoz); }}>
+                {emVoz ? "Respostas em voz alta: ligado" : "Ler respostas em voz alta"}
+              </button>
+            )}
+          </div>
         </div>
       )}
     </>
