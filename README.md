@@ -57,7 +57,7 @@ Abra http://localhost:3000.
 |---|---|---|
 | Início | `/` | Escolher cidadão ou advogado |
 | Cidadão | `/cidadao` | Chat com a IA, senha e avaliação |
-| Advogado | `/advogado` | Menu com OAB e motivo (sem IA), horário marcado ou senha |
+| Advogado | `/advogado` | Menu com OAB e motivo (sem IA): senha na fila do gabinete, horário marcado, ou link do Balcão Virtual para a secretaria |
 | Atendente | `/atendente` | Fila em tempo real, emergências no topo, "Chamar", "Concluir", "Triagem correta?" |
 | Totem | `/cidadao?totem=1` | Mesma tela do cidadão com letra grande |
 
@@ -129,7 +129,7 @@ Relatório completo: [`docs/relatorio-testes.md`](docs/relatorio-testes.md).
 app/                 telas (Next.js App Router) e rotas da API
   api/triagem        POST: uma mensagem do cidadão → pergunta, resultado, emergência ou atendente
   api/fila           GET: fila do atendente · PATCH [protocolo]: status, triagem correta, satisfação
-  api/advogado       POST: menu do advogado (OAB + motivo) → senha, horários ou link de suporte
+  api/advogado       POST: menu do advogado (OAB + motivo) → senha na fila do gabinete, horários, ou link (Balcão Virtual, suporte)
   api/indicadores    GET: tempo médio de espera, % resolvido sem fila, % triagem correta, satisfação
   api/papel          POST: foto, PDF ou texto de um papel da Justiça → o que é, o que fazer, até quando
   papel/             tela "Entenda seu papel"
@@ -155,6 +155,7 @@ scripts/             importar planilha, testar regras, testar frases
 - **Salário mínimo de 2026:** R$ 1.621, fixado por decreto federal ([notícia](https://conexaotrabalho.portaldaindustria.com.br/noticias/detalhe/trabalhista/-geral/novo-salario-minimo-ja-esta-em-vigor/)). Conferir antes da demo.
 - **Fora do TJPA:** assunto trabalhista vai para a Justiça do Trabalho (TRT-8); INSS vai para a Justiça Federal.
 - Assuntos marcados como "sempre humano" (intimação, violência doméstica) vão direto ao atendente.
+- **Advogado:** a fila que o ByteMe oferece é a do **gabinete**. A secretaria já atende pelo Balcão Virtual do TJPA, sem ir ao fórum, e lá o advogado vê o tamanho da fila; a fila do gabinete nenhum canal mostra (sugestão de uma advogada, 28/10/2026).
 
 - **Prazo para recorrer de sentença:** 10 dias no Juizado Especial (Lei 9.099/95, art. 42); nas outras varas, em geral 15 dias úteis (CPC, art. 1.003, §5º). Aparece no "Entenda seu papel" quando a sentença não traz o prazo escrito.
 

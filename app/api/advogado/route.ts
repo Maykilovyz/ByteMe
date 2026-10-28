@@ -11,6 +11,10 @@ const Entrada = z.object({
   unidadeId: z.string().optional().nullable(),
 });
 
+// A secretaria já atende pelo Balcão Virtual, que mostra o tamanho da fila no próprio site (link conferido no portal em 27/10/2026).
+// Por isso a fila que o ByteMe oferece ao advogado é a do gabinete, que nenhum canal mostra hoje (sugestão de advogada, 28/10/2026).
+const BALCAO_VIRTUAL = "https://www.tjpa.jus.br/PortalExterno/institucional/Balcao-Virtual-e-Contatos/785286-atendimento-tjpa.xhtml";
+
 function horariosSimulados(): string[] {
   const out: string[] = [];
   const d = new Date();
@@ -40,6 +44,7 @@ export async function POST(req: Request) {
   const { oab, processo, motivoId, unidadeId } = dados.data;
   const motivo = motivoPorId(motivoId);
   if (!motivo) return NextResponse.json({ erro: "Motivo inválido" }, { status: 400 });
+  if (motivoId === "gabinete" && !unidadeId) return NextResponse.json({ erro: "Escolha a vara para entrar na fila do gabinete." }, { status: 400 });
 
   const at = await criarAtendimento("advogado", "web");
   at.advogado = { oab: oab.toUpperCase(), processo: processo ?? null, motivoId, horario: null };
@@ -52,6 +57,11 @@ export async function POST(req: Request) {
     await atualizar(at);
     return NextResponse.json({ protocolo: at.protocolo, tipo: "suporte", texto: `Para login, assinatura ou sistema eletrônico, use o ${o?.nome ?? "suporte oficial do TJPA"}${o?.link ? `: ${o.link}` : ""}.` });
   }
+  if (motivoId === "secretaria") {
+    mudarStatus(at, "resolvido_sem_fila");
+    await atualizar(at);
+    return NextResponse.json({ protocolo: at.protocolo, tipo: "link", texto: "A secretaria da vara atende pelo Balcão Virtual do TJPA, por vídeo, sem ir ao fórum. Lá você já vê o tamanho da fila.", link: BALCAO_VIRTUAL });
+  }
   if (motivo.precisaHorario) {
     await atualizar(at);
     return NextResponse.json({ protocolo: at.protocolo, tipo: "horarios", texto: `${motivo.motivo} precisa de horário marcado. Escolha um:`, horarios: horariosSimulados() });
@@ -61,5 +71,6 @@ export async function POST(req: Request) {
   mudarStatus(at, "aguardando_atendimento");
   await atualizar(at);
   const u = unidadePorId(at.unidadeId);
-  return NextResponse.json({ protocolo: at.protocolo, tipo: "fila", texto: `Senha ${at.senha}${u ? ` para ${u.nome}` : ""}. ${espera > 0 ? `Espera prevista: cerca de ${espera} min.` : "Você é o próximo."}` });
+  const onde = motivoId === "gabinete" ? ` na fila do gabinete${u ? `: ${u.nome}` : ""}` : u ? ` para ${u.nome}` : "";
+  return NextResponse.json({ protocolo: at.protocolo, tipo: "fila", texto: `Senha ${at.senha}${onde}. ${espera > 0 ? `Espera prevista: cerca de ${espera} min.` : "Você é o próximo."}` });
 }

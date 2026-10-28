@@ -3,7 +3,12 @@ import { useState } from "react";
 import motivos from "@/data/motivos-advogado.json";
 import unidades from "@/data/unidades.json";
 
-type Resp = { protocolo?: string; tipo?: string; texto?: string; horarios?: string[]; erro?: string };
+type Resp = { protocolo?: string; tipo?: string; texto?: string; horarios?: string[]; link?: string; erro?: string };
+
+const DICAS: Record<string, string> = {
+  gabinete: "Fila do gabinete da vara, com senha e previsão de espera. A fila da secretaria você já vê no Balcão Virtual.",
+  secretaria: "A secretaria atende pelo Balcão Virtual do TJPA, por vídeo. Lá você vê o tamanho da fila.",
+};
 
 export default function Advogado() {
   const [oab, setOab] = useState("");
@@ -32,7 +37,8 @@ export default function Advogado() {
         <select id="motivo" value={motivoId} onChange={(e) => setMotivoId(e.target.value)}>
           {motivos.map((m) => <option key={m.id} value={m.id}>{m.motivo}</option>)}
         </select>
-        <label htmlFor="vara">Vara ou setor</label>
+        {DICAS[motivoId] && <p className="suave">{DICAS[motivoId]}</p>}
+        <label htmlFor="vara">Vara ou setor{motivoId === "gabinete" ? " (obrigatório para a fila do gabinete)" : ""}</label>
         <select id="vara" value={unidadeId} onChange={(e) => setUnidadeId(e.target.value)}>
           <option value="">Não sei / não se aplica</option>
           {unidades.map((u) => <option key={u.id} value={u.id}>{u.nome}</option>)}
@@ -43,6 +49,7 @@ export default function Advogado() {
       {resp && (
         <div className={`card ${resp.erro ? "" : "resultado"}`}>
           {resp.erro ? <p style={{ color: "var(--alerta)" }}>{resp.erro}</p> : <p>{resp.texto}</p>}
+          {resp.link && <p><a className="botao" href={resp.link} target="_blank" rel="noopener noreferrer">Abrir o Balcão Virtual<span className="sr-only"> (abre em nova aba)</span></a></p>}
           {resp.horarios && (
             <div className="linha">
               {resp.horarios.map((h) => <button key={h} className="sec" onClick={() => enviar({ protocolo: resp.protocolo, horario: h })}>{h}</button>)}

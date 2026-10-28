@@ -1,9 +1,9 @@
 [
   {
-    "id": "secretaria",
-    "motivo": "Falar com a secretaria da vara",
+    "id": "gabinete",
+    "motivo": "Atendimento no gabinete (assessoria do juiz)",
     "precisaHorario": false,
-    "destino": "Fila da secretaria da vara informada (presencial ou Balcão Virtual)",
+    "destino": "Fila do gabinete da vara informada, com senha e previsão de espera. O Balcão Virtual só mostra a fila da secretaria (sugestão de advogada, 28/10/2026)",
     "status": "Revisar com Amyr"
   },
   {
@@ -18,6 +18,13 @@
     "motivo": "Audiência",
     "precisaHorario": true,
     "destino": "Agenda de audiências da vara (sala de audiência presencial ou link de videoconferência)",
+    "status": "Revisar com Amyr"
+  },
+  {
+    "id": "secretaria",
+    "motivo": "Secretaria da vara (pelo Balcão Virtual)",
+    "precisaHorario": false,
+    "destino": "Balcão Virtual do TJPA: atende a secretaria por vídeo, sem ir ao fórum, e mostra o tamanho da fila no próprio site",
     "status": "Revisar com Amyr"
   },
   {
