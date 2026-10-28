@@ -188,6 +188,73 @@ html.alto-contraste .tj-linha textarea { border-color: #fff; }
 .tj-botao:disabled { opacity: .6; cursor: default; }
 html.alto-contraste .tj-botao { color: #000; }
 html.alto-contraste .tj-botao.sec { color: #ffff00; }
+/* Contar o problema ou entender um papel */
+.tj-modos { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--borda); }
+.tj-modos button { padding: 10px 8px; border: 0; border-bottom: 3px solid transparent; background: var(--fundo); color: var(--azul); font-weight: 500; cursor: pointer; }
+.tj-modos button[aria-pressed="true"] { background: var(--bg); border-bottom-color: var(--azul); color: var(--titulo); font-weight: 700; }
+html.alto-contraste .tj-modos button { color: #ffff00; }
+html.alto-contraste .tj-modos button[aria-pressed="true"] { color: #fff; border-bottom-color: #ffff00; }
+/* Falar em vez de escrever */
+.tj-mic, .tj-ouvir { display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
+.tj-mic.ouvindo { background: #b42318; border-color: #b42318; color: #fff; animation: tj-pulso 1.2s ease-in-out infinite; }
+html.alto-contraste .tj-mic.ouvindo { background: #ffff00; color: #000; }
+@keyframes tj-pulso { 0%, 100% { box-shadow: 0 0 0 0 rgb(180 35 24 / .5); } 50% { box-shadow: 0 0 0 9px rgb(180 35 24 / 0); } }
+.tj-voz-status { margin: 6px 0 0; font-size: .85rem; color: var(--suave); }
+.tj-voz-status.erro { color: #b42318; font-weight: 700; }
+html.alto-contraste .tj-voz-status.erro { color: #ffff00; }
+.tj-voz-ligar { margin-top: 8px; padding: 0; border: 0; background: none; color: var(--azul); text-decoration: underline; font-size: .85rem; cursor: pointer; }
+.tj-voz-ligar[aria-pressed="true"] { font-weight: 700; }
+/* Entenda seu papel */
+.tj-papel { padding: 12px; }
+.tj-papel-fotos { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.tj-arquivo { position: relative; display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 52px; font-weight: 500; text-align: center; cursor: pointer; }
+.tj-arquivo input { position: absolute; inset: 0; width: 100%; opacity: 0; cursor: pointer; }
+.tj-arquivo:focus-within { outline: 3px solid var(--foco); outline-offset: 2px; }
+.tj-papel-dica { margin: 6px 0 10px; font-size: .82rem; color: var(--suave); }
+.tj-papel-rotulo { display: block; margin-bottom: 4px; font-weight: 500; }
+.tj-papel textarea { display: block; width: 100%; margin-bottom: 8px; padding: 8px 10px; border: 1px solid #ced4da; border-radius: 4px; background: var(--bg); color: var(--texto); resize: vertical; }
+html.alto-contraste .tj-papel textarea { border-color: #fff; }
+.tj-papel-exemplos { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--borda); font-size: .85rem; color: var(--suave); }
+.tj-papel-exemplos button { padding: 5px 11px; border: 1px solid var(--azul); border-radius: 999px; background: var(--bg); color: var(--azul); font-size: .85rem; }
+.tj-papel-status { margin: 8px 0 0; font-weight: 500; }
+.tj-papel-status:empty { display: none; }
+.tj-papel-status.lendo::before { content: ""; display: inline-block; width: 14px; height: 14px; margin-right: 8px; vertical-align: -2px; border: 2px solid var(--borda); border-top-color: var(--azul); border-radius: 50%; animation: tj-gira .8s linear infinite; }
+@keyframes tj-gira { to { transform: rotate(360deg); } }
+.tj-papel-status.erro { color: #b42318; }
+html.alto-contraste .tj-papel-status.erro { color: #ffff00; }
+.tj-papel-resultado { display: flex; flex-direction: column; gap: 10px; outline: none; }
+.tj-etiqueta { align-self: flex-start; display: inline-block; padding: 1px 8px; border: 1px solid var(--borda); border-radius: 999px; font-size: .78rem; color: var(--suave); }
+.tj-papel-cabeca h2 { margin: 4px 0 2px; font-size: 1.2rem; color: var(--titulo); }
+.tj-papel-sub { margin: 0 0 8px; font-size: .85rem; color: var(--suave); }
+.tj-papel-bloco { padding: 10px 14px; border: 1px solid var(--borda); border-left: 5px solid var(--azul); border-radius: 4px; }
+.tj-papel-bloco h3 { display: flex; align-items: center; gap: 8px; margin: 0 0 4px; font-size: 1.02rem; color: var(--titulo); }
+.tj-papel-bloco h3 span { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--azul); color: #fff; font-size: .9rem; }
+html.alto-contraste .tj-papel-bloco h3 span { color: #000; }
+.tj-papel-bloco p, .tj-papel-bloco ol { margin: 6px 0; }
+.tj-papel-bloco ol { padding-left: 20px; }
+.tj-papel-bloco li + li { margin-top: 5px; }
+.tj-papel-bloco.urgente { border-left-color: #b42318; }
+.tj-papel-bloco.urgente h3 span { background: #b42318; }
+html.alto-contraste .tj-papel-bloco.urgente { border-left-color: #ffff00; }
+html.alto-contraste .tj-papel-bloco.urgente h3 span { background: #ffff00; }
+.tj-papel-resultado.emergencia .tj-papel-bloco.urgente { background: #fdf1f0; }
+.tj-papel-prazo { margin-top: 8px; padding: 8px 12px; border-radius: 4px; background: #fdf1f0; }
+.tj-papel-prazo strong { display: block; font-size: 1.2rem; color: #b42318; }
+.tj-papel-prazo p { margin: 2px 0 0; }
+html.alto-contraste .tj-papel-prazo, html.alto-contraste .tj-papel-resultado.emergencia .tj-papel-bloco.urgente { background: #000; border: 1px solid #fff; }
+html.alto-contraste .tj-papel-prazo strong { color: #ffff00; }
+.tj-papel-acoes { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+a.tj-botao { display: inline-block; text-decoration: none; }
+html.alto-contraste a.tj-botao { color: #000 !important; }
+.tj-papel details summary { margin-top: 4px; color: var(--azul); font-weight: 500; cursor: pointer; }
+.tj-papel-termos { margin: 6px 0 0; }
+.tj-papel-termos div { padding: 6px 0; border-top: 1px solid var(--borda); }
+.tj-papel-termos dt { font-weight: 700; }
+.tj-papel-termos dd { margin: 0; }
+.tj-papel-senha { margin-top: 8px; padding: 8px 12px; border: 1px solid var(--verde); border-radius: 4px; }
+html.alto-contraste .tj-papel-senha { border-color: #fff; }
+.tj-papel-senha p { margin: 4px 0 0; }
+.tj-papel-aviso { margin: 0; font-size: .78rem; color: var(--suave); }
 .tj-emergencia { margin: 0; padding: 8px 12px; font-size: .85rem; border-top: 1px solid var(--borda); background: #fdf1f0; }
 html.alto-contraste .tj-emergencia { background: #000; }
 
@@ -342,7 +409,9 @@ html.alto-contraste .tj-cookies button { background: #ffff00; color: #000; }
   .tj-atendimento-topo h1 { font-size: 1.4rem; }
   .tj-atendimento-topo p { font-size: .92rem; }
   .tj-chat { height: 200px; }
-  .tj-linha textarea { font-size: 1rem; }
+  .tj-linha { flex-wrap: wrap; }
+  .tj-linha textarea { flex-basis: 100%; font-size: 1rem; }
+  .tj-linha .tj-botao { flex: 1; min-height: 46px; }
   .tj-servicos { gap: 8px; }
   .tj-servicos a { min-height: 84px; font-size: .74rem; padding: 10px 4px; }
   .tj-servicos svg { width: 30px; height: 30px; }
@@ -463,8 +532,13 @@ html.alto-contraste .tj-cookies button { background: #ffff00; color: #000; }
     <section class="tj-atendimento" aria-labelledby="titulo-atendimento">
       <div class="tj-atendimento-topo">
         <h1 id="titulo-atendimento">Como podemos ajudar?</h1>
-        <p>Conte seu problema com suas palavras. A gente diz para onde ir, o que levar e se você precisa de advogado.</p>
+        <p>Conte seu problema com suas palavras, escrevendo ou falando, ou mande a foto de um papel da Justiça que você recebeu.</p>
       </div>
+      <div class="tj-modos" role="group" aria-label="O que você quer fazer">
+        <button type="button" id="modo-chat" aria-pressed="true">Contar meu problema</button>
+        <button type="button" id="modo-papel" aria-pressed="false">Entender um papel que recebi</button>
+      </div>
+      <div id="painel-chat">
       <div class="tj-chat" id="chat" aria-live="polite" tabindex="0" aria-label="Conversa com o atendimento">
         <div class="tj-bolha assistente">Olá! Conte com suas palavras o que aconteceu. Pode escrever do seu jeito.</div>
       </div>
@@ -476,12 +550,31 @@ html.alto-contraste .tj-cookies button { background: #ffff00; color: #000; }
         <button type="button">Quero falar com uma pessoa</button>
       </div>
       <form class="tj-form" id="form-chat">
-        <label for="msg" class="sr-only">Sua mensagem</label>
+        <label for="msg" class="sr-only" id="msg-rotulo">Sua mensagem</label>
         <div class="tj-linha">
           <textarea id="msg" rows="2" placeholder="Escreva aqui. Ex.: a loja não quer trocar minha geladeira"></textarea>
+          <button class="tj-botao sec tj-mic" type="button" id="mic" aria-pressed="false" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0 M12 18v3 M8 21h8"/></svg><span>Falar</span></button>
           <button class="tj-botao" type="submit" id="enviar">Enviar</button>
         </div>
+        <p class="tj-voz-status" id="voz-status" role="status" hidden></p>
+        <button type="button" class="tj-voz-ligar" id="em-voz" aria-pressed="false" hidden>Ler respostas em voz alta</button>
       </form>
+      </div>
+      <div id="painel-papel" class="tj-papel" hidden>
+        <div id="papel-entrada">
+          <div class="tj-papel-fotos">
+            <label class="tj-botao tj-arquivo"><input type="file" accept="image/*" capture="environment" id="papel-foto"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>Tirar foto do papel</label>
+            <label class="tj-botao sec tj-arquivo"><input type="file" accept="image/*,application/pdf" id="papel-arquivo"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z M14 3v4h4 M9 13h6 M9 17h4"/></svg>Escolher foto ou PDF</label>
+          </div>
+          <p class="tj-papel-dica">Dica: papel inteiro na foto, em lugar claro, sem sombra.</p>
+          <label for="papel-texto" class="tj-papel-rotulo">Ou cole o texto do papel</label>
+          <textarea id="papel-texto" rows="4" maxlength="12000" placeholder="Cole aqui o texto da intimação, citação ou sentença"></textarea>
+          <button class="tj-botao" type="button" id="papel-explicar">Explicar este papel</button>
+          <div class="tj-papel-exemplos" id="papel-exemplos" role="group" aria-label="Exemplos fictícios"><span>Ver um exemplo fictício:</span></div>
+          <p class="tj-papel-status" id="papel-status" role="status"></p>
+        </div>
+        <div class="tj-papel-resultado" id="papel-resultado" tabindex="-1" aria-labelledby="papel-titulo" hidden></div>
+      </div>
       <p class="tj-emergencia">Em caso de violência ou ameaça, ligue <strong>190</strong> (Polícia) ou <strong>180</strong> (Central da Mulher).</p>
     </section>
 
@@ -777,19 +870,93 @@ html.alto-contraste .tj-cookies button { background: #ffff00; color: #000; }
     }
     if (r.advogado && ADVOGADO[r.advogado]) box.appendChild(el("p", ADVOGADO[r.advogado]));
     box.appendChild(el("p", "Protocolo: " + r.protocolo));
+    var ouvir = el("p"); ouvir.appendChild(botaoOuvir(r.texto, "Ouvir a resposta")); box.appendChild(ouvir);
     var novo = el("button", "Novo atendimento", "tj-botao sec"); novo.type = "button";
-    novo.onclick = function () { protocolo = null; resultado.innerHTML = ""; chat.innerHTML = ""; bolha("assistente", "Olá! Conte com suas palavras o que aconteceu."); form.hidden = sugestoes.hidden = false; msg.focus(); };
+    novo.onclick = function () { calar(); protocolo = null; resultado.innerHTML = ""; chat.innerHTML = ""; bolha("assistente", "Olá! Conte com suas palavras o que aconteceu."); form.hidden = sugestoes.hidden = false; msg.focus(); };
     box.appendChild(novo);
     resultado.innerHTML = ""; resultado.appendChild(box); form.hidden = sugestoes.hidden = true;
   }
+  // Falar em vez de escrever: mesmo comportamento do app ByteMe (app/voz.tsx).
+  // O ditado existe no Chrome, Edge e Safari, só em https ou localhost; no Chrome o áudio é processado pelo Google.
+  var Ditado = window.SpeechRecognition || window.webkitSpeechRecognition;
+  var podeLer = "speechSynthesis" in window;
+  var micBtn = $("mic"), vozStatus = $("voz-status"), emVozBtn = $("em-voz"), emVoz = false, ditado = null;
+  var SVG_OUVIR = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9z M16 9a4 4 0 0 1 0 6 M19 6a8 8 0 0 1 0 12"/></svg>';
+  var ERROS_VOZ = {
+    "not-allowed": "O navegador não deixou usar o microfone. Toque no cadeado da barra de endereço e permita o microfone.",
+    "service-not-allowed": "O navegador não deixou usar o microfone. Toque no cadeado da barra de endereço e permita o microfone.",
+    "no-speech": "Não ouvimos nada. Toque em Falar e tente de novo, mais perto do microfone.",
+    "audio-capture": "Não achamos um microfone neste aparelho.",
+    "network": "O ditado precisa de internet. Tente de novo ou escreva."
+  };
+  function falar(texto, fim) {
+    if (!podeLer) return;
+    speechSynthesis.cancel();
+    var fala = new SpeechSynthesisUtterance(texto);
+    fala.lang = "pt-BR"; fala.rate = 0.95;
+    var voz = speechSynthesis.getVoices().filter(function (v) { return v.lang.replace("_", "-").toLowerCase() === "pt-br"; })[0];
+    if (voz) fala.voice = voz;
+    if (fim) { fala.onend = fim; fala.onerror = fim; }
+    speechSynthesis.speak(fala);
+  }
+  function calar() { if (podeLer) speechSynthesis.cancel(); }
+  function botaoOuvir(texto, rotulo) {
+    var b = el("button", null, "tj-botao sec tj-ouvir"); b.type = "button"; b.hidden = !podeLer;
+    b.innerHTML = SVG_OUVIR + "<span></span>";
+    var s = b.querySelector("span"); s.textContent = rotulo; b.setAttribute("aria-pressed", "false");
+    function fim() { b.setAttribute("aria-pressed", "false"); s.textContent = rotulo; }
+    b.onclick = function () {
+      if (b.getAttribute("aria-pressed") === "true") { calar(); return fim(); }
+      b.setAttribute("aria-pressed", "true"); s.textContent = "Parar leitura"; falar(texto, fim);
+    };
+    return b;
+  }
+  function marcarEmVoz(sim) {
+    emVoz = sim; emVozBtn.setAttribute("aria-pressed", String(sim));
+    emVozBtn.textContent = sim ? "Respostas em voz alta: ligado" : "Ler respostas em voz alta";
+    if (!sim) calar();
+  }
+  function marcarOuvindo(sim) {
+    micBtn.classList.toggle("ouvindo", sim); micBtn.setAttribute("aria-pressed", String(sim));
+    micBtn.querySelector("span").textContent = sim ? "Ouvindo… toque para parar" : "Falar";
+  }
+  function pararDitado() { if (ditado) ditado.stop(); }
+  if (podeLer) { emVozBtn.hidden = false; emVozBtn.addEventListener("click", function () { marcarEmVoz(!emVoz); }); }
+  if (Ditado) {
+    micBtn.hidden = false;
+    $("msg-rotulo").textContent = "Sua mensagem (escreva ou toque em Falar)";
+    micBtn.addEventListener("click", function () {
+      if (ditado) return pararDitado();
+      calar();
+      if (podeLer) marcarEmVoz(true); // quem fala recebe a resposta falada
+      var r = new Ditado();
+      r.lang = "pt-BR"; r.interimResults = true; r.continuous = false;
+      var antes = msg.value.trim() ? msg.value.trim() + " " : "";
+      r.onresult = function (e) {
+        var falado = "";
+        for (var i = 0; i < e.results.length; i++) falado += e.results[i][0].transcript;
+        msg.value = antes + falado.trim();
+      };
+      r.onerror = function (e) {
+        if (!ERROS_VOZ[e.error]) return;
+        vozStatus.textContent = ERROS_VOZ[e.error]; vozStatus.classList.add("erro"); vozStatus.hidden = false;
+      };
+      r.onend = function () { ditado = null; marcarOuvindo(false); if (!vozStatus.classList.contains("erro")) vozStatus.hidden = true; };
+      ditado = r; marcarOuvindo(true);
+      vozStatus.classList.remove("erro"); vozStatus.textContent = "Pode falar. Quando terminar, confira o texto e toque em Enviar."; vozStatus.hidden = false;
+      try { r.start(); } catch (err) { ditado = null; marcarOuvindo(false); }
+    });
+  }
+
   function enviar(texto) {
     if (!texto.trim() || enviando) return;
+    pararDitado();
     enviando = true; enviarBtn.disabled = true; sugestoes.hidden = true;
     bolha("cidadao", texto); msg.value = "";
     var espera = bolha("assistente", "Lendo o que você escreveu…", "suave");
     fetch("/api/triagem", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(protocolo ? { protocolo: protocolo, mensagem: texto, canal: "web" } : { mensagem: texto, canal: "web" }) })
       .then(function (r) { if (!r.ok) throw new Error(String(r.status)); return r.json(); })
-      .then(function (r) { espera.remove(); protocolo = r.protocolo; bolha("assistente", r.texto); if (r.tipo !== "pergunta") mostrarResultado(r); })
+      .then(function (r) { espera.remove(); protocolo = r.protocolo; bolha("assistente", r.texto); if (r.tipo !== "pergunta") mostrarResultado(r); if (emVoz) falar(r.texto); })
       .catch(function () {
         espera.remove();
         bolha("assistente", location.protocol === "file:"
@@ -801,6 +968,147 @@ html.alto-contraste .tj-cookies button { background: #ffff00; color: #000; }
   form.addEventListener("submit", function (e) { e.preventDefault(); enviar(msg.value); });
   msg.addEventListener("keydown", function (e) { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); enviar(msg.value); } });
   sugestoes.querySelectorAll("button").forEach(function (b) { b.addEventListener("click", function () { enviar(b.textContent); }); });
+
+  // Contar o problema ou entender um papel (abre direto no papel com #papel no endereço, bom para QR Code no totem)
+  var modoChat = $("modo-chat"), modoPapel = $("modo-papel"), painelChat = $("painel-chat"), painelPapel = $("painel-papel");
+  function modo(papel) {
+    modoChat.setAttribute("aria-pressed", String(!papel)); modoPapel.setAttribute("aria-pressed", String(papel));
+    painelChat.hidden = papel; painelPapel.hidden = !papel;
+    calar(); pararDitado();
+  }
+  modoChat.addEventListener("click", function () { modo(false); });
+  modoPapel.addEventListener("click", function () { modo(true); });
+  if (location.hash === "#papel") modo(true);
+
+  // Entenda seu papel: usa a mesma API do app ByteMe (/api/papel). A IA lê; as regras do servidor decidem o que fazer.
+  var EXEMPLOS_PAPEL = [{"nome": "Intimação para audiência", "texto": "PODER JUDICIÁRIO DO ESTADO DO PARÁ\n1ª VARA DO JUIZADO ESPECIAL CÍVEL DE ANANINDEUA\n\nINTIMAÇÃO DE AUDIÊNCIA\n\nProcesso nº 0801234-56.2026.8.14.0006\nRequerente: Rita de Cássia Souza\nRequerido: Loja Exemplo Eletrodomésticos Ltda.\n\nDe ordem do(a) MM. Juiz(a) de Direito, fica a parte requerente INTIMADA para comparecer à AUDIÊNCIA DE CONCILIAÇÃO designada para o dia 18/11/2026, às 10h30min.\n\nLocal: Fórum de Ananindeua, Rua Exemplo, 100, Centro, Ananindeua/PA.\n\nO não comparecimento da parte autora à audiência implicará a extinção do processo sem resolução do mérito e a condenação ao pagamento de custas (art. 51, I, da Lei nº 9.099/95).\n\nAnanindeua, 21 de outubro de 2026."}, {"nome": "Citação com prazo", "texto": "PODER JUDICIÁRIO DO ESTADO DO PARÁ\n2ª VARA CÍVEL E EMPRESARIAL DE ANANINDEUA\n\nCARTA DE CITAÇÃO\n\nProcesso nº 0805678-90.2026.8.14.0006\nAutor: Banco Exemplo S.A.\nRéu: José Carlos Pereira\n\nPela presente, fica V. Sa. CITADO(A) para, querendo, apresentar CONTESTAÇÃO no prazo de 15 (quinze) dias úteis, por meio de advogado ou da Defensoria Pública, sob pena de revelia, presumindo-se verdadeiras as alegações de fato formuladas pelo autor (art. 344 do CPC).\n\nAnanindeua, 22 de outubro de 2026."}, {"nome": "Sentença", "texto": "PODER JUDICIÁRIO DO ESTADO DO PARÁ\n1ª VARA DO JUIZADO ESPECIAL CÍVEL DE ANANINDEUA\n\nSENTENÇA\n\nProcesso nº 0801234-56.2026.8.14.0006\nRequerente: Rita de Cássia Souza\nRequerido: Loja Exemplo Eletrodomésticos Ltda.\n\nDispensado o relatório (art. 38 da Lei nº 9.099/95). A requerente comprovou a compra da geladeira e o defeito apresentado em 10 dias de uso, sem solução pela loja.\n\nAnte o exposto, JULGO PROCEDENTE o pedido para condenar a requerida a restituir à requerente o valor de R$ 2.500,00, com correção monetária.\n\nSem custas e honorários nesta fase (art. 55 da Lei nº 9.099/95). Publique-se. Registre-se. Intimem-se.\n\nAnanindeua, 2 de dezembro de 2026."}];
+  var NOME_TIPO = { citacao: "Citação", intimacao: "Intimação", mandado: "Mandado", sentenca: "Sentença", decisao: "Decisão", despacho: "Despacho", outro: "Papel da Justiça", nao_judicial: "Outro papel" };
+  var LINK_DEFENSORIA = "https://www.defensoria.pa.def.br/", MAX_PDF = 4500000;
+  var papelEntrada = $("papel-entrada"), papelRes = $("papel-resultado"), papelTexto = $("papel-texto"), papelStatus = $("papel-status");
+  var exemplos = $("papel-exemplos");
+  EXEMPLOS_PAPEL.forEach(function (ex) {
+    var b = el("button", ex.nome); b.type = "button";
+    b.addEventListener("click", function () { papelTexto.value = ex.texto; lerPapel({ texto: ex.texto }, "Lendo o exemplo…"); });
+    exemplos.appendChild(b);
+  });
+  function papelOcupado(sim, aviso) {
+    painelPapel.querySelectorAll("#papel-entrada button, #papel-entrada input").forEach(function (c) { c.disabled = sim; });
+    papelStatus.textContent = aviso || ""; papelStatus.className = "tj-papel-status" + (sim ? " lendo" : "");
+  }
+  function papelErro(texto) { papelStatus.textContent = texto; papelStatus.className = "tj-papel-status erro"; }
+  function lerPapel(corpo, aviso) {
+    papelOcupado(true, aviso);
+    fetch("/api/papel", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(corpo) })
+      .then(function (r) { return r.json(); })
+      .then(function (d) { papelOcupado(false); if (d.erro) papelErro(d.erro); else mostrarPapel(d); })
+      .catch(function () {
+        papelOcupado(false);
+        papelErro(location.protocol === "file:"
+          ? "Para ler papéis, rode o app ByteMe (npm run dev) e abra http://localhost:3000/hub.html."
+          : "Tivemos um problema para ler o papel. Tente de novo ou fale com um atendente.");
+      });
+  }
+  // Foto vira JPEG de no máximo 1600 px no lado maior; PDF vai como está
+  function prepararArquivo(arquivo) {
+    function comoDataUrl(f) {
+      return new Promise(function (ok, falha) { var r = new FileReader(); r.onload = function () { ok(String(r.result)); }; r.onerror = falha; r.readAsDataURL(f); });
+    }
+    if (arquivo.type === "application/pdf") {
+      return arquivo.size > MAX_PDF ? Promise.reject(new Error("Esse PDF é grande demais. Mande uma foto da primeira página ou cole o texto.")) : comoDataUrl(arquivo);
+    }
+    return new Promise(function (ok, falha) {
+      var url = URL.createObjectURL(arquivo), img = new Image();
+      img.onload = function () {
+        var escala = Math.min(1, 1600 / Math.max(img.naturalWidth, img.naturalHeight));
+        var tela = document.createElement("canvas");
+        tela.width = Math.round(img.naturalWidth * escala); tela.height = Math.round(img.naturalHeight * escala);
+        tela.getContext("2d").drawImage(img, 0, 0, tela.width, tela.height);
+        URL.revokeObjectURL(url); ok(tela.toDataURL("image/jpeg", 0.85));
+      };
+      img.onerror = function () {
+        URL.revokeObjectURL(url);
+        if (arquivo.size > MAX_PDF) falha(new Error("Não conseguimos abrir essa foto. Tente tirar outra ou cole o texto."));
+        else comoDataUrl(arquivo).then(ok, falha); // formato que o navegador não abre: a IA tenta ler assim mesmo
+      };
+      img.src = url;
+    });
+  }
+  ["papel-foto", "papel-arquivo"].forEach(function (id) {
+    $(id).addEventListener("change", function (e) {
+      var arquivo = e.target.files && e.target.files[0];
+      e.target.value = "";
+      if (!arquivo) return;
+      prepararArquivo(arquivo).then(function (dados) {
+        lerPapel({ arquivo: dados }, arquivo.type === "application/pdf" ? "Lendo o PDF…" : "Lendo a foto…");
+      }, function (err) { papelErro(err && err.message ? err.message : "Não conseguimos abrir esse arquivo."); });
+    });
+  });
+  $("papel-explicar").addEventListener("click", function () {
+    if (papelTexto.value.trim()) lerPapel({ texto: papelTexto.value }, "Lendo o texto…");
+    else { papelErro("Cole o texto do papel ou mande uma foto."); papelTexto.focus(); }
+  });
+  function bloco(n, titulo, urgente) {
+    var s = el("section", null, "tj-papel-bloco" + (urgente ? " urgente" : ""));
+    var h = el("h3"), num = el("span", String(n));
+    num.setAttribute("aria-hidden", "true"); h.appendChild(num); h.appendChild(document.createTextNode(" " + titulo));
+    s.appendChild(h); papelRes.appendChild(s); return s;
+  }
+  function mostrarPapel(d) {
+    var l = d.leitura, dc = d.decisao;
+    papelRes.innerHTML = "";
+    papelRes.className = "tj-papel-resultado" + (dc.nivel === "emergencia" ? " emergencia" : "");
+    var quandoTexto = dc.ate_quando.length ? dc.ate_quando.map(function (q) { return q.destaque + ". " + q.detalhe; }).join(" ") : "Este papel não traz prazo nem data escritos.";
+    var cab = el("div", null, "tj-papel-cabeca");
+    cab.appendChild(el("span", NOME_TIPO[l.tipo] || "Papel", "tj-etiqueta"));
+    var h = el("h2", l.titulo_simples); h.id = "papel-titulo"; cab.appendChild(h);
+    var sub = [l.orgao, l.processo && "Processo " + l.processo].filter(Boolean).join(" · ");
+    if (sub) cab.appendChild(el("p", sub, "tj-papel-sub"));
+    cab.appendChild(botaoOuvir(l.titulo_simples + ". " + l.o_que_e + " O que fazer: " + dc.o_que_fazer.join(" ") + " Até quando: " + quandoTexto, "Ouvir a explicação"));
+    papelRes.appendChild(cab);
+
+    var b1 = bloco(1, "O que é", false);
+    b1.appendChild(el("p", l.o_que_e));
+    if (l.termos.length) {
+      var det = el("details"), dl = el("dl", null, "tj-papel-termos");
+      det.appendChild(el("summary", "Palavras difíceis deste papel (" + l.termos.length + ")"));
+      l.termos.forEach(function (t) { var div = el("div"); div.appendChild(el("dt", t.termo)); div.appendChild(el("dd", t.explicacao)); dl.appendChild(div); });
+      det.appendChild(dl); b1.appendChild(det);
+    }
+
+    var b2 = bloco(2, "O que fazer", dc.nivel === "emergencia");
+    var ol = el("ol"); dc.o_que_fazer.forEach(function (p) { ol.appendChild(el("li", p)); }); b2.appendChild(ol);
+    var acoes = el("div", null, "tj-papel-acoes");
+    if (dc.defensoria) {
+      var a = el("a", "Defensoria Pública do Pará", "tj-botao"); a.href = LINK_DEFENSORIA; a.target = "_blank"; a.rel = "noopener noreferrer";
+      a.appendChild(el("span", " (abre em nova aba)", "sr-only")); acoes.appendChild(a);
+    }
+    var pessoa = el("button", "Falar com uma pessoa", "tj-botao" + (dc.defensoria ? " sec" : "")); pessoa.type = "button";
+    var senha = el("div", null, "tj-papel-senha"); senha.hidden = true; senha.setAttribute("role", "status");
+    pessoa.onclick = function () {
+      pessoa.disabled = true; pessoa.textContent = "Chamando…";
+      var mensagem = "Quero falar com uma pessoa sobre um papel da Justiça que recebi: " + (NOME_TIPO[l.tipo] || "papel").toLowerCase() + (l.processo ? ", processo " + l.processo : "") + ".";
+      fetch("/api/triagem", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ mensagem: mensagem, canal: "web" }) })
+        .then(function (r) { return r.json(); })
+        .then(function (r) {
+          if (r.senha) { senha.appendChild(el("span", "Sua senha ")); senha.appendChild(el("strong", r.senha, "tj-senha")); }
+          senha.appendChild(el("p", r.texto));
+        }, function () { senha.appendChild(el("p", "Não conseguimos chamar o atendente. Procure o balcão de atendimento.")); })
+        .then(function () { senha.hidden = false; pessoa.textContent = "Falar com uma pessoa"; });
+    };
+    acoes.appendChild(pessoa); b2.appendChild(acoes); b2.appendChild(senha);
+
+    var b3 = bloco(3, "Até quando", dc.ate_quando.length > 0);
+    if (dc.ate_quando.length) dc.ate_quando.forEach(function (q) {
+      var c = el("div", null, "tj-papel-prazo"); c.appendChild(el("strong", q.destaque)); c.appendChild(el("p", q.detalhe)); b3.appendChild(c);
+    });
+    else b3.appendChild(el("p", "Este papel não traz prazo nem data escritos."));
+
+    papelRes.appendChild(el("p", d.aviso + (d.fonte === "regras" ? " Leitura feita por regras automáticas, sem IA." : ""), "tj-papel-aviso"));
+    var outro = el("button", "Entender outro papel", "tj-botao sec"); outro.type = "button";
+    outro.onclick = function () { calar(); papelRes.hidden = true; papelRes.innerHTML = ""; papelEntrada.hidden = false; papelTexto.value = ""; papelTexto.focus(); };
+    papelRes.appendChild(outro);
+    papelEntrada.hidden = true; papelRes.hidden = false; papelRes.focus();
+  }
 })();
 </script>
 </body>

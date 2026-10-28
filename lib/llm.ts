@@ -22,6 +22,10 @@ export type Ficha = z.infer<typeof FichaSchema>;
 
 export type ResultadoLLM = { ficha: Ficha; provedor: string; bruto: string; ms: number };
 
+/** Pedaço da mensagem ao Gemini: texto ou arquivo (foto de documento) em base64. */
+export type Parte = { text: string } | { inlineData: { mimeType: string; data: string } };
+type Usuario = string | Parte[];
+
 /** Erro que vale a pena tentar em outro modelo: sobrecarga (503), limite (429), demora ou erro do servidor. */
 class ErroTemporario extends Error {}
 
@@ -50,7 +54,7 @@ export function extrairJson(texto: string): unknown {
   return JSON.parse(limpo.slice(ini, fim + 1));
 }
 
-async function chamarGemini(modelo: string, system: string, usuario: string): Promise<string> {
+async function chamarGemini(modelo: string, system: string, usuario: Usuario): Promise<string> {
   const chave = process.env.GEMINI_API_KEY;
   if (!chave) throw new Error("GEMINI_API_KEY não configurada");
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelo}:generateContent`;
@@ -59,7 +63,7 @@ async function chamarGemini(modelo: string, system: string, usuario: string): Pr
     headers: { "Content-Type": "application/json", "x-goog-api-key": chave },
     body: JSON.stringify({
       systemInstruction: { parts: [{ text: system }] },
-      contents: [{ role: "user", parts: [{ text: usuario }] }],
+      contents: [{ role: "user", parts: typeof usuario === "string" ? [{ text: usuario }] : usuario }],
       generationConfig: { responseMimeType: "application/json" },
     }),
     signal: AbortSignal.timeout(TIMEOUT_IA_MS),
@@ -95,13 +99,13 @@ async function chamarGroq(system: string, usuario: string): Promise<string> {
   return corpo?.choices?.[0]?.message?.content ?? "";
 }
 
-async function tentar(chamar: (system: string, usuario: string) => Promise<string>, nome: string, system: string, usuario: string) {
+async function tentar<T>(chamar: (system: string, usuario: Usuario) => Promise<string>, nome: string, system: string, usuario: Usuario, schema: z.ZodType<T>) {
   let ultimoErro: unknown;
   for (let i = 0; i < 2; i++) { // 1 tentativa + 1 repetição se o JSON vier inválido
     const bruto = await chamar(system, usuario);
     try {
-      const ficha = FichaSchema.parse(extrairJson(bruto));
-      return { ficha, bruto };
+      const dados = schema.parse(extrairJson(bruto));
+      return { dados, bruto };
     } catch (e) {
       ultimoErro = e;
     }
@@ -109,25 +113,29 @@ async function tentar(chamar: (system: string, usuario: string) => Promise<strin
   throw new Error(`${nome}: JSON inválido duas vezes: ${String(ultimoErro).slice(0, 200)}`);
 }
 
-/** Monta a ficha a partir da conversa. Tenta cada modelo Gemini da lista; se todos falharem, tenta o Groq (se houver chave). */
-export async function llmMontaFicha(historico: Mensagem[], perguntasFeitas: number): Promise<ResultadoLLM> {
-  const system = montarPrompt(perguntasFeitas);
-  const usuario = `CONVERSA ATÉ AGORA:\n${transcricao(historico)}`;
+/** Tenta cada modelo Gemini da lista; se todos falharem, tenta o Groq (se houver chave e o pedido for só texto). */
+export async function llmJson<T>(schema: z.ZodType<T>, system: string, usuario: Usuario): Promise<{ dados: T; bruto: string; provedor: string; ms: number }> {
   const t0 = Date.now();
   const erros: string[] = [];
   for (const modelo of GEMINI_MODELS) {
     if ((bloqueados().get(modelo) ?? 0) > Date.now()) { erros.push(`${modelo}: pulado (limite de uso)`); continue; }
     try {
-      const r = await tentar((s, u) => chamarGemini(modelo, s, u), modelo, system, usuario);
+      const r = await tentar((s, u) => chamarGemini(modelo, s, u), modelo, system, usuario, schema);
       return { ...r, provedor: `gemini:${modelo}`, ms: Date.now() - t0 };
     } catch (e) {
       erros.push(String(e).slice(0, 120));
       if (!(e instanceof ErroTemporario)) break; // erro de chave ou de pedido: outro modelo não resolve
     }
   }
-  if (process.env.GROQ_API_KEY) {
-    const r = await tentar(chamarGroq, GROQ_MODEL, system, usuario);
+  if (process.env.GROQ_API_KEY && typeof usuario === "string") {
+    const r = await tentar((s, u) => chamarGroq(s, u as string), GROQ_MODEL, system, usuario, schema);
     return { ...r, provedor: `groq:${GROQ_MODEL}`, ms: Date.now() - t0 };
   }
   throw new Error(`Nenhum modelo respondeu: ${erros.join(" | ")}`);
+}
+
+/** Monta a ficha a partir da conversa. */
+export async function llmMontaFicha(historico: Mensagem[], perguntasFeitas: number): Promise<ResultadoLLM> {
+  const r = await llmJson(FichaSchema, montarPrompt(perguntasFeitas), `CONVERSA ATÉ AGORA:\n${transcricao(historico)}`);
+  return { ficha: r.dados, bruto: r.bruto, provedor: r.provedor, ms: r.ms };
 }

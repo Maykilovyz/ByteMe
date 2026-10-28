@@ -10,6 +10,7 @@
     "importar-planilha": "node scripts/importar-planilha.mjs",
     "testar-frases": "tsx scripts/rodar-frases.ts",
     "testar-regras": "tsx scripts/testar-regras.ts",
+    "testar-papel": "tsx scripts/testar-papel.ts",
     "diagnostico-tempo": "tsx scripts/diagnostico-tempo.ts"
   },
   "dependencies": {
