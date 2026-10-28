@@ -41,6 +41,7 @@ label { display: block; font-weight: 600; margin: 10px 0 4px; }
 .etiqueta.emergencia { color: #fff; background: var(--alerta); border-color: var(--alerta); }
 .suave { color: var(--suave); }
 .aviso-prototipo { font-size: .85rem; color: var(--suave); text-align: center; padding: 12px; }
+.aviso-demo { font-size: .85rem; margin: -4px 0 12px; }
 dl.ficha { display: grid; grid-template-columns: max-content 1fr; gap: 2px 12px; margin: 8px 0; }
 dl.ficha dt { color: var(--suave); }
 dl.ficha dd { margin: 0; }

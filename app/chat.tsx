@@ -6,7 +6,7 @@ type Bolha = { papel: "cidadao" | "assistente"; texto: string };
 type Resposta = {
   protocolo: string; tipo: string; texto: string; senha?: string | null; esperaMin?: number | null;
   unidade?: { nome: string; endereco: string | null; horario: string | null } | null;
-  documentos?: string[]; advogado?: string | null;
+  documentos?: string[]; advogado?: string | null; modoDemo?: boolean;
 };
 
 const TEXTO_ADVOGADO: Record<string, string> = {
@@ -25,6 +25,7 @@ export function ChatTriagem() {
   const [final, setFinal] = useState<Resposta | null>(null);
   const [enviando, setEnviando] = useState(false);
   const [nota, setNota] = useState<number | null>(null);
+  const [demo, setDemo] = useState(false);
   // Quem fala recebe a resposta falada; dá para ligar e desligar no botão
   const [emVoz, setEmVoz] = useState(false);
   const [podeLer, setPodeLer] = useState(false);
@@ -46,6 +47,7 @@ export function ChatTriagem() {
       });
       const dados: Resposta = await r.json();
       setProtocolo(dados.protocolo);
+      setDemo(!!dados.modoDemo);
       setBolhas((b) => [...b, { papel: "assistente", texto: dados.texto }]);
       if (dados.tipo !== "pergunta") setFinal(dados);
       if (emVoz) falar(dados.texto);
@@ -81,6 +83,7 @@ export function ChatTriagem() {
         {enviando && <div className="bolha assistente suave">Lendo o que você escreveu…</div>}
         <div ref={fim} />
       </div>
+      {demo && <p className="suave aviso-demo">Modo demonstração: quem lê a conversa é um simulador que segue a base de conhecimento, não a IA.</p>}
 
       {final ? (
         <div className={`card resultado ${final.tipo === "emergencia" ? "emergencia" : ""}`}>
