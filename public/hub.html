@@ -184,8 +184,10 @@ html.alto-contraste .tj-sugestoes button:hover { background: #222; }
 html.alto-contraste .tj-resultado { background: #000; border: 1px solid #fff; border-left-width: 6px; }
 .tj-senha { font-size: 2rem; font-weight: 800; letter-spacing: 2px; }
 .tj-form { padding: 10px 12px 12px; }
-.tj-linha { display: flex; gap: 8px; align-items: stretch; }
-.tj-linha textarea { flex: 1; min-width: 0; padding: 8px 10px; border: 1px solid #ced4da; border-radius: 4px; background: var(--bg); color: var(--texto); resize: vertical; }
+/* A caixa começa com 2 linhas e cresce sozinha com o texto até 5; os botões ficam sempre do tamanho de 2 linhas */
+.tj-linha { display: flex; gap: 8px; align-items: flex-end; }
+.tj-linha textarea { flex: 1; min-width: 0; height: calc(3rem + 18px); max-height: calc(7.5rem + 18px); padding: 8px 10px; border: 1px solid #ced4da; border-radius: 4px; background: var(--bg); color: var(--texto); resize: none; overflow-y: auto; }
+.tj-linha .tj-botao { height: calc(3rem + 18px); }
 html.alto-contraste .tj-linha textarea { border-color: #fff; }
 .tj-botao { padding: 8px 16px; border: 1px solid var(--azul); border-radius: 4px; background: var(--azul); color: #fff; }
 .tj-botao:hover { background: var(--azul-escuro); }
@@ -478,7 +480,7 @@ html.alto-contraste .tj-cookies button { background: #ffff00; color: #000; }
   .tj-chat { height: 200px; }
   .tj-linha { flex-wrap: wrap; }
   .tj-linha textarea { flex-basis: 100%; font-size: 1rem; }
-  .tj-linha .tj-botao { flex: 1; min-height: 46px; }
+  .tj-linha .tj-botao { flex: 1; height: auto; min-height: 46px; }
   .tj-servicos { gap: 8px; }
   .tj-servicos a { min-height: 84px; font-size: .74rem; padding: 10px 4px; }
   .tj-servicos svg { width: 30px; height: 30px; }
@@ -1081,7 +1083,7 @@ ${o}
     r.onresult = function (e) {
       var falado = "";
       for (var i = 0; i < e.results.length; i++) falado += e.results[i][0].transcript;
-      msg.value = antes + falado.trim();
+      msg.value = antes + falado.trim(); ajustarCaixa();
     };
     r.onerror = function (e) { if (ERROS_VOZ[e.error]) avisoVoz(ERROS_VOZ[e.error]); };
     r.onend = function () { ditado = null; marcarOuvindo(false); if (!vozStatus.classList.contains("erro")) vozStatus.hidden = true; };
@@ -1103,7 +1105,7 @@ ${o}
     if (!texto.trim() || enviando) return;
     pararDitado();
     enviando = true; enviarBtn.disabled = true; sugestoes.hidden = true;
-    bolha("cidadao", texto); msg.value = "";
+    bolha("cidadao", texto); msg.value = ""; ajustarCaixa();
     var espera = bolha("assistente", "Lendo o que você escreveu…", "suave");
     var corpo = protocolo ? { protocolo: protocolo, mensagem: texto, canal: "web" } : { mensagem: texto, canal: "web" };
     perguntarServidor("/api/triagem", corpo)
@@ -1124,6 +1126,12 @@ ${o}
       .then(function () { enviando = false; enviarBtn.disabled = false; });
   }
   form.addEventListener("submit", function (e) { e.preventDefault(); enviar(msg.value); });
+  // A caixa de escrever cresce com o texto (até 5 linhas, depois rola) e volta ao tamanho normal quando esvazia
+  function ajustarCaixa() {
+    msg.style.height = "";
+    if (msg.scrollHeight > msg.clientHeight) msg.style.height = msg.scrollHeight + 2 + "px";
+  }
+  msg.addEventListener("input", ajustarCaixa);
   msg.addEventListener("keydown", function (e) { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); enviar(msg.value); } });
   sugestoes.querySelectorAll("button").forEach(function (b) { b.addEventListener("click", function () { enviar(b.textContent); }); });
   // Faixa de sugestões: com o mouse, dá para clicar em qualquer ponto e arrastar para os lados, sem pegar a barra de rolagem.
