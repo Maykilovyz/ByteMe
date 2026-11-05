@@ -14,7 +14,11 @@ export const FichaSchema = z.object({
   contra_quem: z.string().nullable(),
   valor_estimado_reais: z.number().nullable(),
   urgencia: z.enum(["baixa", "media", "alta"]),
+  // Audiência, prazo, despejo ou corte nos próximos dias: o código manda ao atendente (regra do workflow n8n, 05/11).
+  prazo_iminente: z.boolean().optional(),
   tipo_autor: z.enum(["pessoa_fisica", "mei_me_epp", "outra_empresa"]).nullable(),
+  // Campos que a pessoa disse não saber ou não querer informar: o código não pergunta de novo.
+  campos_sem_resposta: z.array(z.string()).optional(),
   resumo: z.string(),
   pergunta_pendente: z.string().nullable(),
 });
