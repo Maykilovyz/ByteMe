@@ -1,7 +1,7 @@
 // Testa as regras fixas SEM chamar a IA (rápido, grátis). Uso: npm run testar-regras
 import "./carregar-env";
-import { aplicarRegras, camposFaltando, decidirJuizoCivel } from "../lib/regras";
-import { tentouInstruirIA, riscoPorPalavras } from "../lib/risco";
+import { aplicarRegras, camposFaltando, decidirJuizoCivel, proximoPasso } from "../lib/regras";
+import { pediuHumano, tentouInstruirIA, riscoPorPalavras } from "../lib/risco";
 import type { Ficha } from "../lib/llm";
 
 const base: Ficha = {
@@ -62,6 +62,33 @@ for (const [f, esperado] of frases) {
   if (passou) okF++;
   console.log(`${passou ? "OK  " : "FALHA"} ordem ao assistente? "${f}" -> ${tentouInstruirIA(f)}`);
 }
-const total = casos.length + frases.length, certos = ok + okF;
+// Regras vindas do workflow n8n (05/11): prazo iminente, campo que a pessoa não sabe, pedido de humano e risco.
+const passos: [string, Partial<Ficha>, number, string][] = [
+  ["audiência em 3 dias vai ao atendente", { prazo_iminente: true }, 0, "atendente prazo_iminente"],
+  ["sem valor: pergunta o valor", { valor_estimado_reais: null }, 0, "pergunta valor"],
+  ["não sabe o valor: não pergunta de novo", { valor_estimado_reais: null, campos_sem_resposta: ["valor"] }, 1, "atendente"],
+  ["ficha completa segue para as regras", {}, 0, "decidir"],
+];
+let okP = 0;
+for (const [nome, mud, feitas, esperado] of passos) {
+  const p = proximoPasso({ ...base, ...mud }, feitas);
+  const obtido = p.tipo === "pergunta" ? `pergunta ${p.faltando.join(",")}` : p.tipo === "atendente" ? (esperado.includes(" ") ? `atendente ${p.motivo}` : "atendente") : p.tipo;
+  const passou = obtido === esperado;
+  if (passou) okP++;
+  console.log(`${passou ? "OK  " : "FALHA"} ${nome}: ${obtido}${passou ? "" : `  (esperado: ${esperado})`}`);
+}
+const deteccao: [string, "humano" | "risco" | "nada"][] = [
+  ["passa pra um atendente pfv", "humano"], ["não quero falar com robô", "humano"], ["chama alguém de verdade", "humano"],
+  ["tentei falar com a pessoa da loja e não resolve", "nada"], ["o atendente da loja foi grosso", "nada"],
+  ["não aguento mais viver", "risco"], ["tô apanhando do meu marido", "risco"], ["quero morar em belém", "nada"],
+];
+let okD = 0;
+for (const [f, esperado] of deteccao) {
+  const obtido = pediuHumano(f) ? "humano" : riscoPorPalavras(f) ? "risco" : "nada";
+  const passou = obtido === esperado;
+  if (passou) okD++;
+  console.log(`${passou ? "OK  " : "FALHA"} detecção sem IA "${f}" -> ${obtido}`);
+}
+const total = casos.length + frases.length + passos.length + deteccao.length, certos = ok + okF + okP + okD;
 console.log(`\n${certos}/${total} regras corretas`);
 process.exit(certos === total ? 0 : 1);

@@ -65,12 +65,18 @@ export function proximoPasso(f: Ficha, perguntasFeitas: number): Passo {
   const faltando = camposFaltando(f);
   // Relato claro, mas o problema não está na lista (ou é só uma tentativa de mudar as regras): a IA não pergunta.
   if (f.assunto_id === "indefinido" && !f.pergunta_pendente) return { tipo: "atendente", motivo: "assunto_fora_da_lista" };
-  if (faltando.length && perguntasFeitas < MAX_PERGUNTAS) {
-    const daIA = f.pergunta_pendente && perguntaCoerente(f.pergunta_pendente, faltando) ? f.pergunta_pendente : null;
-    return { tipo: "pergunta", faltando, pergunta: daIA || PERGUNTA_PADRAO[faltando[0]] };
+  // Audiência, prazo, despejo ou corte nos próximos dias: uma pessoa assume, mesmo com a ficha completa.
+  if (f.prazo_iminente && f.assunto_id !== "indefinido") return { tipo: "atendente", motivo: "prazo_iminente" };
+  // O que a pessoa disse não saber (ou não querer informar) não é perguntado de novo: vai ao atendente.
+  const semResposta = new Set(f.campos_sem_resposta ?? []);
+  const perguntaveis = faltando.filter((c) => !semResposta.has(c));
+  if (perguntaveis.length && perguntasFeitas < MAX_PERGUNTAS) {
+    const daIA = f.pergunta_pendente && perguntaCoerente(f.pergunta_pendente, perguntaveis) ? f.pergunta_pendente : null;
+    return { tipo: "pergunta", faltando: perguntaveis, pergunta: daIA || PERGUNTA_PADRAO[perguntaveis[0]] };
   }
   if (faltando.length || !confiancaOk(f)) {
-    return { tipo: "atendente", motivo: `ficha_parcial: ${faltando.length ? `faltou ${faltando.join(", ")}` : "baixa confiança"}` };
+    const motivo = faltando.length ? `faltou ${faltando.join(", ")}${semResposta.size ? " (pessoa não soube informar)" : ""}` : "baixa confiança";
+    return { tipo: "atendente", motivo: `ficha_parcial: ${motivo}` };
   }
   return { tipo: "decidir" };
 }

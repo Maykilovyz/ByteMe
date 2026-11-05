@@ -4,7 +4,8 @@ import type { Decisao } from "./regras";
 
 export const TEXTO_EMERGENCIA =
   "Se você ou alguém está em perigo agora, ligue 190 (Polícia). Para violência contra a mulher, ligue 180. " +
-  "Para emergência médica, ligue 192 (SAMU). Já chamamos um atendente para falar com você.";
+  "Para emergência médica, ligue 192 (SAMU). Se você está sofrendo muito, o CVV atende a qualquer hora no 188. " +
+  "Já chamamos um atendente para falar com você.";
 
 export const TEXTO_ENCAMINHADO =
   "Vamos te passar para um atendente. Ele já vai receber o que você contou, e você não precisa repetir.";
