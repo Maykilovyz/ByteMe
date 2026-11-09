@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DWM · Developer With Mission</title>
+  <meta name="description" content="DWM (Developer With Mission): startup que cria software com propósito. Sites, sistemas e IA para quem tem uma missão.">
+  <link rel="icon" href="assets/dwm-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="glow" aria-hidden="true"></div>
+
+  <header class="nav">
+    <a class="brand" href="#topo">
+      <img src="assets/dwm-icon.png" alt="" width="32" height="31">
+      <span>DWM</span>
+    </a>
+    <nav class="nav-links" id="menu">
+      <a href="#missao">Missão</a>
+      <a href="#servicos">Serviços</a>
+      <a href="#projetos">Projetos</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="btn btn-small" href="#contato">Fale com a gente</a>
+    <button class="menu-toggle" aria-label="Abrir menu" aria-controls="menu" aria-expanded="false">☰</button>
+  </header>
+
+  <main id="topo">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-text">
+        <p class="tag">Developer With Mission</p>
+        <h1>Código com <span class="grad">propósito</span>.</h1>
+        <p class="lead">Somos a DWM, uma startup de desenvolvimento que transforma ideias com missão em software de verdade: sites, sistemas e soluções com IA que resolvem problemas reais.</p>
+        <div class="cta">
+          <a class="btn" href="#contato">Começar um projeto</a>
+          <a class="btn btn-ghost" href="#projetos">Ver projetos</a>
+        </div>
+        <div class="terminal" aria-label="Terminal de exemplo">
+          <span class="prompt">$</span>
+          <code id="term">dwm start --missao "mudar o jogo"</code>
+          <button class="copy" data-copy="dwm start --missao &quot;mudar o jogo&quot;" aria-label="Copiar comando">copiar</button>
+        </div>
+      </div>
+      <div class="hero-art">
+        <img src="assets/dwm-mark.jpg" alt="Logo da DWM: bloco 3D roxo com as letras DW★M">
+      </div>
+    </section>
+
+    <!-- MISSÃO -->
+    <section id="missao" class="section">
+      <h2>Missão</h2>
+      <div class="mission">
+        <p class="big">Todo código que escrevemos precisa ter um motivo. Construímos tecnologia que aproxima pessoas de serviços, simplifica o difícil e deixa impacto.</p>
+        <ul class="values">
+          <li><strong>Propósito</strong><span>Começamos pelo problema, não pela ferramenta.</span></li>
+          <li><strong>Clareza</strong><span>Produto simples de usar e código simples de manter.</span></li>
+          <li><strong>Entrega</strong><span>Protótipo rápido, evolução contínua junto com você.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SERVIÇOS -->
+    <section id="servicos" class="section">
+      <h2>Serviços</h2>
+      <div class="grid">
+        <article class="card"><p class="num">#1 Criar</p><h3>Sites e landing pages</h3><p>Páginas rápidas, bonitas e responsivas para apresentar sua marca e converter visitantes.</p></article>
+        <article class="card"><p class="num">#2 Construir</p><h3>Sistemas web</h3><p>Painéis, filas, cadastros e fluxos internos sob medida para o seu negócio.</p></article>
+        <article class="card"><p class="num">#3 Automatizar</p><h3>IA aplicada</h3><p>Assistentes e triagens com IA onde ela ajuda, com regras claras onde a decisão importa.</p></article>
+        <article class="card"><p class="num">#4 Integrar</p><h3>APIs e automações</h3><p>Conectamos suas ferramentas para que os dados andem sozinhos.</p></article>
+        <article class="card"><p class="num">#5 Validar</p><h3>Protótipos e MVPs</h3><p>Da ideia à primeira versão testável em pouco tempo, ideal para hackathons e pitches.</p></article>
+        <article class="card"><p class="num">#6 Evoluir</p><h3>Manutenção</h3><p>Acompanhamos o produto depois do lançamento, com melhorias contínuas.</p></article>
+      </div>
+    </section>
+
+    <!-- PROJETOS -->
+    <section id="projetos" class="section">
+      <h2>Projetos</h2>
+      <div class="grid grid-2">
+        <article class="card project">
+          <p class="num">Hackathon TJPA 2026</p>
+          <h3>ByteMe</h3>
+          <p>Porta única de atendimento do tribunal: o cidadão conta o problema com as próprias palavras, a IA monta a ficha e regras fixas decidem o encaminhamento, com senha e fila em tempo real.</p>
+          <ul class="chips"><li>Next.js</li><li>IA</li><li>Triagem</li></ul>
+          <a class="link" href="https://github.com/Maykilovyz/ByteMe" target="_blank" rel="noopener">Ver no GitHub →</a>
+        </article>
+        <article class="card project soon">
+          <p class="num">Em breve</p>
+          <h3>Próxima missão</h3>
+          <p>Novos projetos chegando. Este espaço é seu se você tem uma ideia que precisa sair do papel.</p>
+          <a class="link" href="#contato">Propor um projeto →</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="section">
+      <h2>FAQs</h2>
+      <div class="faq">
+        <details><summary>Como funciona um projeto com a DWM?</summary><p>Conversamos sobre o problema, montamos uma proposta curta, entregamos um protótipo e evoluímos em ciclos curtos com o seu retorno.</p></details>
+        <details><summary>Quanto tempo leva?</summary><p>Uma landing page costuma ficar pronta em poucos dias. Sistemas maiores são divididos em etapas com entregas parciais.</p></details>
+        <details><summary>Vocês trabalham com IA?</summary><p>Sim. Usamos IA para interpretar, resumir e automatizar, sempre com regras claras e revisão humana onde a decisão é sensível.</p></details>
+        <details><summary>Como peço um orçamento?</summary><p>Fale com a gente pela seção de contato abaixo contando sua ideia. Respondemos com os próximos passos.</p></details>
+      </div>
+    </section>
+
+    <!-- CONTATO -->
+    <section id="contato" class="section contact">
+      <h2>Tem uma missão? <span class="grad">Vamos codar.</span></h2>
+      <p class="lead">Conte sua ideia e a gente responde com os próximos passos.</p>
+      <div class="cta">
+        <!-- TODO: trocar pelo e-mail oficial da DWM -->
+        <a class="btn" href="mailto:contato@dwm.dev">contato@dwm.dev</a>
+        <a class="btn btn-ghost" href="https://github.com/Maykilovyz" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="foot-brand">
+      <img src="assets/dwm-icon.png" alt="" width="40" height="39">
+      <div><strong>DWM</strong><span>Developer With Mission</span></div>
+    </div>
+    <div class="foot-cols">
+      <div><h4>Empresa</h4><a href="#missao">Missão</a><a href="#projetos">Projetos</a></div>
+      <div><h4>Serviços</h4><a href="#servicos">Sites</a><a href="#servicos">Sistemas</a><a href="#servicos">IA</a></div>
+      <div><h4>Comunidade</h4><a href="https://github.com/Maykilovyz" target="_blank" rel="noopener">GitHub</a><a href="#contato">Contato</a></div>
+    </div>
+    <p class="copy-line">© <span id="ano">2026</span> DWM · Developer With Mission</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
