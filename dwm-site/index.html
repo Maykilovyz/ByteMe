@@ -47,8 +47,41 @@
           <button class="copy" data-copy="dwm start --missao &quot;mudar o jogo&quot;" aria-label="Copiar comando">copiar</button>
         </div>
       </div>
-      <div class="hero-art">
-        <img src="assets/dwm-mark.png" alt="Logo da DWM: bloco 3D roxo com as letras DW★M">
+      <div class="hero-art" title="Clique para repetir a animação">
+        <svg id="lg" class="logo-anim" viewBox="542 316 1000 1000" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Logo da DWM: bloco 3D roxo com as letras DW★M">
+          <defs>
+            <linearGradient id="lg-top" x1="0" y1="1" x2="0" y2="0">
+              <stop offset="0" stop-color="#cf6fe8"/><stop offset=".45" stop-color="#5a2a8a"/>
+              <stop offset=".8" stop-color="#1a0b38"/><stop offset="1" stop-color="#05030f" stop-opacity="0"/>
+            </linearGradient>
+            <linearGradient id="lg-right" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#cf6fe8"/><stop offset=".35" stop-color="#6a3a9c"/>
+              <stop offset=".7" stop-color="#1c0c3a"/><stop offset="1" stop-color="#03020a" stop-opacity="0"/>
+            </linearGradient>
+            <linearGradient id="lg-star" gradientUnits="userSpaceOnUse" x1="611" y1="0" x2="787" y2="0">
+              <stop offset="0" stop-color="#6b7cff"/><stop offset=".5" stop-color="#b86be0"/><stop offset="1" stop-color="#ff5fb5"/>
+            </linearGradient>
+            <linearGradient id="lg-sheen" gradientUnits="userSpaceOnUse" x1="600" y1="1240" x2="740" y2="1100">
+              <stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".34"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <g class="beam">
+            <polygon id="lg-ptop" fill="url(#lg-top)"/>
+            <polygon id="lg-pright" fill="url(#lg-right)"/>
+            <polygon id="lg-stop" fill="url(#lg-sheen)" opacity="0"/>
+            <polygon id="lg-sright" fill="url(#lg-sheen)" opacity="0"/>
+          </g>
+          <g id="lg-move">
+            <g fill="#f5f5f0">
+              <path class="pop" style="--d:.25s" fill-rule="evenodd" d="M628 891H688A75.5 75.5 0 0 1 688 1042H628ZM661 921V1012H688A45.5 45.5 0 0 0 688 921Z"/>
+              <path class="pop" style="--d:.45s" d="M817 898H847V985L884 929L921 985V898H950V1031H919L884 976L849 1031H817Z"/>
+              <path class="pop" style="--d:.65s" d="M817 1236V1102H849L884 1158L919 1102H950V1236H921V1148L883 1205L846 1148V1236Z"/>
+            </g>
+            <g class="star"><g class="twinkle">
+              <polygon fill="url(#lg-star)" points="699,1058 720,1122 787,1122 733,1161 754,1226 699,1186 644,1226 665,1161 611,1122 678,1122"/>
+            </g></g>
+          </g>
+        </svg>
       </div>
     </section>
 
