@@ -47,7 +47,7 @@ h1 { font-size: clamp(2.6rem, 7vw, 5rem); line-height: 1.02; margin: 0 0 20px; l
 .prompt { color: var(--pink); }
 .copy { background: none; border: 1px solid var(--line); color: var(--muted); font-family: var(--mono); border-radius: 6px; padding: 4px 10px; cursor: pointer; }
 .copy:hover { color: var(--text); border-color: var(--purple); }
-.hero-art img { width: 100%; max-width: 520px; margin: 0 auto; animation: float 6s ease-in-out infinite; mix-blend-mode: lighten; }
+.hero-art img { width: 100%; max-width: 520px; margin: 0 auto; animation: float 6s ease-in-out infinite; }
 @keyframes float { 50% { transform: translateY(-14px); } }
 
 /* SECTIONS */
@@ -113,3 +113,51 @@ h2 { font-size: clamp(2rem, 4.5vw, 3rem); margin: 0 0 36px; letter-spacing: -.01
   .grid, .grid-2, .foot-cols { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) { .hero-art img { animation: none; } html { scroll-behavior: auto; } }
+
+/* ===== ANIMAÇÕES ===== */
+/* Gradiente do texto em movimento */
+.grad { background-size: 200% auto; animation: shimmer 5s linear infinite; }
+@keyframes shimmer { to { background-position: 200% center; } }
+
+/* Entrada do hero */
+.hero-text > * { opacity: 0; transform: translateY(24px); animation: rise .8s cubic-bezier(.2,.7,.2,1) forwards; }
+.hero-text > *:nth-child(2) { animation-delay: .12s; }
+.hero-text > *:nth-child(3) { animation-delay: .24s; }
+.hero-text > *:nth-child(4) { animation-delay: .36s; }
+.hero-text > *:nth-child(5) { animation-delay: .48s; }
+.hero-art { opacity: 0; animation: pop 1.2s .2s cubic-bezier(.2,.7,.2,1) forwards; }
+@keyframes rise { to { opacity: 1; transform: none; } }
+@keyframes pop { from { opacity: 0; transform: scale(.85) rotate(-4deg); } to { opacity: 1; transform: none; } }
+
+/* Brilho atrás do logo, pulsando */
+.hero-art { position: relative; }
+.hero-art::before { content: ""; position: absolute; inset: 15%; background: radial-gradient(closest-side, rgba(224,91,216,.35), transparent); filter: blur(30px); animation: pulse 4s ease-in-out infinite; z-index: -1; }
+@keyframes pulse { 50% { opacity: .4; transform: scale(1.15); } }
+
+/* Cursor piscando no terminal */
+.cursor { display: inline-block; width: .6em; height: 1.1em; vertical-align: -.2em; background: var(--pink); margin-left: 2px; animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+
+/* Aparecer ao rolar a página */
+.reveal { opacity: 0; transform: translateY(40px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); transition-delay: var(--d, 0s); }
+.reveal.visible { opacity: 1; transform: none; }
+
+/* Luz que segue o mouse nos cards */
+.card { position: relative; overflow: hidden; }
+.card::before { content: ""; position: absolute; inset: 0; background: radial-gradient(300px circle at var(--mx, 50%) var(--my, 50%), rgba(139,92,246,.18), transparent 60%); opacity: 0; transition: opacity .3s; pointer-events: none; }
+.card:hover::before { opacity: 1; }
+
+/* Barra de progresso de leitura */
+.progress { position: fixed; top: 0; left: 0; height: 3px; width: 100%; background: var(--grad); transform-origin: 0 50%; transform: scaleX(0); z-index: 20; }
+
+/* Nav ganha sombra ao rolar */
+.nav { transition: box-shadow .3s; }
+.nav.scrolled { box-shadow: 0 10px 30px rgba(0,0,0,.5); }
+
+/* FAQ abrindo suave */
+.faq details p { animation: rise .4s ease forwards; }
+
+@media (prefers-reduced-motion: reduce) {
+  .grad, .hero-text > *, .hero-art, .hero-art::before, .cursor { animation: none; opacity: 1; transform: none; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+}

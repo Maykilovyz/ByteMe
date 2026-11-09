@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="progress" aria-hidden="true"></div>
   <div class="glow" aria-hidden="true"></div>
 
   <header class="nav">
@@ -42,12 +43,12 @@
         </div>
         <div class="terminal" aria-label="Terminal de exemplo">
           <span class="prompt">$</span>
-          <code id="term">dwm start --missao "mudar o jogo"</code>
+          <code><span id="term"></span><span class="cursor" aria-hidden="true"></span></code>
           <button class="copy" data-copy="dwm start --missao &quot;mudar o jogo&quot;" aria-label="Copiar comando">copiar</button>
         </div>
       </div>
       <div class="hero-art">
-        <img src="assets/dwm-mark.jpg" alt="Logo da DWM: bloco 3D roxo com as letras DW★M">
+        <img src="assets/dwm-mark.png" alt="Logo da DWM: bloco 3D roxo com as letras DW★M">
       </div>
     </section>
 
